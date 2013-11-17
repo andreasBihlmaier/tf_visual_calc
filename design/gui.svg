@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.6599849"
-     inkscape:cx="495.88922"
-     inkscape:cy="334.24096"
+     inkscape:zoom="2.3475731"
+     inkscape:cx="549.82375"
+     inkscape:cy="290.28596"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -325,12 +325,12 @@
     <text
        sodipodi:linespacing="125%"
        id="text3761"
-       y="369.28461"
+       y="367.28461"
        x="321.32651"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        xml:space="preserve"><tspan
          style="font-weight:bold;-inkscape-font-specification:Sans Bold"
-         y="369.28461"
+         y="367.28461"
          x="321.32651"
          id="tspan3763"
          sodipodi:role="line">TfTransformWidget</tspan></text>
@@ -344,14 +344,14 @@
     <text
        sodipodi:linespacing="125%"
        id="text3767"
-       y="351.69812"
-       x="398.03494"
+       y="352.12408"
+       x="382.69995"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        xml:space="preserve"><tspan
-         y="351.69812"
-         x="398.03494"
+         y="352.12408"
+         x="382.69995"
          id="tspan3769"
-         sodipodi:role="line">View:</tspan></text>
+         sodipodi:role="line">Format:</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text3771"
@@ -396,12 +396,12 @@
     <text
        sodipodi:linespacing="125%"
        id="text3785"
-       y="386.5484"
-       x="311.46274"
+       y="391.66006"
+       x="310.18481"
        style="font-size:12px;font-style:italic;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Italic"
        xml:space="preserve"><tspan
-         y="386.5484"
-         x="311.46274"
+         y="391.66006"
+         x="310.18481"
          id="tspan3787"
          sodipodi:role="line">Graphical Representation</tspan></text>
     <text
@@ -576,7 +576,7 @@
          y="422.25037"
          x="476.89606"
          id="tspan4650"
-         sodipodi:role="line">View</tspan></text>
+         sodipodi:role="line">Type</tspan></text>
     <text
        transform="translate(2.2150897,23.737921)"
        sodipodi:linespacing="125%"
@@ -2539,5 +2539,24 @@ YOGpopmVNuuJyzpDuPUqZVH5CQVGIRwNkfX/AJ6Tf/HKKKSk7bluKL1vc3MMCpGtqqDkAxMevPUv
          x="243.18115"
          y="453.35654"
          style="font-size:12px;font-weight:bold;-inkscape-font-specification:Sans Bold">RvizTfTransformGraphicsWidget</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1.0239929;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:3.0719787, 1.0239929;stroke-dashoffset:0"
+       id="rect7702"
+       width="266.65836"
+       height="37.965897"
+       x="254.39014"
+       y="371.98087" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3761-7"
+       y="382.5405"
+       x="294.95108"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold"
+         y="382.5405"
+         x="294.95108"
+         id="tspan3763-0"
+         sodipodi:role="line">TfTransformFormatWidget</tspan></text>
   </g>
 </svg>
