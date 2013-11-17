@@ -1,0 +1,19 @@
+<library path="lib/libtf_visual_calc">
+  <class name="TfVisualCalc"
+         type="TfVisualCalcPanel"
+         base_class_type="rviz::Panel">
+    <description>
+      A panel widget that eases interactive manipulation (and conversion) of transformations.
+
+      Transformations are visualized through rviz TF and optional Markers.
+      Input and output for each transformation in tree can be a:
+      - Homogenous matrix
+      - Vector + RPY-Rotation
+      - Vector + Quaternion
+      - DH Parameters (output only if possible)
+      Parent to child relations in tree can be directly manipulated.
+
+      The panel can be initialized by the current TF tree.
+    </description>
+  </class>
+</library>
