@@ -1,0 +1,24 @@
+# Tree view
+TfVisualCalcView : QGraphicsView
+ + RvizTfTransformGraphicsWidget
+
+# Transform format input/output (graphical and textual representation)
+TfTransformFormatWidget : QWidget
+
+HomogenousTfTransformFormatWidget : TfTransformFormatWidget
+VectorRPYTfTransformFormatWidget : TfTransformFormatWidget
+VectorQuaternionTfTransformFormatWidget : TfTransformFormatWidget
+DhTfTransformFormatWidget : TfTransformFormatWidget
+
+
+# Transform storage, format chooser and absolute calculator
+TfTransformWidget : QWidget
+ + tf::Transform
+ + TfTransformFormatWidget
+
+# Proxy to put TfTransformWidget into TfVisualCalcView
+TfTransformGraphicsWidget : QGraphicsProxyWidget
+ + TfTransformWidget
+
+# Add Marker setting (and other) rviz specific features
+RvizTfTransformGraphicsWidget : TfTransformGraphicsWidget
