@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <QLabel>
+#include <QComboBox>
 
 // custom includes
 
@@ -57,9 +58,25 @@ TfTransformWidget::createLayout()
   m_tfNameEdit = new QLineEdit();
   connect(m_tfNameEdit, SIGNAL(textChanged(const QString&)), this, SLOT(setTfName(const QString&)));
 
+  m_formatLabel = new QLabel("Format:");
+  m_formatComboBox = new QComboBox();
+  m_formatComboBox->insertItem(HomogeneousFormat, "Homogeneous");
+  m_formatComboBox->insertItem(VectorRPYFormat, "Vector + RPY");
+  m_formatComboBox->insertItem(VectorQuaternionFormat, "Vector + Quaternion");
+  m_formatComboBox->insertItem(DenavitHartenbergFormat, "Denavit-Hartenberg");
+
+  m_relativeLabel = new QLabel("relative:");
+
+  m_relativeLayout = new QHBoxLayout();
+  m_relativeLayout->addWidget(m_relativeLabel);
+  m_relativeLayout->addStretch();
+  m_relativeLayout->addWidget(m_formatLabel);
+  m_relativeLayout->addWidget(m_formatComboBox);
+
   m_topLayout = new QVBoxLayout();
   m_topLayout->addWidget(m_tfNameLabel);
   m_topLayout->addWidget(m_tfNameEdit);
+  m_topLayout->addLayout(m_relativeLayout);
   setLayout(m_topLayout);
 }
 /*------------------------------------------------------------------------}}}-*/

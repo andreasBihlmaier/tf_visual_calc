@@ -20,6 +20,7 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QLabel;
 class QLineEdit;
+class QComboBox;
 
 
 class TfTransformWidget
@@ -31,6 +32,7 @@ class TfTransformWidget
 
   public:
     // enums
+    enum ViewFormat { HomogeneousFormat, VectorRPYFormat, VectorQuaternionFormat, DenavitHartenbergFormat };
 
     // typedefs
 
@@ -70,8 +72,11 @@ class TfTransformWidget
     unsigned m_broadcastCount;
 
     QVBoxLayout* m_topLayout;
+    QHBoxLayout* m_headerLayout;
     QLabel* m_tfNameLabel;
     QLineEdit* m_tfNameEdit;
+    QLabel* m_formatLabel;
+    QComboBox* m_formatComboBox;
 
 
   private slots:

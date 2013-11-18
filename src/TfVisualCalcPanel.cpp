@@ -17,7 +17,7 @@ TfVisualCalcPanel::TfVisualCalcPanel(QWidget* p_parent)
 
   // TODO change to TfVisualCalcView
   TfTransformWidget* tfTransformWidget = new TfTransformWidget();
-  tfTransformWidget.setTfParent("/world");
+  tfTransformWidget->setTfParent("/world");
   m_topLayout->addWidget(tfTransformWidget);
 
   setLayout(m_topLayout);
