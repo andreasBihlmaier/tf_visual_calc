@@ -103,10 +103,14 @@ include_directories(
 qt4_wrap_cpp(MOC_FILES
   include/TfVisualCalcPanel.h
   include/TfTransformWidget.h
+  include/TfTransformRepSelectionWidget.h
+  include/TfTransformRepresentationWidget.h
 )
 set(SOURCE_FILES
   src/TfVisualCalcPanel.cpp
   src/TfTransformWidget.cpp
+  src/TfTransformRepSelectionWidget.cpp
+  src/TfTransformRepresentationWidget.cpp
   ${MOC_FILES}
 )
 

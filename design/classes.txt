@@ -1,10 +1,10 @@
-# Transform format input/output (graphical and textual representation)
-TfTransformFormatWidget : QWidget
+# Transform input/output (graphical and textual) representation
+TfTransformRepresentationWidget : QWidget
 
-HomogenousTfTransformFormatWidget : TfTransformFormatWidget
-VectorRPYTfTransformFormatWidget : TfTransformFormatWidget
-VectorQuaternionTfTransformFormatWidget : TfTransformFormatWidget
-DhTfTransformFormatWidget : TfTransformFormatWidget
+HomogenousTfTransformRepresentationWidget : TfTransformRepresentationWidget
+VectorRPYTfTransformRepresentationWidget : TfTransformRepresentationWidget
+VectorQuaternionTfTransformRepresentationWidget : TfTransformRepresentationWidget
+DhTfTransformRepresentationWidget : TfTransformRepresentationWidget
 
 
 # Transform storage, format chooser and absolute calculator

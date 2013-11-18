@@ -7,10 +7,9 @@
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <QLabel>
-#include <QComboBox>
 
 // custom includes
-
+#include "TfTransformRepSelectionWidget.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformWidget::TfTransformWidget(QWidget* p_parent)
@@ -58,25 +57,27 @@ TfTransformWidget::createLayout()
   m_tfNameEdit = new QLineEdit();
   connect(m_tfNameEdit, SIGNAL(textChanged(const QString&)), this, SLOT(setTfName(const QString&)));
 
-  m_formatLabel = new QLabel("Format:");
-  m_formatComboBox = new QComboBox();
-  m_formatComboBox->insertItem(HomogeneousFormat, "Homogeneous");
-  m_formatComboBox->insertItem(VectorRPYFormat, "Vector + RPY");
-  m_formatComboBox->insertItem(VectorQuaternionFormat, "Vector + Quaternion");
-  m_formatComboBox->insertItem(DenavitHartenbergFormat, "Denavit-Hartenberg");
+  m_tfNameLayout = new QHBoxLayout();
+  m_tfNameLayout->addWidget(m_tfNameLabel);
+  m_tfNameLayout->addWidget(m_tfNameEdit);
 
   m_relativeLabel = new QLabel("relative:");
+  m_relativeRepSelectionWidget = new TfTransformRepSelectionWidget();
+  m_relativeRepSelectionWidget->setTransform(&m_tf);
 
-  m_relativeLayout = new QHBoxLayout();
-  m_relativeLayout->addWidget(m_relativeLabel);
-  m_relativeLayout->addStretch();
-  m_relativeLayout->addWidget(m_formatLabel);
-  m_relativeLayout->addWidget(m_formatComboBox);
+  m_absoluteLabel = new QLabel("absolute:");
+  m_absoluteRepSelectionWidget = new TfTransformRepSelectionWidget();
+  m_absoluteRepSelectionWidget->setReadOnly(true);
+  m_absoluteRepSelectionWidget->setTransform(&m_absoluteTf);
+
 
   m_topLayout = new QVBoxLayout();
-  m_topLayout->addWidget(m_tfNameLabel);
-  m_topLayout->addWidget(m_tfNameEdit);
-  m_topLayout->addLayout(m_relativeLayout);
+  m_topLayout->addLayout(m_tfNameLayout);
+  m_topLayout->addWidget(m_relativeLabel);
+  m_topLayout->addWidget(m_relativeRepSelectionWidget);
+  m_topLayout->addSpacing(2);
+  m_topLayout->addWidget(m_absoluteLabel);
+  m_topLayout->addWidget(m_absoluteRepSelectionWidget);
   setLayout(m_topLayout);
 }
 /*------------------------------------------------------------------------}}}-*/

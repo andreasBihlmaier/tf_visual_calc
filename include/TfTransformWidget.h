@@ -20,7 +20,7 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QLabel;
 class QLineEdit;
-class QComboBox;
+class TfTransformRepSelectionWidget;
 
 
 class TfTransformWidget
@@ -32,7 +32,6 @@ class TfTransformWidget
 
   public:
     // enums
-    enum ViewFormat { HomogeneousFormat, VectorRPYFormat, VectorQuaternionFormat, DenavitHartenbergFormat };
 
     // typedefs
 
@@ -65,6 +64,7 @@ class TfTransformWidget
 
     // variables
     tf2::Transform m_tf;
+    tf2::Transform m_absoluteTf;
     tf2_ros::TransformBroadcaster m_tfBroadcaster;
 
     std::string m_tfName;
@@ -72,11 +72,14 @@ class TfTransformWidget
     unsigned m_broadcastCount;
 
     QVBoxLayout* m_topLayout;
-    QHBoxLayout* m_headerLayout;
+    QHBoxLayout* m_tfNameLayout;
     QLabel* m_tfNameLabel;
     QLineEdit* m_tfNameEdit;
-    QLabel* m_formatLabel;
-    QComboBox* m_formatComboBox;
+    QLabel* m_relativeLabel;
+    QLabel* m_absoluteLabel;
+
+    TfTransformRepSelectionWidget* m_relativeRepSelectionWidget;
+    TfTransformRepSelectionWidget* m_absoluteRepSelectionWidget;
 
 
   private slots:
