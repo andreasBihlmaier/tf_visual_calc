@@ -6,6 +6,7 @@ project(tf_visual_calc)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   rviz
+  tf2_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -100,9 +101,11 @@ include_directories(
 
 qt4_wrap_cpp(MOC_FILES
   include/TfVisualCalcPanel.h
+  include/TfTransformWidget.h
 )
 set(SOURCE_FILES
   src/TfVisualCalcPanel.cpp
+  src/TfTransformWidget.cpp
   ${MOC_FILES}
 )
 
