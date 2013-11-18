@@ -14,6 +14,7 @@
 
 
 // forward declarations
+class QVBoxLayout;
 
 
 
@@ -57,6 +58,8 @@ class TfVisualCalcPanel
 
     // variables
     ros::NodeHandle m_nodeHandle;
+
+    QVBoxLayout* m_topLayout;
 
 
   private slots:

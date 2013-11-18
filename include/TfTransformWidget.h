@@ -8,15 +8,18 @@
 
 #ifndef Q_MOC_RUN
 # include <ros/ros.h>
-# include <tf2_ros/transform_broadcaster.h>
 # include <tf2/LinearMath/Transform.h>
+# include <tf2_ros/transform_broadcaster.h>
 #endif
 
 // custom includes
 
 
 // forward declarations
-
+class QHBoxLayout;
+class QVBoxLayout;
+class QLabel;
+class QLineEdit;
 
 
 class TfTransformWidget
@@ -37,6 +40,7 @@ class TfTransformWidget
 
 
     // constructors
+    TfTransformWidget(QWidget* p_parent = 0);
 
     // overwritten methods
 
@@ -46,6 +50,8 @@ class TfTransformWidget
 
 
   public slots:
+    void setTfParent(const QString& p_parent);
+    void broadcastTransform();
 
 
   signals:
@@ -53,14 +59,23 @@ class TfTransformWidget
 
   private:
     // methods
+    void createLayout();
 
     // variables
     tf2::Transform m_tf;
     tf2_ros::TransformBroadcaster m_tfBroadcaster;
 
+    std::string m_tfName;
+    std::string m_tfParent;
+    unsigned m_broadcastCount;
+
+    QVBoxLayout* m_topLayout;
+    QLabel* m_tfNameLabel;
+    QLineEdit* m_tfNameEdit;
+
 
   private slots:
-
+    void setTfName(const QString& p_name);
 
 };
 

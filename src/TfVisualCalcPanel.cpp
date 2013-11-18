@@ -3,14 +3,24 @@
 // system includes
 
 // library includes
+#include <QVBoxLayout>
 
 // custom includes
+#include "TfTransformWidget.h"
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfVisualCalcPanel::TfVisualCalcPanel(QWidget* p_parent)
   :rviz::Panel(p_parent)
 {
+  m_topLayout = new QVBoxLayout();
+
+  // TODO change to TfVisualCalcView
+  TfTransformWidget* tfTransformWidget = new TfTransformWidget();
+  tfTransformWidget.setTfParent("/world");
+  m_topLayout->addWidget(tfTransformWidget);
+
+  setLayout(m_topLayout);
 }
 
 void

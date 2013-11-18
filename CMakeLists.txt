@@ -6,6 +6,7 @@ project(tf_visual_calc)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   rviz
+  tf2
   tf2_ros
 )
 
