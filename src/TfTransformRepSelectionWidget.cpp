@@ -11,7 +11,7 @@
 #include <tf2/LinearMath/Transform.h>
 
 // custom includes
-#include "TfTransformRepresentationWidget.h"
+#include "HomogeneousTfTransformRepresentationWidget.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformRepSelectionWidget::TfTransformRepSelectionWidget(QWidget* p_parent)
@@ -40,10 +40,9 @@ TfTransformRepSelectionWidget::setReadOnly(bool p_ro)
 void
 TfTransformRepSelectionWidget::setRepresentation(int p_representation)
 {
-  m_representationWidget = new TfTransformRepresentationWidget(this, m_tf); // TODO rm
   switch (p_representation) {
   case HomogeneousRepresentation:
-    // TODO m_representationWidget = new HomogenousTfTransformRepresentationWidget(this, m_tf);
+    m_representationWidget = new HomogeneousTfTransformRepresentationWidget(this, m_tf);
     break;
   case VectorRPYRepresentation:
     break;
