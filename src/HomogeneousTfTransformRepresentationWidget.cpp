@@ -20,6 +20,12 @@ void
 HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 {
   TfTransformRepresentationWidget::setReadOnly(p_ro);
+
+  for (unsigned i = 0; i < 4; i++) {
+    for (unsigned j = 0; j < 4; j++) {
+      m_graphicWidget->matrixEdits[i][j]->setReadOnly(p_ro);
+    }
+  }
 }
 /*------------------------------------------------------------------------}}}-*/
 

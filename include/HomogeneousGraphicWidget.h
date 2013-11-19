@@ -10,6 +10,7 @@
 
 
 // forward declarations
+class QLineEdit;
 
 
 class HomogeneousGraphicWidget
@@ -37,6 +38,7 @@ class HomogeneousGraphicWidget
     // methods
 
     // variables
+    QLineEdit* matrixEdits[4][4];
 
 
   public slots:
@@ -51,6 +53,7 @@ class HomogeneousGraphicWidget
 
   private:
     // methods
+    void createChildWidgets();
 
     // variables
 
