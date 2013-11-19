@@ -46,8 +46,13 @@ class HomogeneousTfTransformRepresentationWidget
   signals:
 
 
+  protected:
+    void paintEvent(QPaintEvent* p_event);
+
+
   private:
     // methods
+    void createGraphicFrame();
 
     // variables
 

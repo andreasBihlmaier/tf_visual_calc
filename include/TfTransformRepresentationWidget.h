@@ -5,6 +5,8 @@
 
 // library includes
 #include <QWidget>
+#include <QPainter>
+#include <QFrame>
 
 // custom includes
 
@@ -13,7 +15,6 @@
 class QLabel;
 class QLineEdit;
 class QVBoxLayout;
-class QFrame;
 
 namespace tf2 {
   class Transform;
@@ -62,6 +63,7 @@ class TfTransformRepresentationWidget
     QLineEdit* m_textEdit;
     QFrame* m_graphicFrame;
     QVBoxLayout* m_topLayout;
+    QPainter* m_graphicPainter;
 
 
   private:

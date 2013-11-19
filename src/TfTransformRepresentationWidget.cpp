@@ -5,7 +5,6 @@
 // library includes
 #include <QLabel>
 #include <QLineEdit>
-#include <QFrame>
 #include <QVBoxLayout>
 
 #include <tf2/LinearMath/Transform.h>
@@ -19,6 +18,7 @@ TfTransformRepresentationWidget::TfTransformRepresentationWidget(QWidget* p_pare
    m_tf(p_tf)
 {
   createLayout();
+  m_graphicPainter = new QPainter(m_graphicFrame);
 }
 
 void

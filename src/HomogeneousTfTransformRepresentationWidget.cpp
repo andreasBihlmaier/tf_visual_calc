@@ -11,6 +11,7 @@
 HomogeneousTfTransformRepresentationWidget::HomogeneousTfTransformRepresentationWidget(QWidget* p_parent, tf2::Transform* p_tf)
   :TfTransformRepresentationWidget(p_parent, p_tf)
 {
+  createGraphicFrame();
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -22,7 +23,20 @@ HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 }
 /*------------------------------------------------------------------------}}}-*/
 
+/*---------------------------------- protected: ----------------------------{{{-*/
+void
+HomogeneousTfTransformRepresentationWidget::paintEvent(QPaintEvent* p_event)
+{
+  m_graphicPainter->drawLine(0, 0, 10, 30);
+}
+/*------------------------------------------------------------------------}}}-*/
+
 /*---------------------------------- private: ----------------------------{{{-*/
+void
+HomogeneousTfTransformRepresentationWidget::createGraphicFrame()
+{
+  m_graphicFrame->setMinimumHeight(50);
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- private slots: -------------------------{{{-*/
