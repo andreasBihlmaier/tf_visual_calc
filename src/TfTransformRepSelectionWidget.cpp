@@ -11,7 +11,7 @@
 #include <tf2/LinearMath/Transform.h>
 
 // custom includes
-
+#include "TfTransformRepresentationWidget.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformRepSelectionWidget::TfTransformRepSelectionWidget(QWidget* p_parent)
@@ -34,11 +34,13 @@ void
 TfTransformRepSelectionWidget::setReadOnly(bool p_ro)
 {
   m_readOnly = p_ro;
+  m_representationWidget->setReadOnly(p_ro);
 }
 
 void
 TfTransformRepSelectionWidget::setRepresentation(int p_representation)
 {
+  m_representationWidget = new TfTransformRepresentationWidget(this, m_tf); // TODO rm
   switch (p_representation) {
   case HomogeneousRepresentation:
     // TODO m_representationWidget = new HomogenousTfTransformRepresentationWidget(this, m_tf);
@@ -64,7 +66,7 @@ TfTransformRepSelectionWidget::createLayout()
   m_representationComboBox->insertItem(VectorQuaternionRepresentation, "Vector + Quaternion");
   m_representationComboBox->insertItem(DenavitHartenbergRepresentation, "Denavit-Hartenberg");
   connect(m_representationComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setRepresentation(int)));
-  setRepresentation(m_representationComboBox->currentIndex);
+  setRepresentation(m_representationComboBox->currentIndex());
 
   m_representationLayout = new QHBoxLayout();
   m_representationLayout->addWidget(m_representationLabel);
@@ -72,7 +74,7 @@ TfTransformRepSelectionWidget::createLayout()
 
   m_topLayout = new QVBoxLayout();
   m_topLayout->addLayout(m_representationLayout);
-  // TODO m_topLayout->addLayout(m_representationWidget);
+  m_topLayout->addWidget(m_representationWidget);
   setLayout(m_topLayout);
 }
 /*------------------------------------------------------------------------}}}-*/

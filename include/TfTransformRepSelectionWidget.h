@@ -14,6 +14,7 @@ class QHBoxLayout;
 class QVBoxLayout;
 class QLabel;
 class QComboBox;
+class TfTransformRepresentationWidget;
 
 namespace tf2 {
   class Transform;
@@ -69,6 +70,8 @@ class TfTransformRepSelectionWidget
     QHBoxLayout* m_representationLayout;
     QLabel* m_representationLabel;
     QComboBox* m_representationComboBox;
+
+    TfTransformRepresentationWidget* m_representationWidget;
 
 
   private slots:

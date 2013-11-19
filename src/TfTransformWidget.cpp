@@ -7,6 +7,8 @@
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <QLabel>
+#include <QLine>
+#include <QFrame>
 
 // custom includes
 #include "TfTransformRepSelectionWidget.h"
@@ -65,6 +67,9 @@ TfTransformWidget::createLayout()
   m_relativeRepSelectionWidget = new TfTransformRepSelectionWidget();
   m_relativeRepSelectionWidget->setTransform(&m_tf);
 
+  m_horizontalLineFrame = new QFrame();
+  m_horizontalLineFrame->setFrameShape(QFrame::HLine);
+
   m_absoluteLabel = new QLabel("absolute:");
   m_absoluteRepSelectionWidget = new TfTransformRepSelectionWidget();
   m_absoluteRepSelectionWidget->setReadOnly(true);
@@ -75,7 +80,9 @@ TfTransformWidget::createLayout()
   m_topLayout->addLayout(m_tfNameLayout);
   m_topLayout->addWidget(m_relativeLabel);
   m_topLayout->addWidget(m_relativeRepSelectionWidget);
-  m_topLayout->addSpacing(2);
+  m_topLayout->addSpacing(1);
+  m_topLayout->addWidget(m_horizontalLineFrame);
+  m_topLayout->addSpacing(1);
   m_topLayout->addWidget(m_absoluteLabel);
   m_topLayout->addWidget(m_absoluteRepSelectionWidget);
   setLayout(m_topLayout);

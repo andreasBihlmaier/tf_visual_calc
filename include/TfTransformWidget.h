@@ -21,6 +21,8 @@ class QVBoxLayout;
 class QLabel;
 class QLineEdit;
 class TfTransformRepSelectionWidget;
+class QLine;
+class QFrame;
 
 
 class TfTransformWidget
@@ -77,6 +79,7 @@ class TfTransformWidget
     QLineEdit* m_tfNameEdit;
     QLabel* m_relativeLabel;
     QLabel* m_absoluteLabel;
+    QFrame* m_horizontalLineFrame;
 
     TfTransformRepSelectionWidget* m_relativeRepSelectionWidget;
     TfTransformRepSelectionWidget* m_absoluteRepSelectionWidget;
