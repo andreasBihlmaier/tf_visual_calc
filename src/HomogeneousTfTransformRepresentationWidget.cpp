@@ -24,18 +24,14 @@ HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 /*------------------------------------------------------------------------}}}-*/
 
 /*---------------------------------- protected: ----------------------------{{{-*/
-void
-HomogeneousTfTransformRepresentationWidget::paintEvent(QPaintEvent* p_event)
-{
-  m_graphicPainter->drawLine(0, 0, 10, 30);
-}
 /*------------------------------------------------------------------------}}}-*/
 
 /*---------------------------------- private: ----------------------------{{{-*/
 void
 HomogeneousTfTransformRepresentationWidget::createGraphicFrame()
 {
-  m_graphicFrame->setMinimumHeight(50);
+  m_graphicWidget = new HomogeneousGraphicWidget();
+  m_topLayout->insertWidget(0, m_graphicWidget);
 }
 /*------------------------------------------------------------------------}}}-*/
 

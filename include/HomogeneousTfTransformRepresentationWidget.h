@@ -7,6 +7,7 @@
 
 // custom includes
 #include "TfTransformRepresentationWidget.h"
+#include "HomogeneousGraphicWidget.h"
 
 // forward declarations
 
@@ -47,7 +48,6 @@ class HomogeneousTfTransformRepresentationWidget
 
 
   protected:
-    void paintEvent(QPaintEvent* p_event);
 
 
   private:
@@ -55,6 +55,7 @@ class HomogeneousTfTransformRepresentationWidget
     void createGraphicFrame();
 
     // variables
+    HomogeneousGraphicWidget* m_graphicWidget;
 
 
   private slots:
