@@ -12,7 +12,7 @@
 HomogeneousGraphicWidget::HomogeneousGraphicWidget(QWidget* p_parent)
   :QWidget(p_parent)
 {
-  setMinimumHeight(50);
+  setMinimumHeight(100);
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -24,7 +24,11 @@ void
 HomogeneousGraphicWidget::paintEvent(QPaintEvent* p_event)
 {
   QPainter painter(this);
-  painter.drawLine(0, 0, 10, 30);
+  QFont font;
+  font.setPointSize(60);
+  painter.setFont(font);
+  painter.drawText(0, height()/2, "[");
+  //painter.drawText(width() - 40, height(), "]");
 }
 /*------------------------------------------------------------------------}}}-*/
 
