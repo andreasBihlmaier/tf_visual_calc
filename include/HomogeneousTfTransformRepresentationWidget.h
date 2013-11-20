@@ -42,12 +42,17 @@ class HomogeneousTfTransformRepresentationWidget
 
   public slots:
     virtual void setReadOnly(bool);
+    virtual void updateDisplay();
 
 
   signals:
 
 
   protected:
+
+
+  protected slots:
+    void updateTransform();
 
 
   private:

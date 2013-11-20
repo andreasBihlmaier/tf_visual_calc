@@ -67,9 +67,9 @@ class TfTransformWidget
     void createLayout();
 
     // variables
-    tf2::Transform m_tf;
-    tf2::Transform m_absoluteTf;
-    tf2_ros::TransformBroadcaster m_tfBroadcaster;
+    tf2::Transform* m_tf;
+    tf2::Transform* m_absoluteTf;
+    tf2_ros::TransformBroadcaster* m_tfBroadcaster;
 
     std::string m_tfName;
     std::string m_tfParent;

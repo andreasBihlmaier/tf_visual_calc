@@ -9,15 +9,15 @@
 #include <QPlainTextEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QLineEdit>
+
+#include <tf2/LinearMath/Transform.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 // custom includes
 
 
 // forward declarations
-
-namespace tf2 {
-  class Transform;
-}
 
 
 class TfTransformRepresentationWidget
@@ -35,6 +35,7 @@ class TfTransformRepresentationWidget
     // const static member variables
 
     // static utility functions
+    static void setEditNumberNoSignal(QLineEdit* p_edit, int p_number);
 
 
     // constructors
@@ -43,12 +44,14 @@ class TfTransformRepresentationWidget
     // overwritten methods
 
     // methods
+    void setTransform(tf2::Transform* p_tf);
 
     // variables
 
 
   public slots:
     virtual void setReadOnly(bool);
+    virtual void updateDisplay() = 0;
 
 
   signals:
@@ -61,6 +64,9 @@ class TfTransformRepresentationWidget
     // variables
     QPlainTextEdit* m_textEdit;
     QHBoxLayout* m_topLayout;
+
+
+  protected slots:
 
 
   private:

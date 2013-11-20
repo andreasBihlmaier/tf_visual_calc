@@ -3,12 +3,19 @@
 // system includes
 
 // library includes
-#include <tf2/LinearMath/Transform.h>
 
 // custom includes
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
+void
+TfTransformRepresentationWidget::setEditNumberNoSignal(QLineEdit* p_edit, int p_number)
+{
+  bool oldState = p_edit->blockSignals(true);
+  p_edit->setText(QString::number(p_number));
+  p_edit->blockSignals(oldState);
+}
+
 TfTransformRepresentationWidget::TfTransformRepresentationWidget(QWidget* p_parent, tf2::Transform* p_tf)
   :QWidget(p_parent),
    m_tf(p_tf)
@@ -17,13 +24,9 @@ TfTransformRepresentationWidget::TfTransformRepresentationWidget(QWidget* p_pare
 }
 
 void
-TfTransformRepresentationWidget::createLayout()
+TfTransformRepresentationWidget::setTransform(tf2::Transform* p_tf)
 {
-  m_textEdit = new QPlainTextEdit();
-
-  m_topLayout = new QHBoxLayout();
-  m_topLayout->addWidget(m_textEdit);
-  setLayout(m_topLayout);
+  m_tf = p_tf;
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -39,4 +42,13 @@ TfTransformRepresentationWidget::setReadOnly(bool p_ro)
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- private slots: -------------------------{{{-*/
+void
+TfTransformRepresentationWidget::createLayout()
+{
+  m_textEdit = new QPlainTextEdit();
+
+  m_topLayout = new QHBoxLayout();
+  m_topLayout->addWidget(m_textEdit);
+  setLayout(m_topLayout);
+}
 /*------------------------------------------------------------------------}}}-*/

@@ -4,6 +4,7 @@
 
 // library includes
 #include <QPainter>
+#include <QDoubleValidator>
 
 // custom includes
 
@@ -57,6 +58,7 @@ HomogeneousGraphicWidget::createChildWidgets()
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
       matrixEdits[i][j] = new QLineEdit(this);
+      matrixEdits[i][j]->setValidator(new QDoubleValidator());
     }
   }
 }

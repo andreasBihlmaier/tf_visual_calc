@@ -26,6 +26,8 @@ void
 TfTransformRepSelectionWidget::setTransform(tf2::Transform* p_tf)
 {
   m_tf = p_tf;
+  m_representationWidget->setTransform(m_tf);
+  m_representationWidget->updateDisplay();
 }
 /*------------------------------------------------------------------------}}}-*/
 
