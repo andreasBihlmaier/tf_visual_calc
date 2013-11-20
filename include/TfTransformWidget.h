@@ -5,6 +5,7 @@
 
 // library includes
 #include <QWidget>
+#include <QGridLayout>
 
 #ifndef Q_MOC_RUN
 # include <ros/ros.h>
@@ -61,6 +62,8 @@ class TfTransformWidget
 
   signals:
 
+  protected:
+    QGridLayout* m_topLayout;
 
   private:
     // methods
@@ -75,7 +78,6 @@ class TfTransformWidget
     std::string m_tfParent;
     unsigned m_broadcastCount;
 
-    QVBoxLayout* m_topLayout;
     QHBoxLayout* m_tfNameLayout;
     QLabel* m_tfNameLabel;
     QLineEdit* m_tfNameEdit;

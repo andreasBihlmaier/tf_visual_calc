@@ -107,6 +107,7 @@ qt4_wrap_cpp(MOC_FILES
   include/TfTransformRepresentationWidget.h
   include/HomogeneousTfTransformRepresentationWidget.h
   include/HomogeneousGraphicWidget.h
+  include/TfTransformGraphicsWidget.h
 )
 set(SOURCE_FILES
   src/TfVisualCalcPanel.cpp
@@ -115,6 +116,7 @@ set(SOURCE_FILES
   src/TfTransformRepresentationWidget.cpp
   src/HomogeneousTfTransformRepresentationWidget.cpp
   src/HomogeneousGraphicWidget.cpp
+  src/TfTransformGraphicsWidget.cpp
   ${MOC_FILES}
 )
 

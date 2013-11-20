@@ -5,6 +5,7 @@
 // library includes
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QGridLayout>
 #include <QLineEdit>
 #include <QLabel>
 #include <QLine>
@@ -96,12 +97,13 @@ TfTransformWidget::createLayout()
   m_absoluteRepSelectionWidget->setTransform(m_absoluteTf);
   connect(m_absoluteButton, SIGNAL(toggled(bool)), this, SLOT(toggleAbsolute(bool)));
 
-  m_topLayout = new QVBoxLayout();
-  m_topLayout->addLayout(m_tfNameLayout);
-  m_topLayout->addWidget(m_relativeLabel);
-  m_topLayout->addWidget(m_relativeRepSelectionWidget);
-  m_topLayout->addWidget(m_horizontalLineFrame);
-  m_topLayout->addWidget(m_absoluteButton);
+  // populated from (1,1), child classes can easily insert something on all side
+  m_topLayout = new QGridLayout();
+  m_topLayout->addLayout(m_tfNameLayout, m_topLayout->rowCount(), 1);
+  m_topLayout->addWidget(m_relativeLabel, m_topLayout->rowCount(), 1);
+  m_topLayout->addWidget(m_relativeRepSelectionWidget, m_topLayout->rowCount(), 1);
+  m_topLayout->addWidget(m_horizontalLineFrame, m_topLayout->rowCount(), 1);
+  m_topLayout->addWidget(m_absoluteButton, m_topLayout->rowCount(), 1);
   setLayout(m_topLayout);
 
   m_absoluteButton->setChecked(true); // TODO rm

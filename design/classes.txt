@@ -13,9 +13,8 @@ TfTransformWidget : QWidget
  + TfTransformFormatWidget
 
 
-# Proxy to put TfTransformWidget into TfVisualCalcView
-TfTransformGraphicsWidget : QGraphicsProxyWidget
- + TfTransformWidget
+# Add elements for tree view
+TfTransformGraphicsWidget : TfTransformWidget
 
 
 # Add Marker setting (and other) rviz specific features
