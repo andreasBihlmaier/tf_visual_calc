@@ -11,6 +11,7 @@
 #endif
 
 // custom includes
+#include "TfVisualCalcView.h"
 
 
 // forward declarations
@@ -60,6 +61,8 @@ class TfVisualCalcPanel
     ros::NodeHandle m_nodeHandle;
 
     QVBoxLayout* m_topLayout;
+
+    TfVisualCalcView* m_calcView;
 
 
   private slots:

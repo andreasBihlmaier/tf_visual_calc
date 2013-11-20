@@ -17,9 +17,11 @@
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformWidget::TfTransformWidget(QWidget* p_parent)
-  :QWidget(p_parent),
+  :QFrame(p_parent),
    m_broadcastCount(0)
 {
+  setFrameStyle(QFrame::Box);
+
   m_tf = new tf2::Transform();
   m_absoluteTf = new tf2::Transform();
   m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
@@ -33,29 +35,38 @@ TfTransformWidget::TfTransformWidget(QWidget* p_parent)
 
   createLayout();
 }
+
+geometry_msgs::TransformStamped
+TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::string& p_tfParent, const std::string p_tfName, int p_seq)
+{
+  geometry_msgs::TransformStamped tfStampedMsg;
+  tfStampedMsg.header.seq = p_seq;
+  tfStampedMsg.header.stamp = ros::Time::now();
+  tfStampedMsg.header.frame_id = p_tfParent;
+
+  // tf2 sucks
+  tfStampedMsg.transform.translation.x = p_tf.getOrigin().getX();
+  tfStampedMsg.transform.translation.y = p_tf.getOrigin().getY();
+  tfStampedMsg.transform.translation.z = p_tf.getOrigin().getZ();
+  tfStampedMsg.transform.rotation.x = p_tf.getRotation().getX();
+  tfStampedMsg.transform.rotation.y = p_tf.getRotation().getY();
+  tfStampedMsg.transform.rotation.z = p_tf.getRotation().getZ();
+  tfStampedMsg.transform.rotation.w = p_tf.getRotation().getW();
+
+  tfStampedMsg.child_frame_id = p_tfName;
+
+  return tfStampedMsg;
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public slots: --------------------------{{{-*/
 void
 TfTransformWidget::broadcastTransform()
 {
-  geometry_msgs::TransformStamped tfStampedMsg;
-  tfStampedMsg.header.seq = m_broadcastCount++;
-  tfStampedMsg.header.stamp = ros::Time::now();
-  tfStampedMsg.header.frame_id = m_tfParent;
+  if (m_tfName.empty())
+    return;
 
-  // tf2 sucks
-  tfStampedMsg.transform.translation.x = m_tf->getOrigin().getX();
-  tfStampedMsg.transform.translation.y = m_tf->getOrigin().getY();
-  tfStampedMsg.transform.translation.z = m_tf->getOrigin().getZ();
-  tfStampedMsg.transform.rotation.x = m_tf->getRotation().getX();
-  tfStampedMsg.transform.rotation.y = m_tf->getRotation().getY();
-  tfStampedMsg.transform.rotation.z = m_tf->getRotation().getZ();
-  tfStampedMsg.transform.rotation.w = m_tf->getRotation().getW();
-
-  tfStampedMsg.child_frame_id = m_tfName;
-
-  m_tfBroadcaster->sendTransform(tfStampedMsg);
+  m_tfBroadcaster->sendTransform(toTransformStamped(*m_tf, m_tfParent, m_tfName, m_broadcastCount++));
 }
 
 void
@@ -68,6 +79,8 @@ TfTransformWidget::toggleAbsolute(bool p_toggled)
     m_topLayout->removeWidget(m_absoluteRepSelectionWidget);
     m_absoluteRepSelectionWidget->hide();
   }
+  updateGeometry();
+  resize(width(), minimumSizeHint().height());
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -100,7 +113,7 @@ TfTransformWidget::createLayout()
   // populated from (1,1), child classes can easily insert something on all side
   m_topLayout = new QGridLayout();
   m_topLayout->addLayout(m_tfNameLayout, m_topLayout->rowCount(), 1);
-  m_topLayout->addWidget(m_relativeLabel, m_topLayout->rowCount(), 1);
+  //m_topLayout->addWidget(m_relativeLabel, m_topLayout->rowCount(), 1);
   m_topLayout->addWidget(m_relativeRepSelectionWidget, m_topLayout->rowCount(), 1);
   m_topLayout->addWidget(m_horizontalLineFrame, m_topLayout->rowCount(), 1);
   m_topLayout->addWidget(m_absoluteButton, m_topLayout->rowCount(), 1);

@@ -6,7 +6,6 @@
 #include <QVBoxLayout>
 
 // custom includes
-#include "TfTransformGraphicsWidget.h"
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
@@ -15,10 +14,8 @@ TfVisualCalcPanel::TfVisualCalcPanel(QWidget* p_parent)
 {
   m_topLayout = new QVBoxLayout();
 
-  // TODO change to TfVisualCalcView
-  TfTransformGraphicsWidget* tfTransformGraphicsWidget = new TfTransformGraphicsWidget();
-  tfTransformGraphicsWidget->setTfParent("/world");
-  m_topLayout->addWidget(tfTransformGraphicsWidget);
+  m_calcView = new TfVisualCalcView();
+  m_topLayout->addWidget(m_calcView);
 
   setLayout(m_topLayout);
 }

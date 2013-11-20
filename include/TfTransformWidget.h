@@ -4,7 +4,7 @@
 // system includes
 
 // library includes
-#include <QWidget>
+#include <QFrame>
 #include <QGridLayout>
 
 #ifndef Q_MOC_RUN
@@ -28,7 +28,7 @@ class QPushButton;
 
 
 class TfTransformWidget
-  :public QWidget
+  :public QFrame
 {
   Q_OBJECT
   // properties
@@ -42,6 +42,7 @@ class TfTransformWidget
     // const static member variables
 
     // static utility functions
+    static geometry_msgs::TransformStamped toTransformStamped(const tf2::Transform& p_tf, const std::string& p_tfParent, const std::string p_tfName, int p_seq);
 
 
     // constructors
