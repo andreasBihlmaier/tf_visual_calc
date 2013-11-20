@@ -49,6 +49,7 @@ class TfTransformGraphicsWidget
     // methods
 
     // variables
+    // TODO parent, children
 
 
   protected slots:
