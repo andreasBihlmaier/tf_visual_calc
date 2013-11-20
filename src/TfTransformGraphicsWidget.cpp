@@ -32,8 +32,8 @@ TfTransformGraphicsWidget::extendLayout()
   m_childLabel = new QLabel("^ children"); // use unicode arrow 2191
   m_parentLabel = new QLabel("v parent"); // 2193
 
-  m_topLayout->addWidget(m_childLabel, 1, 0);
-  m_topLayout->addWidget(m_parentLabel, m_topLayout->rowCount() - 1, 0);
+  m_topLayout->addWidget(m_childLabel, 1, 0, Qt::AlignTop);
+  m_topLayout->addWidget(m_parentLabel, m_topLayout->rowCount() - 1, 0, Qt::AlignBottom);
 }
 /*------------------------------------------------------------------------}}}-*/
 

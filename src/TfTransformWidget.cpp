@@ -62,7 +62,7 @@ void
 TfTransformWidget::toggleAbsolute(bool p_toggled)
 {
   if (p_toggled && m_topLayout->indexOf(m_absoluteRepSelectionWidget) == -1) {
-    m_topLayout->addWidget(m_absoluteRepSelectionWidget);
+    m_topLayout->addWidget(m_absoluteRepSelectionWidget, m_absoluteRepSelectionWidgetRow, m_absoluteRepSelectionWidgetColumn);
     m_absoluteRepSelectionWidget->show();
   } else {
     m_topLayout->removeWidget(m_absoluteRepSelectionWidget);
@@ -104,6 +104,9 @@ TfTransformWidget::createLayout()
   m_topLayout->addWidget(m_relativeRepSelectionWidget, m_topLayout->rowCount(), 1);
   m_topLayout->addWidget(m_horizontalLineFrame, m_topLayout->rowCount(), 1);
   m_topLayout->addWidget(m_absoluteButton, m_topLayout->rowCount(), 1);
+  m_absoluteRepSelectionWidgetRow = m_topLayout->rowCount();
+  m_absoluteRepSelectionWidgetColumn = 1;
+  m_topLayout->setColumnStretch(1, 1);
   setLayout(m_topLayout);
 
   m_absoluteButton->setChecked(true); // TODO rm

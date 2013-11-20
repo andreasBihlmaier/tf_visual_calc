@@ -87,6 +87,8 @@ class TfTransformWidget
 
     TfTransformRepSelectionWidget* m_relativeRepSelectionWidget;
     TfTransformRepSelectionWidget* m_absoluteRepSelectionWidget;
+    int m_absoluteRepSelectionWidgetRow;
+    int m_absoluteRepSelectionWidgetColumn;
 
 
   private slots:
