@@ -4,6 +4,7 @@
 #include <iostream>
 
 // library includes
+#include <QMessageBox>
 
 // custom includes
 
@@ -39,6 +40,41 @@ void
 HomogeneousTfTransformRepresentationWidget::updateTransform()
 {
   std::cout << "updateTransform" << std::endl;
+
+  for (unsigned i = 0; i < 4; i++) {
+    for (unsigned j = 0; j < 4; j++) {
+      if (m_graphicWidget->matrixEdits[i][j]->text().isEmpty())
+        return;
+    }
+  }
+
+  for (unsigned i = 0; i < 3; i++) {
+    if (m_graphicWidget->matrixEdits[i][3]->text().toDouble() != 0) {
+      QMessageBox::critical(this, "Homogeneous Representation",
+                            QString("Field (%1, %2) must be %3").arg(i).arg(3).arg(0));
+      return;
+    }
+  }
+  if (m_graphicWidget->matrixEdits[3][3]->text().toDouble() != 1) {
+    QMessageBox::critical(this, "Homogeneous Representation",
+                          QString("Field (%1, %2) must be %3").arg(3).arg(3).arg(1));
+    return;
+  }
+
+
+  tf2::Matrix3x3 rotationMatrix;
+  for (unsigned i = 0; i < 3; i++) {
+    for (unsigned j = 0; j < 3; j++) {
+       rotationMatrix[i][j] = m_graphicWidget->matrixEdits[i][j]->text().toDouble();
+    }
+  }
+  m_tf->setBasis(rotationMatrix);
+
+  tf2::Vector3 translationVector;
+  for (unsigned j = 0; j < 3; j++) {
+    translationVector[j] = m_graphicWidget->matrixEdits[3][j]->text().toDouble();
+  }
+  m_tf->setOrigin(translationVector);
 }
 
 void
