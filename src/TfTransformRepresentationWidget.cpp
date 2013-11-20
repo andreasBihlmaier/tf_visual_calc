@@ -19,9 +19,9 @@ TfTransformRepresentationWidget::TfTransformRepresentationWidget(QWidget* p_pare
 void
 TfTransformRepresentationWidget::createLayout()
 {
-  m_textEdit = new QLineEdit();
+  m_textEdit = new QPlainTextEdit();
 
-  m_topLayout = new QVBoxLayout();
+  m_topLayout = new QHBoxLayout();
   m_topLayout->addWidget(m_textEdit);
   setLayout(m_topLayout);
 }

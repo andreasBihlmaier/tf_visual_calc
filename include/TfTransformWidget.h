@@ -23,6 +23,7 @@ class QLineEdit;
 class TfTransformRepSelectionWidget;
 class QLine;
 class QFrame;
+class QPushButton;
 
 
 class TfTransformWidget
@@ -55,6 +56,7 @@ class TfTransformWidget
   public slots:
     void setTfParent(const QString& p_parent);
     void broadcastTransform();
+    void toggleAbsolute(bool);
 
 
   signals:
@@ -78,7 +80,7 @@ class TfTransformWidget
     QLabel* m_tfNameLabel;
     QLineEdit* m_tfNameEdit;
     QLabel* m_relativeLabel;
-    QLabel* m_absoluteLabel;
+    QPushButton* m_absoluteButton;
     QFrame* m_horizontalLineFrame;
 
     TfTransformRepSelectionWidget* m_relativeRepSelectionWidget;

@@ -6,8 +6,9 @@
 // library includes
 #include <QWidget>
 #include <QLabel>
-#include <QLineEdit>
+#include <QPlainTextEdit>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 
 // custom includes
 
@@ -58,8 +59,8 @@ class TfTransformRepresentationWidget
     tf2::Transform* m_tf;
 
     // variables
-    QLineEdit* m_textEdit;
-    QVBoxLayout* m_topLayout;
+    QPlainTextEdit* m_textEdit;
+    QHBoxLayout* m_topLayout;
 
 
   private:

@@ -5,12 +5,12 @@
 
 // library includes
 #include <QWidget>
+#include <QLineEdit>
 
 // custom includes
 
 
 // forward declarations
-class QLineEdit;
 
 
 class HomogeneousGraphicWidget

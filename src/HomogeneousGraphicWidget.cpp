@@ -4,7 +4,6 @@
 
 // library includes
 #include <QPainter>
-#include <QLineEdit>
 
 // custom includes
 
@@ -13,7 +12,8 @@
 HomogeneousGraphicWidget::HomogeneousGraphicWidget(QWidget* p_parent)
   :QWidget(p_parent)
 {
-  setMinimumHeight(80);
+  setMinimumWidth(300);
+  setFixedHeight(80);
 
   createChildWidgets();
 }
@@ -36,7 +36,7 @@ HomogeneousGraphicWidget::paintEvent(QPaintEvent* p_event)
   painter.drawText(width() - borderWidth, textheight, "]");
   int widthWithoutBorder = width() - (borderWidth*2);
   int xw = widthWithoutBorder / 4;
-  int yw = 20;
+  int yw = height() / 4;
   int verticalLineX = borderWidth + xw * 3 - 1;
   painter.drawLine(verticalLineX, 0, verticalLineX, height());
   int horizontalLineY = yw * 3;
@@ -56,10 +56,9 @@ HomogeneousGraphicWidget::createChildWidgets()
 {
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
-      matrixEdits[i][j] = new QLineEdit("0.0", this);
+      matrixEdits[i][j] = new QLineEdit(this);
     }
   }
-  matrixEdits[3][3]->setText("1.0");
 }
 /*------------------------------------------------------------------------}}}-*/
 
