@@ -16,6 +16,10 @@ set(QT_QMAKE_EXECUTABLE /usr/bin/qmake-qt4)
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})
 
+## Do not define "emit", "slots", etc because they conflict with boost signals,
+## replace: emit -> Q_EMIT; slots -> Q_SLOTS
+add_definitions(-DQT_NO_KEYWORDS)
+
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html

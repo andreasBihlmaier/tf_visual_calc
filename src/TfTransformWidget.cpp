@@ -26,8 +26,9 @@ TfTransformWidget::TfTransformWidget(bool p_hasAbsolute, QWidget* p_parent)
   setFrameStyle(QFrame::Box);
 
   m_tf = new tf2::Transform();
-  m_absoluteTf = new tf2::Transform();
   m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
+  m_absoluteTf = new tf2::Transform();
+  m_absoluteTfListener = new tf2_ros::TransformListener();
 
   m_tf->setOrigin(tf2::Vector3(0.0, 2.0, 0.0));
   tf2::Quaternion quat;

@@ -11,6 +11,7 @@
 # include <ros/ros.h>
 # include <tf2/LinearMath/Transform.h>
 # include <tf2_ros/transform_broadcaster.h>
+# include <tf2_ros/transform_listener.h>
 #endif
 
 // custom includes
@@ -82,6 +83,7 @@ class TfTransformWidget
     tf2::Transform* m_tf;
     tf2::Transform* m_absoluteTf;
     tf2_ros::TransformBroadcaster* m_tfBroadcaster;
+    tf2_ros::TransformListener* m_absoluteTfListener;
 
     std::string m_tfParent;
     unsigned m_broadcastCount;
