@@ -49,6 +49,7 @@ class TfTransformGraphicsWidget
 
   public slots:
     virtual void broadcastTransform();
+    virtual void toggleAbsolute(bool p_toggled);
 
 
   signals:

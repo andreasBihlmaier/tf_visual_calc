@@ -60,6 +60,12 @@ TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::str
 
   return tfStampedMsg;
 }
+
+const std::string&
+TfTransformWidget::tfName()
+{
+  return m_tfName;
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public slots: --------------------------{{{-*/

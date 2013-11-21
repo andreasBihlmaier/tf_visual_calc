@@ -51,14 +51,15 @@ class TfTransformWidget
     // overwritten methods
 
     // methods
+    const std::string& tfName();
 
     // variables
 
 
   public slots:
     virtual void broadcastTransform();
+    virtual void toggleAbsolute(bool);
     void setTfParent(const QString& p_parent);
-    void toggleAbsolute(bool);
 
 
   signals:

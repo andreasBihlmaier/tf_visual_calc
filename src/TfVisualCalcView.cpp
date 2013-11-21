@@ -71,7 +71,7 @@ void
 TfVisualCalcView::createScene()
 {
   setScene(new QGraphicsScene(QRect(0, 0, 640, 480), this));
-  scene()->setSceneRect(-1000, 0, 2000, 1000);
+  scene()->setSceneRect(-2000, 0, 4000, 4000);
 
   m_worldLabel = new QLabel("/world");
   m_worldLabelProxy = scene()->addWidget(m_worldLabel);
@@ -122,11 +122,21 @@ TfVisualCalcView::createContextMenu()
 void
 TfVisualCalcView::drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y)
 {
+  printf("drawTree(%s, %d, %d)\n", p_node->tfName().c_str(), p_x, p_y);
+  int nodeWidth = p_node->width();
+  int nodeHeight = p_node->height();
   QGraphicsProxyWidget* proxy = p_node->proxy();
-  proxy->setPos(-p_node->width()/2, p_y - p_node->height());
+  proxy->setPos(p_x - nodeWidth/2, p_y - nodeHeight);
 
-  for (unsigned childIdx = 0; childIdx < p_node->children().size(); childIdx++) {
-    drawTree(p_node->children()[childIdx], p_x, p_y - p_node->height());
+  int childrenCount = p_node->children().size();
+  for (unsigned childIdx = 0; childIdx < childrenCount; childIdx++) {
+    int dx = (childIdx - childrenCount/2) * nodeWidth;
+    if (childrenCount % 2 == 0) {
+      dx += nodeWidth/2;
+    }
+    int x = p_x + dx;
+    int y = p_y - nodeHeight;
+    drawTree(p_node->children()[childIdx], x, y);
   }
 }
 /*------------------------------------------------------------------------}}}-*/

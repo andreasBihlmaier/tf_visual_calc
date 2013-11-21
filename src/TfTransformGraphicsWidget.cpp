@@ -69,6 +69,13 @@ TfTransformGraphicsWidget::broadcastTransform()
     (*childIter)->broadcastTransform();
   }
 }
+
+void
+TfTransformGraphicsWidget::toggleAbsolute(bool p_toggled)
+{
+  TfTransformWidget::toggleAbsolute(p_toggled);
+  m_view->updateScene();
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*--------------------------------- protected: ---------------------------{{{-*/
