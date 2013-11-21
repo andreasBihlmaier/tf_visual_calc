@@ -5,6 +5,8 @@
 
 // library includes
 #include <QLabel>
+#include <QAction>
+#include <QMenu>
 
 // custom includes
 
@@ -60,6 +62,16 @@ TfTransformGraphicsWidget::extendLayout()
 
   m_topLayout->addWidget(m_childLabel, 1, 0, Qt::AlignTop);
   m_topLayout->addWidget(m_parentLabel, m_topLayout->rowCount() - 1, 0, Qt::AlignBottom);
+}
+
+void
+TfTransformGraphicsWidget::createContextMenu()
+{
+  m_addChildAction = new QAction(tr("&Add Child"), this);
+  connect(m_addChildAction, SIGNAL(triggered()), this, SLOT(addChild()));
+
+  m_contextMenu = new QMenu(this);
+  m_contextMenu->addAction(m_addChildAction);
 }
 /*------------------------------------------------------------------------}}}-*/
 

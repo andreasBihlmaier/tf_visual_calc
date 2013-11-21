@@ -79,7 +79,7 @@ class TfVisualCalcView
     QTimer* m_broadcastTimer;
     TfTransformGraphicsWidget* m_rootTfWidget;
 
-    QAction* m_addTfAction;
+    QAction* m_removeAllAction;
     QMenu* m_contextMenu;
 
 

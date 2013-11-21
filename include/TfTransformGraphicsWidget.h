@@ -10,7 +10,8 @@
 #include "TfTransformWidget.h"
 
 // forward declarations
-
+class QMenu;
+class QAction;
 
 
 class TfTransformGraphicsWidget
@@ -50,6 +51,7 @@ class TfTransformGraphicsWidget
 
   protected:
     // methods
+    virtual void contextMenuEvent(QContextMenuEvent* p_event);
 
     // variables
     TfTransformGraphicsWidget* m_parent;
@@ -62,11 +64,14 @@ class TfTransformGraphicsWidget
   private:
     // methods
     void extendLayout();
+    void createContextMenu();
 
     // variables
     QLabel* m_childLabel;
     QLabel* m_parentLabel;
 
+    QAction* m_addChildAction;
+    QMenu* m_contextMenu;
 
   private slots:
 

@@ -101,11 +101,11 @@ TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
 void
 TfVisualCalcView::createContextMenu()
 {
-  m_addTfAction = new QAction(tr("&Add Tf"), this);
-  connect(m_addTfAction, SIGNAL(triggered()), this, SLOT(addTfWidget()));
+  m_removeAllAction = new QAction(tr("&Remove all"), this);
+  connect(m_removeAllAction, SIGNAL(triggered()), this, SLOT(removeAll()));
 
   m_contextMenu = new QMenu(this);
-  m_contextMenu->addAction(m_addTfAction);
+  m_contextMenu->addAction(m_removeAllAction);
 }
 /*------------------------------------------------------------------------}}}-*/
 
