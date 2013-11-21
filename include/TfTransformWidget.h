@@ -51,7 +51,6 @@ class TfTransformWidget
     // overwritten methods
 
     // methods
-    void setProxy(QGraphicsProxyWidget* p_proxy);
 
     // variables
 
@@ -64,9 +63,14 @@ class TfTransformWidget
 
   signals:
 
+
   protected:
     std::string m_tfName;
     QGridLayout* m_topLayout;
+
+  protected slots:
+    virtual void setTfName();
+
 
   private:
     // methods
@@ -93,10 +97,7 @@ class TfTransformWidget
     int m_absoluteRepSelectionWidgetRow;
     int m_absoluteRepSelectionWidgetColumn;
 
-    QGraphicsProxyWidget* m_proxy;
-
   private slots:
-    void setTfName();
 
 };
 

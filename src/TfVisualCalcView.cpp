@@ -27,6 +27,12 @@ TfVisualCalcView::TfVisualCalcView(QWidget* p_parent)
   createContextMenu();
   setupBroadcastTimer();
 }
+
+TfTransformGraphicsWidget*
+TfVisualCalcView::addTfWidget()
+{
+  return dynamic_cast<TfTransformGraphicsWidget*>(addTfWidget("")->widget());
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public slots: --------------------------{{{-*/
@@ -38,9 +44,9 @@ TfVisualCalcView::broadcastTransforms()
 }
 
 void
-TfVisualCalcView::addTfWidget()
+TfVisualCalcView::updateScene()
 {
-  addTfWidget("");
+  drawTree(m_rootTfWidget, 0, scene()->sceneRect().height() - m_worldLabel->height());
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -48,7 +54,12 @@ TfVisualCalcView::addTfWidget()
 void
 TfVisualCalcView::contextMenuEvent(QContextMenuEvent* p_event)
 {
-  m_contextMenu->exec(p_event->globalPos());
+  QGraphicsSceneContextMenuEvent* graphicsSceneEvent = dynamic_cast<QGraphicsSceneContextMenuEvent*>(p_event);
+  if (items(p_event->pos()).empty()) {
+    m_contextMenu->exec(p_event->globalPos());
+  } else {
+    QGraphicsView::contextMenuEvent(p_event);
+  }
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -67,8 +78,8 @@ TfVisualCalcView::createScene()
   m_worldLabelProxy->setPos(-m_worldLabel->width()/2, scene()->sceneRect().height() - m_worldLabel->height()/2);
 
   QGraphicsProxyWidget* rootTfProxy = addTfWidget("/world", false);
-  m_rootTfWidget = (TfTransformGraphicsWidget*)rootTfProxy->widget();
-  rootTfProxy->setPos(-m_rootTfWidget->width()/2, scene()->sceneRect().height() - m_worldLabel->height() - m_rootTfWidget->height());
+  m_rootTfWidget = dynamic_cast<TfTransformGraphicsWidget*>(rootTfProxy->widget());
+  updateScene();
 
   centerOn(0, scene()->sceneRect().height());
 }
@@ -86,6 +97,7 @@ QGraphicsProxyWidget*
 TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
 {
   TfTransformGraphicsWidget* newTfWidget = new TfTransformGraphicsWidget(p_hasAbsolute);
+  newTfWidget->setView(this);
 
   if (!p_tfName.empty()) {
     newTfWidget->setTfParent(QString::fromStdString(p_tfName));
@@ -93,7 +105,6 @@ TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
 
   QGraphicsProxyWidget* newTfProxy = scene()->addWidget(newTfWidget);
   newTfWidget->setProxy(newTfProxy);
-  newTfProxy->setPos(mapToScene(width()/2, height()/2));
 
   return newTfProxy;
 }
@@ -106,6 +117,17 @@ TfVisualCalcView::createContextMenu()
 
   m_contextMenu = new QMenu(this);
   m_contextMenu->addAction(m_removeAllAction);
+}
+
+void
+TfVisualCalcView::drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y)
+{
+  QGraphicsProxyWidget* proxy = p_node->proxy();
+  proxy->setPos(-p_node->width()/2, p_y - p_node->height());
+
+  for (unsigned childIdx = 0; childIdx < p_node->children().size(); childIdx++) {
+    drawTree(p_node->children()[childIdx], p_x, p_y - p_node->height());
+  }
 }
 /*------------------------------------------------------------------------}}}-*/
 

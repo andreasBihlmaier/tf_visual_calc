@@ -7,15 +7,19 @@
 #include <QLabel>
 #include <QAction>
 #include <QMenu>
+#include <QContextMenuEvent>
 
 // custom includes
-
+#include "TfVisualCalcView.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformGraphicsWidget::TfTransformGraphicsWidget(bool p_hasAbsolute, QWidget* p_parent)
   :TfTransformWidget(p_hasAbsolute, p_parent),
-   m_parent(NULL)
+   m_parent(NULL),
+   m_proxy(NULL),
+   m_view(NULL)
 {
+  createContextMenu();
   extendLayout();
 }
 
@@ -26,6 +30,30 @@ TfTransformGraphicsWidget::addChild(TfTransformGraphicsWidget* p_newChild)
     m_children.push_back(p_newChild);
     p_newChild->setTfParent(QString::fromStdString(m_tfName));
   }
+}
+
+void
+TfTransformGraphicsWidget::setProxy(QGraphicsProxyWidget* p_proxy)
+{
+  m_proxy = p_proxy;
+}
+
+void
+TfTransformGraphicsWidget::setView(TfVisualCalcView* p_view)
+{
+  m_view = p_view;
+}
+
+QGraphicsProxyWidget*
+TfTransformGraphicsWidget::proxy()
+{
+  return m_proxy;
+}
+
+const std::vector<TfTransformGraphicsWidget*>&
+TfTransformGraphicsWidget::children()
+{
+  return m_children;
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -44,9 +72,25 @@ TfTransformGraphicsWidget::broadcastTransform()
 /*------------------------------------------------------------------------}}}-*/
 
 /*--------------------------------- protected: ---------------------------{{{-*/
+void
+TfTransformGraphicsWidget::contextMenuEvent(QContextMenuEvent* p_event)
+{
+  m_contextMenu->exec(p_event->globalPos());
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------ protected slots: ------------------------{{{-*/
+void
+TfTransformGraphicsWidget::setTfName()
+{
+  TfTransformWidget::setTfName();
+
+  for (std::vector<TfTransformGraphicsWidget*>::iterator childIter = m_children.begin();
+       childIter != m_children.end();
+       ++childIter) {
+    (*childIter)->setTfParent(QString::fromStdString(m_tfName));
+  }
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*---------------------------------- private: ----------------------------{{{-*/
@@ -67,13 +111,19 @@ TfTransformGraphicsWidget::extendLayout()
 void
 TfTransformGraphicsWidget::createContextMenu()
 {
-  m_addChildAction = new QAction(tr("&Add Child"), this);
-  connect(m_addChildAction, SIGNAL(triggered()), this, SLOT(addChild()));
+  m_createChildAction = new QAction(tr("&Create child"), this);
+  connect(m_createChildAction, SIGNAL(triggered()), this, SLOT(createChildWidget()));
 
   m_contextMenu = new QMenu(this);
-  m_contextMenu->addAction(m_addChildAction);
+  m_contextMenu->addAction(m_createChildAction);
 }
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- private slots: -------------------------{{{-*/
+void
+TfTransformGraphicsWidget::createChildWidget()
+{
+  addChild(m_view->addTfWidget());
+  m_view->updateScene();
+}
 /*------------------------------------------------------------------------}}}-*/

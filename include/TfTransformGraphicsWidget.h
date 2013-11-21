@@ -12,6 +12,7 @@
 // forward declarations
 class QMenu;
 class QAction;
+class TfVisualCalcView;
 
 
 class TfTransformGraphicsWidget
@@ -38,6 +39,10 @@ class TfTransformGraphicsWidget
 
     // methods
     void addChild(TfTransformGraphicsWidget* p_newChild);
+    void setProxy(QGraphicsProxyWidget* p_proxy);
+    void setView(TfVisualCalcView* p_view);
+    QGraphicsProxyWidget* proxy();
+    const std::vector<TfTransformGraphicsWidget*>& children();
 
     // variables
 
@@ -59,6 +64,7 @@ class TfTransformGraphicsWidget
 
 
   protected slots:
+    virtual void setTfName();
 
 
   private:
@@ -70,10 +76,14 @@ class TfTransformGraphicsWidget
     QLabel* m_childLabel;
     QLabel* m_parentLabel;
 
-    QAction* m_addChildAction;
+    QAction* m_createChildAction;
     QMenu* m_contextMenu;
 
+    QGraphicsProxyWidget* m_proxy;
+    TfVisualCalcView* m_view;
+
   private slots:
+    void createChildWidget();
 
 
 };

@@ -21,8 +21,7 @@
 TfTransformWidget::TfTransformWidget(bool p_hasAbsolute, QWidget* p_parent)
   :QFrame(p_parent),
    m_hasAbsolute(p_hasAbsolute),
-   m_broadcastCount(0),
-   m_proxy(NULL)
+   m_broadcastCount(0)
 {
   setFrameStyle(QFrame::Box);
 
@@ -60,12 +59,6 @@ TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::str
   tfStampedMsg.child_frame_id = p_tfName;
 
   return tfStampedMsg;
-}
-
-void
-TfTransformWidget::setProxy(QGraphicsProxyWidget* p_proxy)
-{
-  m_proxy = p_proxy;
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -144,13 +137,19 @@ TfTransformWidget::createLayout()
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- private slots: -------------------------{{{-*/
+/*--------------------------------- protected: ---------------------------{{{-*/
+/*------------------------------------------------------------------------}}}-*/
+
+/*------------------------------ protected slots: ------------------------{{{-*/
 void
 TfTransformWidget::setTfName()
 {
   m_tfName = m_tfNameEdit->text().toStdString();
 }
+/*------------------------------------------------------------------------}}}-*/
 
+
+/*------------------------------- private slots: -------------------------{{{-*/
 void
 TfTransformWidget::setTfParent(const QString& p_parent)
 {

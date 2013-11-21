@@ -41,13 +41,14 @@ class TfVisualCalcView
     // overwritten methods
 
     // methods
+    TfTransformGraphicsWidget* addTfWidget();
 
     // variables
 
 
   public slots:
     void broadcastTransforms();
-    void addTfWidget();
+    void updateScene();
 
 
   signals:
@@ -72,6 +73,7 @@ class TfVisualCalcView
     void createContextMenu();
     void setupBroadcastTimer();
     QGraphicsProxyWidget* addTfWidget(const std::string& p_tfName, bool p_hasAbsolute = true);
+    void drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y);
 
     // variables
     QLabel* m_worldLabel;
