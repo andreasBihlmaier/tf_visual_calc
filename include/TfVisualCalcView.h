@@ -14,6 +14,8 @@
 class QLabel;
 class QTimer;
 class QPushButton;
+class QMenu;
+class QAction;
 
 
 class TfVisualCalcView
@@ -53,6 +55,7 @@ class TfVisualCalcView
 
   protected:
     // methods
+    virtual void contextMenuEvent(QContextMenuEvent* p_event);
 
     // variables
     tf2::Transform* m_worldMapTf;
@@ -66,6 +69,7 @@ class TfVisualCalcView
   private:
     // methods
     void createScene();
+    void createContextMenu();
     void setupBroadcastTimer();
     QGraphicsProxyWidget* addTfWidget(const std::string& p_tfName, bool p_hasAbsolute = true);
 
@@ -74,6 +78,9 @@ class TfVisualCalcView
     QGraphicsProxyWidget* m_worldLabelProxy;
     QTimer* m_broadcastTimer;
     TfTransformGraphicsWidget* m_rootTfWidget;
+
+    QAction* m_addTfAction;
+    QMenu* m_contextMenu;
 
 
   private slots:

@@ -7,8 +7,11 @@
 #include <QLabel>
 #include <QGraphicsScene>
 #include <QGraphicsProxyWidget>
+#include <QGraphicsSceneContextMenuEvent>
 #include <QTimer>
 #include <QPushButton>
+#include <QAction>
+#include <QMenu>
 
 // custom includes
 
@@ -21,6 +24,7 @@ TfVisualCalcView::TfVisualCalcView(QWidget* p_parent)
   m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
 
   createScene();
+  createContextMenu();
   setupBroadcastTimer();
 }
 /*------------------------------------------------------------------------}}}-*/
@@ -36,12 +40,16 @@ TfVisualCalcView::broadcastTransforms()
 void
 TfVisualCalcView::addTfWidget()
 {
-  // TODO
-  // addTfWidget("");
+  addTfWidget("");
 }
 /*------------------------------------------------------------------------}}}-*/
 
 /*--------------------------------- protected: ---------------------------{{{-*/
+void
+TfVisualCalcView::contextMenuEvent(QContextMenuEvent* p_event)
+{
+  m_contextMenu->exec(p_event->globalPos());
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------ protected slots: ------------------------{{{-*/
@@ -61,7 +69,6 @@ TfVisualCalcView::createScene()
   QGraphicsProxyWidget* rootTfProxy = addTfWidget("/world", false);
   m_rootTfWidget = (TfTransformGraphicsWidget*)rootTfProxy->widget();
   rootTfProxy->setPos(-m_rootTfWidget->width()/2, scene()->sceneRect().height() - m_worldLabel->height() - m_rootTfWidget->height());
-  //TODO m_rootTfWidget->moveable(false);
 
   centerOn(0, scene()->sceneRect().height());
 }
@@ -89,6 +96,16 @@ TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
   newTfProxy->setPos(mapToScene(width()/2, height()/2));
 
   return newTfProxy;
+}
+
+void
+TfVisualCalcView::createContextMenu()
+{
+  m_addTfAction = new QAction(tr("&Add Tf"), this);
+  connect(m_addTfAction, SIGNAL(triggered()), this, SLOT(addTfWidget()));
+
+  m_contextMenu = new QMenu(this);
+  m_contextMenu->addAction(m_addTfAction);
 }
 /*------------------------------------------------------------------------}}}-*/
 
