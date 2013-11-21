@@ -39,8 +39,6 @@ HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 void
 HomogeneousTfTransformRepresentationWidget::updateTransform()
 {
-  std::cout << "updateTransform" << std::endl;
-
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
       if (m_graphicWidget->matrixEdits[i][j]->text().isEmpty())
@@ -86,17 +84,17 @@ HomogeneousTfTransformRepresentationWidget::updateDisplay()
   tf2::Matrix3x3 rotationMatrix = m_tf->getBasis();
   for (unsigned i = 0; i < 3; i++) {
     for (unsigned j = 0; j < 3; j++) {
-      setEditNumberNoSignal(m_graphicWidget->matrixEdits[i][j], rotationMatrix[i][j]);
+      m_graphicWidget->matrixEdits[i][j]->setText(QString::number(rotationMatrix[i][j]));
     }
   }
   for (unsigned i = 0; i < 3; i++) {
-    setEditNumberNoSignal(m_graphicWidget->matrixEdits[i][3], 0);
+    m_graphicWidget->matrixEdits[i][3]->setText(QString::number(0));
   }
-  setEditNumberNoSignal(m_graphicWidget->matrixEdits[3][3], 1);
+  m_graphicWidget->matrixEdits[3][3]->setText(QString::number(1));
 
   tf2::Vector3 translationVector = m_tf->getOrigin();
   for (unsigned j = 0; j < 3; j++) {
-    setEditNumberNoSignal(m_graphicWidget->matrixEdits[3][j], translationVector[j]);
+    m_graphicWidget->matrixEdits[3][j]->setText(QString::number(translationVector[j]));
   }
 }
 /*------------------------------------------------------------------------}}}-*/
@@ -109,7 +107,7 @@ HomogeneousTfTransformRepresentationWidget::createGraphicFrame()
   m_topLayout->insertWidget(0, m_graphicWidget);
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
-      connect(m_graphicWidget->matrixEdits[i][j], SIGNAL(textChanged(const QString&)), this, SLOT(updateTransform()));
+      connect(m_graphicWidget->matrixEdits[i][j], SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
     }
   }
 }

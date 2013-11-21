@@ -35,7 +35,6 @@ class TfTransformRepresentationWidget
     // const static member variables
 
     // static utility functions
-    static void setEditNumberNoSignal(QLineEdit* p_edit, int p_number);
 
 
     // constructors

@@ -47,6 +47,7 @@ TfVisualCalcView::createScene()
   QGraphicsProxyWidget *worldLabelProxy = scene()->addWidget(m_worldLabel);
   worldLabelProxy->setPos(width()/2 - m_worldLabel->width()/2, height() - m_worldLabel->height()/2);
   m_rootTfWidget = new TfTransformGraphicsWidget(this);
+  m_rootTfWidget->setTfParent("/world");
 }
 
 void

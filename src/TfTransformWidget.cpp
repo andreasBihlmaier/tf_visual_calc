@@ -63,7 +63,7 @@ TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::str
 void
 TfTransformWidget::broadcastTransform()
 {
-  if (m_tfName.empty())
+  if (m_tfName.empty() || m_tfParent.empty())
     return;
 
   m_tfBroadcaster->sendTransform(toTransformStamped(*m_tf, m_tfParent, m_tfName, m_broadcastCount++));
@@ -90,7 +90,7 @@ TfTransformWidget::createLayout()
 {
   m_tfNameLabel = new QLabel("tfName:");
   m_tfNameEdit = new QLineEdit();
-  connect(m_tfNameEdit, SIGNAL(textChanged(const QString&)), this, SLOT(setTfName(const QString&)));
+  connect(m_tfNameEdit, SIGNAL(editingFinished()), this, SLOT(setTfName()));
 
   m_tfNameLayout = new QHBoxLayout();
   m_tfNameLayout->addWidget(m_tfNameLabel);
@@ -128,9 +128,9 @@ TfTransformWidget::createLayout()
 
 /*------------------------------- private slots: -------------------------{{{-*/
 void
-TfTransformWidget::setTfName(const QString& p_name)
+TfTransformWidget::setTfName()
 {
-  m_tfName = p_name.toStdString();
+  m_tfName = m_tfNameEdit->text().toStdString();
 }
 
 void

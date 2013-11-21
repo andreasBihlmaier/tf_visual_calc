@@ -56,8 +56,8 @@ class TfTransformWidget
 
 
   public slots:
+    virtual void broadcastTransform();
     void setTfParent(const QString& p_parent);
-    void broadcastTransform();
     void toggleAbsolute(bool);
 
 
@@ -93,7 +93,7 @@ class TfTransformWidget
 
 
   private slots:
-    void setTfName(const QString& p_name);
+    void setTfName();
 
 };
 

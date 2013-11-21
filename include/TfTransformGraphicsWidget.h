@@ -2,6 +2,7 @@
 #define _TF_TRANSFORM_GRAPHICS_WIDGET_H_
 
 // system includes
+#include <vector>
 
 // library includes
 
@@ -40,6 +41,7 @@ class TfTransformGraphicsWidget
 
 
   public slots:
+    virtual void broadcastTransform();
 
 
   signals:
@@ -49,7 +51,8 @@ class TfTransformGraphicsWidget
     // methods
 
     // variables
-    // TODO parent, children
+    TfTransformGraphicsWidget* m_parent;
+    std::vector<TfTransformGraphicsWidget*> m_children;
 
 
   protected slots:
