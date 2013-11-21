@@ -1,6 +1,7 @@
 #include "TfTransformGraphicsWidget.h"
 
 // system includes
+#include <algorithm>
 
 // library includes
 #include <QLabel>
@@ -14,6 +15,15 @@ TfTransformGraphicsWidget::TfTransformGraphicsWidget(QWidget* p_parent)
    m_parent(NULL)
 {
   extendLayout();
+}
+
+void
+TfTransformGraphicsWidget::addChild(TfTransformGraphicsWidget* p_newChild)
+{
+  if (std::find(m_children.begin(), m_children.end(), p_newChild) == m_children.end()) {
+    m_children.push_back(p_newChild);
+    p_newChild->setTfParent(QString::fromStdString(m_tfName));
+  }
 }
 /*------------------------------------------------------------------------}}}-*/
 

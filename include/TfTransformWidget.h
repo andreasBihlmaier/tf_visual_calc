@@ -64,6 +64,7 @@ class TfTransformWidget
   signals:
 
   protected:
+    std::string m_tfName;
     QGridLayout* m_topLayout;
 
   private:
@@ -75,7 +76,6 @@ class TfTransformWidget
     tf2::Transform* m_absoluteTf;
     tf2_ros::TransformBroadcaster* m_tfBroadcaster;
 
-    std::string m_tfName;
     std::string m_tfParent;
     unsigned m_broadcastCount;
 

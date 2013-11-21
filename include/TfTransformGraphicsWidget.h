@@ -36,6 +36,7 @@ class TfTransformGraphicsWidget
     // overwritten methods
 
     // methods
+    void addChild(TfTransformGraphicsWidget* p_newChild);
 
     // variables
 

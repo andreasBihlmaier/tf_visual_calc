@@ -50,6 +50,7 @@ class TfVisualCalcPanel
 
   public slots:
 
+  protected:
 
   signals:
 
