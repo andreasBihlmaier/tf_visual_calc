@@ -18,8 +18,9 @@
 #include "TfTransformRepSelectionWidget.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
-TfTransformWidget::TfTransformWidget(QWidget* p_parent)
+TfTransformWidget::TfTransformWidget(bool p_hasAbsolute, QWidget* p_parent)
   :QFrame(p_parent),
+   m_hasAbsolute(p_hasAbsolute),
    m_broadcastCount(0),
    m_proxy(NULL)
 {
@@ -81,6 +82,9 @@ TfTransformWidget::broadcastTransform()
 void
 TfTransformWidget::toggleAbsolute(bool p_toggled)
 {
+  if (!m_hasAbsolute)
+    return;
+
   if (p_toggled && m_topLayout->indexOf(m_absoluteRepSelectionWidget) == -1) {
     m_topLayout->addWidget(m_absoluteRepSelectionWidget, m_absoluteRepSelectionWidgetRow, m_absoluteRepSelectionWidgetColumn);
     m_absoluteRepSelectionWidget->show();
@@ -111,29 +115,32 @@ TfTransformWidget::createLayout()
   m_relativeRepSelectionWidget = new TfTransformRepSelectionWidget();
   m_relativeRepSelectionWidget->setTransform(m_tf);
 
-  m_horizontalLineFrame = new QFrame();
-  m_horizontalLineFrame->setFrameShape(QFrame::HLine);
+  if (m_hasAbsolute) {
+    m_horizontalLineFrame = new QFrame();
+    m_horizontalLineFrame->setFrameShape(QFrame::HLine);
 
-  m_absoluteButton = new QPushButton("absolute:");
-  m_absoluteButton->setCheckable(true);
-  m_absoluteRepSelectionWidget = new TfTransformRepSelectionWidget();
-  m_absoluteRepSelectionWidget->setReadOnly(true);
-  m_absoluteRepSelectionWidget->setTransform(m_absoluteTf);
-  connect(m_absoluteButton, SIGNAL(toggled(bool)), this, SLOT(toggleAbsolute(bool)));
+    m_absoluteButton = new QPushButton("absolute:");
+    m_absoluteButton->setCheckable(true);
+    m_absoluteRepSelectionWidget = new TfTransformRepSelectionWidget();
+    m_absoluteRepSelectionWidget->setReadOnly(true);
+    m_absoluteRepSelectionWidget->setTransform(m_absoluteTf);
+    connect(m_absoluteButton, SIGNAL(toggled(bool)), this, SLOT(toggleAbsolute(bool)));
+  }
 
   // populated from (1,1), child classes can easily insert something on all side
   m_topLayout = new QGridLayout();
   m_topLayout->addLayout(m_tfNameLayout, m_topLayout->rowCount(), 1);
   //m_topLayout->addWidget(m_relativeLabel, m_topLayout->rowCount(), 1);
   m_topLayout->addWidget(m_relativeRepSelectionWidget, m_topLayout->rowCount(), 1);
-  m_topLayout->addWidget(m_horizontalLineFrame, m_topLayout->rowCount(), 1);
-  m_topLayout->addWidget(m_absoluteButton, m_topLayout->rowCount(), 1);
-  m_absoluteRepSelectionWidgetRow = m_topLayout->rowCount();
-  m_absoluteRepSelectionWidgetColumn = 1;
+  if (m_hasAbsolute) {
+    m_topLayout->addWidget(m_horizontalLineFrame, m_topLayout->rowCount(), 1);
+    m_topLayout->addWidget(m_absoluteButton, m_topLayout->rowCount(), 1);
+    m_absoluteRepSelectionWidgetRow = m_topLayout->rowCount();
+    m_absoluteRepSelectionWidgetColumn = 1;
+  }
   m_topLayout->setColumnStretch(1, 1);
   setLayout(m_topLayout);
-
-  m_absoluteButton->setChecked(true); // TODO rm
+  resize(0, 0);
 }
 /*------------------------------------------------------------------------}}}-*/
 

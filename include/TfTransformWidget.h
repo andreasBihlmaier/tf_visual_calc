@@ -46,7 +46,7 @@ class TfTransformWidget
 
 
     // constructors
-    TfTransformWidget(QWidget* p_parent = 0);
+    TfTransformWidget(bool p_hasAbsolute = true, QWidget* p_parent = 0);
 
     // overwritten methods
 
@@ -73,6 +73,7 @@ class TfTransformWidget
     void createLayout();
 
     // variables
+    bool m_hasAbsolute;
     tf2::Transform* m_tf;
     tf2::Transform* m_absoluteTf;
     tf2_ros::TransformBroadcaster* m_tfBroadcaster;

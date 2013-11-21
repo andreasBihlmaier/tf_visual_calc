@@ -67,7 +67,7 @@ class TfVisualCalcView
     // methods
     void createScene();
     void setupBroadcastTimer();
-    QGraphicsProxyWidget* addTfWidget(const std::string& p_tfName);
+    QGraphicsProxyWidget* addTfWidget(const std::string& p_tfName, bool p_hasAbsolute = true);
 
     // variables
     QLabel* m_worldLabel;

@@ -31,7 +31,7 @@ class TfTransformGraphicsWidget
 
 
     // constructors
-    TfTransformGraphicsWidget(QWidget* p_parent = 0);
+    TfTransformGraphicsWidget(bool p_hasAbsolute = true, QWidget* p_parent = 0);
 
     // overwritten methods
 

@@ -10,8 +10,8 @@
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
-TfTransformGraphicsWidget::TfTransformGraphicsWidget(QWidget* p_parent)
-  :TfTransformWidget(p_parent),
+TfTransformGraphicsWidget::TfTransformGraphicsWidget(bool p_hasAbsolute, QWidget* p_parent)
+  :TfTransformWidget(p_hasAbsolute, p_parent),
    m_parent(NULL)
 {
   extendLayout();

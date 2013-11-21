@@ -58,7 +58,7 @@ TfVisualCalcView::createScene()
   m_worldLabelProxy = scene()->addWidget(m_worldLabel);
   m_worldLabelProxy->setPos(-m_worldLabel->width()/2, scene()->sceneRect().height() - m_worldLabel->height()/2);
 
-  QGraphicsProxyWidget* rootTfProxy = addTfWidget("/world");
+  QGraphicsProxyWidget* rootTfProxy = addTfWidget("/world", false);
   m_rootTfWidget = (TfTransformGraphicsWidget*)rootTfProxy->widget();
   rootTfProxy->setPos(-m_rootTfWidget->width()/2, scene()->sceneRect().height() - m_worldLabel->height() - m_rootTfWidget->height());
   //TODO m_rootTfWidget->moveable(false);
@@ -76,9 +76,9 @@ TfVisualCalcView::setupBroadcastTimer()
 }
 
 QGraphicsProxyWidget*
-TfVisualCalcView::addTfWidget(const std::string& p_tfName)
+TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
 {
-  TfTransformGraphicsWidget* newTfWidget = new TfTransformGraphicsWidget();
+  TfTransformGraphicsWidget* newTfWidget = new TfTransformGraphicsWidget(p_hasAbsolute);
 
   if (!p_tfName.empty()) {
     newTfWidget->setTfParent(QString::fromStdString(p_tfName));
