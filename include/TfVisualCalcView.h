@@ -53,7 +53,6 @@ class TfVisualCalcView
 
   protected:
     // methods
-    virtual void resizeEvent(QResizeEvent* p_event);
 
     // variables
     tf2::Transform* m_worldMapTf;
@@ -68,14 +67,13 @@ class TfVisualCalcView
     // methods
     void createScene();
     void setupBroadcastTimer();
+    QGraphicsProxyWidget* addTf(const std::string& p_tfName);
 
     // variables
     QLabel* m_worldLabel;
     QGraphicsProxyWidget* m_worldLabelProxy;
     QTimer* m_broadcastTimer;
     TfTransformGraphicsWidget* m_rootTfWidget;
-    QPushButton* m_addButton;
-    QGraphicsProxyWidget* m_addButtonProxy;
 
 
   private slots:

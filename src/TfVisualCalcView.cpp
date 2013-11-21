@@ -41,17 +41,6 @@ TfVisualCalcView::addTransformWidget()
 /*------------------------------------------------------------------------}}}-*/
 
 /*--------------------------------- protected: ---------------------------{{{-*/
-void
-TfVisualCalcView::resizeEvent(QResizeEvent* p_event)
-{
-  QGraphicsView::resizeEvent(p_event);
-  // TODO
-  scene()->setSceneRect(rect());
-
-  std::cout << m_worldLabel->pos().x() << std::endl;
-  m_worldLabelProxy->setPos(width()/2 - m_worldLabel->width()/2, height() - m_worldLabel->height()/2);
-  m_addButtonProxy->setPos(width() - m_addButton->width()/2, height() - m_addButton->height()/2);
-}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------ protected slots: ------------------------{{{-*/
@@ -62,16 +51,16 @@ void
 TfVisualCalcView::createScene()
 {
   setScene(new QGraphicsScene(QRect(0, 0, 640, 480), this));
+  scene()->setSceneRect(-1000, 0, 2000, 1000);
 
   m_worldLabel = new QLabel("/world");
   m_worldLabelProxy = scene()->addWidget(m_worldLabel);
+  m_worldLabelProxy->setPos(-m_worldLabel->width()/2, scene()->sceneRect().height() - m_worldLabel->height()/2);
 
-  m_rootTfWidget = new TfTransformGraphicsWidget(this);
-  m_rootTfWidget->setTfParent("/world");
-
-  m_addButton = new QPushButton("Add Tf");
-  connect(m_addButton, SIGNAL(pressed()), this, SLOT(addTransformWidget()));
-  m_addButtonProxy = scene()->addWidget(m_addButton);
+  QGraphicsProxyWidget* rootTfProxy = addTf("/world");
+  m_rootTfWidget = (TfTransformGraphicsWidget*)rootTfProxy->widget();
+  rootTfProxy->setPos(-m_rootTfWidget->width()/2, scene()->sceneRect().height() - m_worldLabel->height() - 350);
+  //TODO m_rootTfWidget->moveable(false);
 }
 
 void
@@ -81,6 +70,20 @@ TfVisualCalcView::setupBroadcastTimer()
   m_broadcastTimer->setInterval(100);
   connect(m_broadcastTimer, SIGNAL(timeout()), this, SLOT(broadcastTransforms()));
   m_broadcastTimer->start();
+}
+
+QGraphicsProxyWidget*
+TfVisualCalcView::addTf(const std::string& p_tfName)
+{
+  TfTransformGraphicsWidget* newTfWidget = new TfTransformGraphicsWidget();
+
+  if (!p_tfName.empty()) {
+    newTfWidget->setTfParent(QString::fromStdString(p_tfName));
+  }
+
+  QGraphicsProxyWidget* newTfProxy = scene()->addWidget(newTfWidget);
+
+  return newTfProxy;
 }
 /*------------------------------------------------------------------------}}}-*/
 
