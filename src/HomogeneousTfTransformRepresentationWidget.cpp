@@ -10,8 +10,8 @@
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
-HomogeneousTfTransformRepresentationWidget::HomogeneousTfTransformRepresentationWidget(QWidget* p_parent, tf2::Transform* p_tf)
-  :TfTransformRepresentationWidget(p_parent, p_tf)
+HomogeneousTfTransformRepresentationWidget::HomogeneousTfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent)
+  :TfTransformRepresentationWidget(p_tf, p_parent)
 {
   createGraphicFrame();
   updateDisplay();

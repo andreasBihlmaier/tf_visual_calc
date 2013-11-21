@@ -8,7 +8,7 @@
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
-TfTransformRepresentationWidget::TfTransformRepresentationWidget(QWidget* p_parent, tf2::Transform* p_tf)
+TfTransformRepresentationWidget::TfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent)
   :QWidget(p_parent),
    m_tf(p_tf)
 {

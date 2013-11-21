@@ -34,9 +34,10 @@ TfVisualCalcView::broadcastTransforms()
 }
 
 void
-TfVisualCalcView::addTransformWidget()
+TfVisualCalcView::addTfWidget()
 {
   // TODO
+  // addTfWidget("");
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -57,10 +58,12 @@ TfVisualCalcView::createScene()
   m_worldLabelProxy = scene()->addWidget(m_worldLabel);
   m_worldLabelProxy->setPos(-m_worldLabel->width()/2, scene()->sceneRect().height() - m_worldLabel->height()/2);
 
-  QGraphicsProxyWidget* rootTfProxy = addTf("/world");
+  QGraphicsProxyWidget* rootTfProxy = addTfWidget("/world");
   m_rootTfWidget = (TfTransformGraphicsWidget*)rootTfProxy->widget();
-  rootTfProxy->setPos(-m_rootTfWidget->width()/2, scene()->sceneRect().height() - m_worldLabel->height() - 350);
+  rootTfProxy->setPos(-m_rootTfWidget->width()/2, scene()->sceneRect().height() - m_worldLabel->height() - m_rootTfWidget->height());
   //TODO m_rootTfWidget->moveable(false);
+
+  centerOn(0, scene()->sceneRect().height());
 }
 
 void
@@ -73,7 +76,7 @@ TfVisualCalcView::setupBroadcastTimer()
 }
 
 QGraphicsProxyWidget*
-TfVisualCalcView::addTf(const std::string& p_tfName)
+TfVisualCalcView::addTfWidget(const std::string& p_tfName)
 {
   TfTransformGraphicsWidget* newTfWidget = new TfTransformGraphicsWidget();
 
@@ -82,6 +85,8 @@ TfVisualCalcView::addTf(const std::string& p_tfName)
   }
 
   QGraphicsProxyWidget* newTfProxy = scene()->addWidget(newTfWidget);
+  newTfWidget->setProxy(newTfProxy);
+  newTfProxy->setPos(mapToScene(width()/2, height()/2));
 
   return newTfProxy;
 }

@@ -51,8 +51,12 @@ TfTransformGraphicsWidget::broadcastTransform()
 void
 TfTransformGraphicsWidget::extendLayout()
 {
+  QFont font;
+  font.setPointSize(6);
   m_childLabel = new QLabel(QString(QChar(0x2191)) + "children");
+  m_childLabel->setFont(font);
   m_parentLabel = new QLabel(QString(QChar(0x2193)) + "parent");
+  m_parentLabel->setFont(font);
 
   m_topLayout->addWidget(m_childLabel, 1, 0, Qt::AlignTop);
   m_topLayout->addWidget(m_parentLabel, m_topLayout->rowCount() - 1, 0, Qt::AlignBottom);

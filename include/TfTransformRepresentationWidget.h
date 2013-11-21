@@ -38,7 +38,7 @@ class TfTransformRepresentationWidget
 
 
     // constructors
-    TfTransformRepresentationWidget(QWidget* p_parent, tf2::Transform* p_tf);
+    TfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent = 0);
 
     // overwritten methods
 

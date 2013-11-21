@@ -11,6 +11,8 @@
 #include <QLine>
 #include <QFrame>
 #include <QPushButton>
+#include <QGraphicsProxyWidget>
+#include <QApplication>
 
 // custom includes
 #include "TfTransformRepSelectionWidget.h"
@@ -18,7 +20,8 @@
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformWidget::TfTransformWidget(QWidget* p_parent)
   :QFrame(p_parent),
-   m_broadcastCount(0)
+   m_broadcastCount(0),
+   m_proxy(NULL)
 {
   setFrameStyle(QFrame::Box);
 
@@ -31,7 +34,7 @@ TfTransformWidget::TfTransformWidget(QWidget* p_parent)
   quat.setEuler(0, 0, 0);
   m_tf->setRotation(quat);
 
-  setMinimumWidth(500);
+  setFixedWidth(600);
 
   createLayout();
 }
@@ -57,6 +60,12 @@ TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::str
 
   return tfStampedMsg;
 }
+
+void
+TfTransformWidget::setProxy(QGraphicsProxyWidget* p_proxy)
+{
+  m_proxy = p_proxy;
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public slots: --------------------------{{{-*/
@@ -79,8 +88,10 @@ TfTransformWidget::toggleAbsolute(bool p_toggled)
     m_topLayout->removeWidget(m_absoluteRepSelectionWidget);
     m_absoluteRepSelectionWidget->hide();
   }
-  updateGeometry();
-  resize(width(), minimumSizeHint().height());
+
+  // hack to resize Widget to size it would have if removed Widget would never have been there
+  QApplication::processEvents();
+  resize(0, 0);
 }
 /*------------------------------------------------------------------------}}}-*/
 

@@ -45,7 +45,7 @@ class TfVisualCalcView
 
   public slots:
     void broadcastTransforms();
-    void addTransformWidget();
+    void addTfWidget();
 
 
   signals:
@@ -67,7 +67,7 @@ class TfVisualCalcView
     // methods
     void createScene();
     void setupBroadcastTimer();
-    QGraphicsProxyWidget* addTf(const std::string& p_tfName);
+    QGraphicsProxyWidget* addTfWidget(const std::string& p_tfName);
 
     // variables
     QLabel* m_worldLabel;
@@ -77,6 +77,7 @@ class TfVisualCalcView
 
 
   private slots:
+    void adjustSize(QGraphicsProxyWidget* p_proxy);
 
 
 };

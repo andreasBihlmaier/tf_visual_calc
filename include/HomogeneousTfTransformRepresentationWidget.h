@@ -31,7 +31,7 @@ class HomogeneousTfTransformRepresentationWidget
 
 
     // constructors
-    HomogeneousTfTransformRepresentationWidget(QWidget* p_parent, tf2::Transform* p_tf);
+    HomogeneousTfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent = 0);
 
     // overwritten methods
 

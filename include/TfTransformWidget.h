@@ -51,6 +51,7 @@ class TfTransformWidget
     // overwritten methods
 
     // methods
+    void setProxy(QGraphicsProxyWidget* p_proxy);
 
     // variables
 
@@ -91,6 +92,7 @@ class TfTransformWidget
     int m_absoluteRepSelectionWidgetRow;
     int m_absoluteRepSelectionWidgetColumn;
 
+    QGraphicsProxyWidget* m_proxy;
 
   private slots:
     void setTfName();

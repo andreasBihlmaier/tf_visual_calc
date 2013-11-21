@@ -44,7 +44,7 @@ TfTransformRepSelectionWidget::setRepresentation(int p_representation)
 {
   switch (p_representation) {
   case HomogeneousRepresentation:
-    m_representationWidget = new HomogeneousTfTransformRepresentationWidget(this, m_tf);
+    m_representationWidget = new HomogeneousTfTransformRepresentationWidget(m_tf);
     break;
   case VectorRPYRepresentation:
     break;
