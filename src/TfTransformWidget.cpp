@@ -124,6 +124,12 @@ TfTransformWidget::toggleAbsolute(bool p_toggled)
     m_absoluteRepSelectionWidget->hide();
   }
 
+  updateSize();
+}
+
+void
+TfTransformWidget::updateSize()
+{
   // hack to resize Widget to size it would have if removed Widget would never have been there
   QApplication::processEvents();
   resize(0, 0);
@@ -145,6 +151,7 @@ TfTransformWidget::createLayout()
   m_relativeLabel = new QLabel("relative:");
   m_relativeRepSelectionWidget = new TfTransformRepSelectionWidget();
   m_relativeRepSelectionWidget->setTransform(m_tf);
+  connect(m_relativeRepSelectionWidget, SIGNAL(sizeChanged()), this, SLOT(updateSize()));
 
   if (m_hasAbsolute) {
     m_horizontalLineFrame = new QFrame();
@@ -152,10 +159,11 @@ TfTransformWidget::createLayout()
 
     m_absoluteButton = new QPushButton("absolute:");
     m_absoluteButton->setCheckable(true);
+    connect(m_absoluteButton, SIGNAL(toggled(bool)), this, SLOT(toggleAbsolute(bool)));
     m_absoluteRepSelectionWidget = new TfTransformRepSelectionWidget();
     m_absoluteRepSelectionWidget->setReadOnly(true);
     m_absoluteRepSelectionWidget->setTransform(m_absoluteTf);
-    connect(m_absoluteButton, SIGNAL(toggled(bool)), this, SLOT(toggleAbsolute(bool)));
+    connect(m_absoluteRepSelectionWidget, SIGNAL(sizeChanged()), this, SLOT(updateSize()));
   }
 
   // populated from (1,1), child classes can easily insert something on all side

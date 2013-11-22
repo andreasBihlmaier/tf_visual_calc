@@ -62,6 +62,7 @@ class TfTransformWidget
   public Q_SLOTS:
     virtual void broadcastTransform();
     virtual void toggleAbsolute(bool);
+    virtual void updateSize();
     void setTfParent(const QString& p_parent);
 
 

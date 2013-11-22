@@ -50,6 +50,7 @@ class TfTransformGraphicsWidget
   public Q_SLOTS:
     virtual void broadcastTransform();
     virtual void toggleAbsolute(bool p_toggled);
+    virtual void updateSize();
 
 
   Q_SIGNALS:

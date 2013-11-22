@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QComboBox>
+#include <QApplication>
 
 #include <tf2/LinearMath/Transform.h>
 
@@ -63,6 +64,8 @@ TfTransformRepSelectionWidget::setRepresentation(int p_representation)
   }
 
   m_topLayout->addWidget(m_representationWidget);
+
+  Q_EMIT sizeChanged();
 }
 
 void

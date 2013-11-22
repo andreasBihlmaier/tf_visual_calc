@@ -7,6 +7,7 @@
 #include <QDoubleValidator>
 
 // custom includes
+#include "PaintPrimitives.h"
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
@@ -14,7 +15,7 @@ VectorRPYGraphicWidget::VectorRPYGraphicWidget(QWidget* p_parent)
   :QWidget(p_parent)
 {
   setMinimumWidth(300);
-  setFixedHeight(80);
+  setFixedHeight(100);
 
   createChildWidgets();
 }
@@ -27,8 +28,23 @@ VectorRPYGraphicWidget::VectorRPYGraphicWidget(QWidget* p_parent)
 void
 VectorRPYGraphicWidget::paintEvent(QPaintEvent* p_event)
 {
-  /*
   QPainter painter(this);
+  int arrowLineWidth = 3;
+  int xArrowLength = 90;
+  int yArrowLength = 70;
+  int zArrowLength = 90;
+  int border = 2 * arrowLineWidth + (arrowLineWidth+1)/2;
+  QPoint axisOrigin(border, height() - border);
+  QPoint xAxisTip(axisOrigin.x() + xArrowLength, axisOrigin.y());
+  QPoint yAxisTip(axisOrigin.x() + yArrowLength, axisOrigin.y() - yArrowLength);
+  QPoint zAxisTip(axisOrigin.x(), axisOrigin.y() - zArrowLength);
+
+  PaintPrimitives::drawArrow(painter, axisOrigin, xAxisTip, arrowLineWidth, QColor("red"));
+  PaintPrimitives::drawArrow(painter, axisOrigin, yAxisTip, arrowLineWidth, QColor("green"));
+  PaintPrimitives::drawArrow(painter, axisOrigin, zAxisTip, arrowLineWidth, QColor("blue"));
+
+
+  /*
   QFont font;
   font.setPointSize(68);
   int borderWidth = 30;
@@ -44,11 +60,7 @@ VectorRPYGraphicWidget::paintEvent(QPaintEvent* p_event)
   int horizontalLineY = yw * 3;
   painter.drawLine(borderWidth, horizontalLineY, widthWithoutBorder + 4 * 6, horizontalLineY);
 
-  for (unsigned i = 0; i < 4; i++) {
-    for (unsigned j = 0; j < 4; j++) {
-      matrixEdits[i][j]->setGeometry(borderWidth + i * xw, j * yw, xw, yw);
-    }
-  }
+  matrixEdits[i][j]->setGeometry(borderWidth + i * xw, j * yw, xw, yw);
   */
 }
 /*------------------------------------------------------------------------}}}-*/

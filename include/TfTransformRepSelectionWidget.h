@@ -57,6 +57,7 @@ class TfTransformRepSelectionWidget
 
 
   Q_SIGNALS:
+    void sizeChanged();
 
 
   private:

@@ -127,6 +127,7 @@ set(SOURCE_FILES
   src/TfVisualCalcView.cpp
   src/VectorRPYTfTransformRepresentationWidget.cpp
   src/VectorRPYGraphicWidget.cpp
+  src/PaintPrimitives.cpp
   ${MOC_FILES}
 )
 

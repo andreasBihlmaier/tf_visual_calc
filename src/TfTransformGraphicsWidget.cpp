@@ -76,6 +76,13 @@ TfTransformGraphicsWidget::toggleAbsolute(bool p_toggled)
   TfTransformWidget::toggleAbsolute(p_toggled);
   m_view->updateScene();
 }
+
+void
+TfTransformGraphicsWidget::updateSize()
+{
+  TfTransformWidget::updateSize();
+  m_view->updateScene();
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*--------------------------------- protected: ---------------------------{{{-*/

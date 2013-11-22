@@ -122,7 +122,7 @@ TfVisualCalcView::createContextMenu()
 void
 TfVisualCalcView::drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y)
 {
-  printf("drawTree(%s, %d, %d)\n", p_node->tfName().c_str(), p_x, p_y);
+  //printf("drawTree(%s, %d, %d)\n", p_node->tfName().c_str(), p_x, p_y);
   int nodeWidth = p_node->width();
   int nodeHeight = p_node->height();
   QGraphicsProxyWidget* proxy = p_node->proxy();
