@@ -37,6 +37,7 @@ TfTransformWidget::TfTransformWidget(bool p_hasAbsolute, QWidget* p_parent)
 
   m_tfBuffer = new tf2_ros::Buffer();
   m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
+  m_tfListener = new tf2_ros::TransformListener(*m_tfBuffer);
 
   setFixedWidth(600);
 
@@ -94,11 +95,17 @@ TfTransformWidget::broadcastTransform()
   m_tfBroadcaster->sendTransform(toTransformStamped(*m_tf, m_tfParent, m_tfName, m_broadcastCount++));
 
   if (m_hasAbsolute) {
-    try {
-      geometry_msgs::TransformStamped transformStamped = m_tfBuffer->lookupTransform(m_tfName.substr(1), "world", ros::Time(0));
-      *m_absoluteTf = toTransform(transformStamped);
-    } catch (tf2::LookupException) {
-      // do nothing
+    std::string errorString;
+    if (!m_tfBuffer->canTransform("world", m_tfName.substr(1), ros::Time(0), ros::Duration(0), &errorString)) {
+      std::cout << "errorString=" << errorString << std::endl;
+    } else {
+      try {
+        geometry_msgs::TransformStamped transformStamped = m_tfBuffer->lookupTransform("world", m_tfName.substr(1), ros::Time(0));
+        *m_absoluteTf = toTransform(transformStamped);
+        m_absoluteRepSelectionWidget->updateDisplay();
+      } catch (tf2::LookupException) {
+        std::cout << "tf2::LookupException" << std::endl;
+      }
     }
   }
 }

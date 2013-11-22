@@ -54,6 +54,12 @@ TfTransformRepSelectionWidget::setRepresentation(int p_representation)
     break;
   }
 }
+
+void
+TfTransformRepSelectionWidget::updateDisplay()
+{
+  m_representationWidget->updateDisplay();
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*---------------------------------- private: ----------------------------{{{-*/

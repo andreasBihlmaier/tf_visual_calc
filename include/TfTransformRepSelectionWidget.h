@@ -53,6 +53,7 @@ class TfTransformRepSelectionWidget
   public Q_SLOTS:
     void setReadOnly(bool);
     void setRepresentation(int);
+    void updateDisplay();
 
 
   Q_SIGNALS:
