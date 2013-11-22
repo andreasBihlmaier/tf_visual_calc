@@ -45,7 +45,7 @@ HomogeneousGraphicWidget::paintEvent(QPaintEvent* p_event)
 
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
-      matrixEdits[i][j]->setGeometry(borderWidth + i * xw, j * yw, xw, yw);
+      m_matrixEdits[i][j]->setGeometry(borderWidth + i * xw, j * yw, xw, yw);
     }
   }
 }
@@ -57,8 +57,8 @@ HomogeneousGraphicWidget::createChildWidgets()
 {
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
-      matrixEdits[i][j] = new QLineEdit(this);
-      matrixEdits[i][j]->setValidator(new QDoubleValidator());
+      m_matrixEdits[i][j] = new QLineEdit(this);
+      m_matrixEdits[i][j]->setValidator(new QDoubleValidator());
     }
   }
 }

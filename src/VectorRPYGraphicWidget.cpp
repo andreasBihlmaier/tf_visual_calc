@@ -15,7 +15,7 @@ VectorRPYGraphicWidget::VectorRPYGraphicWidget(QWidget* p_parent)
   :QWidget(p_parent)
 {
   setMinimumWidth(300);
-  setFixedHeight(100);
+  setFixedHeight(135);
 
   createChildWidgets();
 }
@@ -29,39 +29,45 @@ void
 VectorRPYGraphicWidget::paintEvent(QPaintEvent* p_event)
 {
   QPainter painter(this);
+  QColor xAxisColor("red");
+  QColor yAxisColor("green");
+  QColor zAxisColor("blue");
   int arrowLineWidth = 3;
-  int xArrowLength = 90;
+  int rotationDiameter = 25;
+  int rotationLineWidth = arrowLineWidth;
+  int xArrowLength = 80;
   int yArrowLength = 70;
-  int zArrowLength = 90;
-  int border = 2 * arrowLineWidth + (arrowLineWidth+1)/2;
-  QPoint axisOrigin(border, height() - border);
+  int zArrowLength = 80;
+  int border = rotationDiameter / 2 + rotationLineWidth;
+  int editWidth = 60;
+  int editHeight = 25;
+  int editDistance = 5;
+  QPoint axisOrigin(border + editWidth, height() - (border + editHeight/2));
   QPoint xAxisTip(axisOrigin.x() + xArrowLength, axisOrigin.y());
   QPoint yAxisTip(axisOrigin.x() + yArrowLength, axisOrigin.y() - yArrowLength);
   QPoint zAxisTip(axisOrigin.x(), axisOrigin.y() - zArrowLength);
 
-  PaintPrimitives::drawArrow(painter, axisOrigin, xAxisTip, arrowLineWidth, QColor("red"));
-  PaintPrimitives::drawArrow(painter, axisOrigin, yAxisTip, arrowLineWidth, QColor("green"));
-  PaintPrimitives::drawArrow(painter, axisOrigin, zAxisTip, arrowLineWidth, QColor("blue"));
+  PaintPrimitives::drawArrow(painter, axisOrigin, xAxisTip, arrowLineWidth, xAxisColor);
+  PaintPrimitives::drawArrow(painter, axisOrigin, yAxisTip, arrowLineWidth, yAxisColor);
+  PaintPrimitives::drawArrow(painter, axisOrigin, zAxisTip, arrowLineWidth, zAxisColor);
 
+  QPoint xAxisRotationCenter(axisOrigin.x() + (3*xArrowLength)/4, axisOrigin.y());
+  double xAxisRotationAngle = 0;
+  PaintPrimitives::drawRotation(painter, xAxisRotationCenter, xAxisRotationAngle, rotationDiameter, rotationLineWidth, xAxisColor);
 
-  /*
-  QFont font;
-  font.setPointSize(68);
-  int borderWidth = 30;
-  painter.setFont(font);
-  int textheight = height() - 12;
-  painter.drawText(0, textheight, "[");
-  painter.drawText(width() - borderWidth, textheight, "]");
-  int widthWithoutBorder = width() - (borderWidth*2);
-  int xw = widthWithoutBorder / 4;
-  int yw = height() / 4;
-  int verticalLineX = borderWidth + xw * 3 - 1;
-  painter.drawLine(verticalLineX, 0, verticalLineX, height());
-  int horizontalLineY = yw * 3;
-  painter.drawLine(borderWidth, horizontalLineY, widthWithoutBorder + 4 * 6, horizontalLineY);
+  QPoint yAxisRotationCenter(axisOrigin.x() + (3*yArrowLength)/4, axisOrigin.y() - (3*yArrowLength)/4);
+  double yAxisRotationAngle = 45;
+  PaintPrimitives::drawRotation(painter, yAxisRotationCenter, yAxisRotationAngle, rotationDiameter, rotationLineWidth, yAxisColor);
 
-  matrixEdits[i][j]->setGeometry(borderWidth + i * xw, j * yw, xw, yw);
-  */
+  QPoint zAxisRotationCenter(axisOrigin.x(), axisOrigin.y() - (3*zArrowLength)/4);
+  double zAxisRotationAngle = 90;
+  PaintPrimitives::drawRotation(painter, zAxisRotationCenter, zAxisRotationAngle, rotationDiameter, rotationLineWidth, zAxisColor);
+
+  m_xEdit->setGeometry(xAxisTip.x() + editDistance, xAxisTip.y() - editHeight/2, editWidth, editHeight);
+  m_rxEdit->setGeometry(xAxisRotationCenter.x() - (rotationDiameter/4 + editWidth), height() - editHeight, editWidth, editHeight);
+
+  m_zEdit->setGeometry(zAxisTip.x() - editWidth/2, zAxisTip.y() - (editDistance + editHeight), editWidth, editHeight);
+
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -69,9 +75,16 @@ VectorRPYGraphicWidget::paintEvent(QPaintEvent* p_event)
 void
 VectorRPYGraphicWidget::createChildWidgets()
 {
+  m_xEdit = new QLineEdit(this);
   /*
-  matrixEdits[i][j] = new QLineEdit(this);
-  matrixEdits[i][j]->setValidator(new QDoubleValidator());
+  m_yEdit = new QLineEdit(this);
+  */
+  m_zEdit = new QLineEdit(this);
+
+  m_rxEdit = new QLineEdit(this);
+  /*
+  m_ryEdit = new QLineEdit(this);
+  m_rzEdit = new QLineEdit(this);
   */
 }
 /*------------------------------------------------------------------------}}}-*/

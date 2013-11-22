@@ -38,7 +38,7 @@ class HomogeneousGraphicWidget
     // methods
 
     // variables
-    QLineEdit* matrixEdits[4][4];
+    QLineEdit* m_matrixEdits[4][4];
 
 
   public Q_SLOTS:

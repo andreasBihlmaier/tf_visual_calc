@@ -27,6 +27,7 @@ class PaintPrimitives
 
     // static utility functions
     static void drawArrow(QPainter& p_painter, const QPoint& p_origin, const QPoint& p_tip, int p_lineWidth = 1, const QColor& p_color = QColor("black"));
+    static void drawRotation(QPainter& p_painter, const QPoint& p_center, double p_angle, int p_diameter, int p_lineWidth = 1, const QColor& p_color = QColor("black"));
 
 
     // constructors

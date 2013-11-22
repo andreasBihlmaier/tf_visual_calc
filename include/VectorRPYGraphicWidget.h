@@ -38,7 +38,12 @@ class VectorRPYGraphicWidget
     // methods
 
     // variables
-    QLineEdit* matrixEdits[4][4];
+    QLineEdit* m_xEdit;
+    QLineEdit* m_yEdit;
+    QLineEdit* m_zEdit;
+    QLineEdit* m_rxEdit;
+    QLineEdit* m_ryEdit;
+    QLineEdit* m_rzEdit;
 
 
   public Q_SLOTS:
@@ -56,7 +61,6 @@ class VectorRPYGraphicWidget
     void createChildWidgets();
 
     // variables
-
 
   private Q_SLOTS:
 
