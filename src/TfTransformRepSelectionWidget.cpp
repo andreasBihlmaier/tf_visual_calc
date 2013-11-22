@@ -12,12 +12,14 @@
 
 // custom includes
 #include "HomogeneousTfTransformRepresentationWidget.h"
+#include "VectorRPYTfTransformRepresentationWidget.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformRepSelectionWidget::TfTransformRepSelectionWidget(QWidget* p_parent)
   :QWidget(p_parent),
    m_tf(NULL),
-   m_readOnly(false)
+   m_readOnly(false),
+   m_representationWidget(NULL)
 {
   createLayout();
 }
@@ -42,17 +44,25 @@ TfTransformRepSelectionWidget::setReadOnly(bool p_ro)
 void
 TfTransformRepSelectionWidget::setRepresentation(int p_representation)
 {
+  if (m_representationWidget) {
+    m_topLayout->removeWidget(m_representationWidget);
+    delete m_representationWidget;
+  }
+
   switch (p_representation) {
   case HomogeneousRepresentation:
     m_representationWidget = new HomogeneousTfTransformRepresentationWidget(m_tf);
     break;
   case VectorRPYRepresentation:
+    m_representationWidget = new VectorRPYTfTransformRepresentationWidget(m_tf);
     break;
   case VectorQuaternionRepresentation:
     break;
   case DenavitHartenbergRepresentation:
     break;
   }
+
+  m_topLayout->addWidget(m_representationWidget);
 }
 
 void
@@ -73,7 +83,6 @@ TfTransformRepSelectionWidget::createLayout()
   m_representationComboBox->insertItem(VectorQuaternionRepresentation, "Vector + Quaternion");
   m_representationComboBox->insertItem(DenavitHartenbergRepresentation, "Denavit-Hartenberg");
   connect(m_representationComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setRepresentation(int)));
-  setRepresentation(m_representationComboBox->currentIndex());
 
   m_representationLayout = new QHBoxLayout();
   m_representationLayout->addWidget(m_representationLabel);
@@ -81,8 +90,9 @@ TfTransformRepSelectionWidget::createLayout()
 
   m_topLayout = new QVBoxLayout();
   m_topLayout->addLayout(m_representationLayout);
-  m_topLayout->addWidget(m_representationWidget);
   setLayout(m_topLayout);
+
+  setRepresentation(m_representationComboBox->currentIndex());
 }
 /*------------------------------------------------------------------------}}}-*/
 
