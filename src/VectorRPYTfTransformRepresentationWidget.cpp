@@ -35,13 +35,15 @@ VectorRPYTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 void
 VectorRPYTfTransformRepresentationWidget::updateTransform()
 {
-  /*
-  tf2::Vector3 translationVector;
-  for (unsigned j = 0; j < 3; j++) {
-    translationVector[j] = m_graphicWidget->matrixEdits[3][j]->text().toDouble();
-  }
+  tf2::Matrix3x3 rotationMatrix;
+  rotationMatrix.setRPY(m_graphicWidget->m_rxEdit->text().toDouble(),
+                        m_graphicWidget->m_ryEdit->text().toDouble(),
+                        m_graphicWidget->m_rzEdit->text().toDouble());
+  m_tf->setBasis(rotationMatrix);
+  tf2::Vector3 translationVector(m_graphicWidget->m_xEdit->text().toDouble(),
+                                 m_graphicWidget->m_yEdit->text().toDouble(),
+                                 m_graphicWidget->m_zEdit->text().toDouble());
   m_tf->setOrigin(translationVector);
-  */
 }
 
 void
@@ -50,6 +52,14 @@ VectorRPYTfTransformRepresentationWidget::updateDisplay()
   if (m_tf == NULL)
     return;
 
+  tf2::Matrix3x3 rotationMatrix = m_tf->getBasis();
+  double roll;
+  double pitch;
+  double yaw;
+  rotationMatrix.getRPY(roll, pitch, yaw);
+  m_graphicWidget->m_rxEdit->setText(QString::number(roll));
+  m_graphicWidget->m_ryEdit->setText(QString::number(pitch));
+  m_graphicWidget->m_rzEdit->setText(QString::number(yaw));
 
   tf2::Vector3 translationVector = m_tf->getOrigin();
   m_graphicWidget->m_xEdit->setText(QString::number(translationVector.x()));
@@ -64,7 +74,12 @@ VectorRPYTfTransformRepresentationWidget::createGraphicFrame()
 {
   m_graphicWidget = new VectorRPYGraphicWidget();
   m_topLayout->insertWidget(0, m_graphicWidget);
-  //connect(m_graphicWidget->forallEdits, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_xEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_yEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_zEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_rxEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_ryEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_rzEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
 }
 /*------------------------------------------------------------------------}}}-*/
 
