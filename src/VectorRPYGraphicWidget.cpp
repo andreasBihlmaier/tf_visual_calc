@@ -66,7 +66,11 @@ VectorRPYGraphicWidget::paintEvent(QPaintEvent* p_event)
   m_xEdit->setGeometry(xAxisTip.x() + editDistance, xAxisTip.y() - editHeight/2, editWidth, editHeight);
   m_rxEdit->setGeometry(xAxisRotationCenter.x() - (rotationDiameter/4 + editWidth), height() - editHeight, editWidth, editHeight);
 
+  m_yEdit->setGeometry(yAxisTip.x() + (editDistance - editWidth/2), yAxisTip.y() - (editDistance + editHeight), editWidth, editHeight);
+  m_ryEdit->setGeometry(yAxisRotationCenter.x() + rotationDiameter/2, yAxisRotationCenter.y() - rotationDiameter/4, editWidth, editHeight);
+
   m_zEdit->setGeometry(zAxisTip.x() - editWidth/2, zAxisTip.y() - (editDistance + editHeight), editWidth, editHeight);
+  m_rzEdit->setGeometry(0, zAxisRotationCenter.y() - editHeight/2, editWidth, editHeight);
 
 }
 /*------------------------------------------------------------------------}}}-*/
@@ -76,16 +80,12 @@ void
 VectorRPYGraphicWidget::createChildWidgets()
 {
   m_xEdit = new QLineEdit(this);
-  /*
   m_yEdit = new QLineEdit(this);
-  */
   m_zEdit = new QLineEdit(this);
 
   m_rxEdit = new QLineEdit(this);
-  /*
   m_ryEdit = new QLineEdit(this);
   m_rzEdit = new QLineEdit(this);
-  */
 }
 /*------------------------------------------------------------------------}}}-*/
 
