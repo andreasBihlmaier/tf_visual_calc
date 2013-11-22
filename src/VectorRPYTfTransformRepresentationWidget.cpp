@@ -51,7 +51,10 @@ VectorRPYTfTransformRepresentationWidget::updateDisplay()
     return;
 
 
-  //tf2::Vector3 translationVector = m_tf->getOrigin();
+  tf2::Vector3 translationVector = m_tf->getOrigin();
+  m_graphicWidget->m_xEdit->setText(QString::number(translationVector.x()));
+  m_graphicWidget->m_yEdit->setText(QString::number(translationVector.y()));
+  m_graphicWidget->m_zEdit->setText(QString::number(translationVector.z()));
 }
 /*------------------------------------------------------------------------}}}-*/
 
