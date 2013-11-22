@@ -57,7 +57,7 @@ TfTransformGraphicsWidget::children()
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- public slots: --------------------------{{{-*/
+/*------------------------------- public Q_SLOTS: --------------------------{{{-*/
 void
 TfTransformGraphicsWidget::broadcastTransform()
 {
@@ -86,7 +86,7 @@ TfTransformGraphicsWidget::contextMenuEvent(QContextMenuEvent* p_event)
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------ protected slots: ------------------------{{{-*/
+/*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
 void
 TfTransformGraphicsWidget::setTfName()
 {
@@ -126,7 +126,7 @@ TfTransformGraphicsWidget::createContextMenu()
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- private slots: -------------------------{{{-*/
+/*------------------------------- private Q_SLOTS: -------------------------{{{-*/
 void
 TfTransformGraphicsWidget::createChildWidget()
 {

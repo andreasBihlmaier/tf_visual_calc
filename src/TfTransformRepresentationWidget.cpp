@@ -22,7 +22,7 @@ TfTransformRepresentationWidget::setTransform(tf2::Transform* p_tf)
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- public slots: --------------------------{{{-*/
+/*------------------------------- public Q_SLOTS: --------------------------{{{-*/
 void
 TfTransformRepresentationWidget::setReadOnly(bool p_ro)
 {
@@ -33,7 +33,7 @@ TfTransformRepresentationWidget::setReadOnly(bool p_ro)
 /*---------------------------------- private: ----------------------------{{{-*/
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- private slots: -------------------------{{{-*/
+/*------------------------------- private Q_SLOTS: -------------------------{{{-*/
 void
 TfTransformRepresentationWidget::createLayout()
 {

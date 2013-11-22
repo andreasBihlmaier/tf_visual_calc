@@ -50,12 +50,12 @@ class TfTransformRepSelectionWidget
     // variables
 
 
-  public slots:
+  public Q_SLOTS:
     void setReadOnly(bool);
     void setRepresentation(int);
 
 
-  signals:
+  Q_SIGNALS:
 
 
   private:
@@ -74,7 +74,7 @@ class TfTransformRepSelectionWidget
     TfTransformRepresentationWidget* m_representationWidget;
 
 
-  private slots:
+  private Q_SLOTS:
 
 
 };

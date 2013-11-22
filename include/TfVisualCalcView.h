@@ -46,12 +46,12 @@ class TfVisualCalcView
     // variables
 
 
-  public slots:
+  public Q_SLOTS:
     void broadcastTransforms();
     void updateScene();
 
 
-  signals:
+  Q_SIGNALS:
 
 
   protected:
@@ -64,7 +64,7 @@ class TfVisualCalcView
     unsigned m_broadcastCount;
 
 
-  protected slots:
+  protected Q_SLOTS:
 
 
   private:
@@ -85,7 +85,7 @@ class TfVisualCalcView
     QMenu* m_contextMenu;
 
 
-  private slots:
+  private Q_SLOTS:
     void adjustSize(QGraphicsProxyWidget* p_proxy);
 
 

@@ -40,18 +40,18 @@ class HomogeneousTfTransformRepresentationWidget
     // variables
 
 
-  public slots:
+  public Q_SLOTS:
     virtual void setReadOnly(bool);
     virtual void updateDisplay();
 
 
-  signals:
+  Q_SIGNALS:
 
 
   protected:
 
 
-  protected slots:
+  protected Q_SLOTS:
     void updateTransform();
 
 
@@ -63,7 +63,7 @@ class HomogeneousTfTransformRepresentationWidget
     HomogeneousGraphicWidget* m_graphicWidget;
 
 
-  private slots:
+  private Q_SLOTS:
 
 
 };

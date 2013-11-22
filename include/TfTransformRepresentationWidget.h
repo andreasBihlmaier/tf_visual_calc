@@ -48,12 +48,12 @@ class TfTransformRepresentationWidget
     // variables
 
 
-  public slots:
+  public Q_SLOTS:
     virtual void setReadOnly(bool);
     virtual void updateDisplay() = 0;
 
 
-  signals:
+  Q_SIGNALS:
 
 
   protected:
@@ -65,7 +65,7 @@ class TfTransformRepresentationWidget
     QHBoxLayout* m_topLayout;
 
 
-  protected slots:
+  protected Q_SLOTS:
 
 
   private:
@@ -75,7 +75,7 @@ class TfTransformRepresentationWidget
     // variables
 
 
-  private slots:
+  private Q_SLOTS:
 
 
 };

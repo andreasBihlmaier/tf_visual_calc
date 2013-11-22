@@ -41,10 +41,10 @@ class HomogeneousGraphicWidget
     QLineEdit* matrixEdits[4][4];
 
 
-  public slots:
+  public Q_SLOTS:
 
 
-  signals:
+  Q_SIGNALS:
 
 
   protected:
@@ -58,7 +58,7 @@ class HomogeneousGraphicWidget
     // variables
 
 
-  private slots:
+  private Q_SLOTS:
 
 
 };

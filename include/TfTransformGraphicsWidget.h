@@ -47,12 +47,12 @@ class TfTransformGraphicsWidget
     // variables
 
 
-  public slots:
+  public Q_SLOTS:
     virtual void broadcastTransform();
     virtual void toggleAbsolute(bool p_toggled);
 
 
-  signals:
+  Q_SIGNALS:
 
 
   protected:
@@ -64,7 +64,7 @@ class TfTransformGraphicsWidget
     std::vector<TfTransformGraphicsWidget*> m_children;
 
 
-  protected slots:
+  protected Q_SLOTS:
     virtual void setTfName();
 
 
@@ -83,7 +83,7 @@ class TfTransformGraphicsWidget
     QGraphicsProxyWidget* m_proxy;
     TfVisualCalcView* m_view;
 
-  private slots:
+  private Q_SLOTS:
     void createChildWidget();
 
 

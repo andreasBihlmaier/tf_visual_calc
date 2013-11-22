@@ -26,18 +26,34 @@ TfTransformWidget::TfTransformWidget(bool p_hasAbsolute, QWidget* p_parent)
   setFrameStyle(QFrame::Box);
 
   m_tf = new tf2::Transform();
-  m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
   m_absoluteTf = new tf2::Transform();
-  m_absoluteTfListener = new tf2_ros::TransformListener();
 
   m_tf->setOrigin(tf2::Vector3(0.0, 2.0, 0.0));
   tf2::Quaternion quat;
   quat.setEuler(0, 0, 0);
   m_tf->setRotation(quat);
+  m_absoluteTf->setOrigin(tf2::Vector3(0, 0, 0));
+  m_absoluteTf->setRotation(quat);
+
+  m_tfBuffer = new tf2_ros::Buffer();
+  m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
 
   setFixedWidth(600);
 
   createLayout();
+}
+
+// tf2 sucks
+tf2::Transform
+TfTransformWidget::toTransform(const geometry_msgs::TransformStamped& p_tfStamped)
+{
+  return tf2::Transform(tf2::Quaternion(p_tfStamped.transform.rotation.x,
+                                        p_tfStamped.transform.rotation.y,
+                                        p_tfStamped.transform.rotation.z,
+                                        p_tfStamped.transform.rotation.w),
+                        tf2::Vector3(p_tfStamped.transform.translation.x,
+                                     p_tfStamped.transform.translation.y,
+                                     p_tfStamped.transform.translation.z));
 }
 
 geometry_msgs::TransformStamped
@@ -48,7 +64,6 @@ TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::str
   tfStampedMsg.header.stamp = ros::Time::now();
   tfStampedMsg.header.frame_id = p_tfParent;
 
-  // tf2 sucks
   tfStampedMsg.transform.translation.x = p_tf.getOrigin().getX();
   tfStampedMsg.transform.translation.y = p_tf.getOrigin().getY();
   tfStampedMsg.transform.translation.z = p_tf.getOrigin().getZ();
@@ -69,7 +84,7 @@ TfTransformWidget::tfName()
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- public slots: --------------------------{{{-*/
+/*------------------------------- public Q_SLOTS: --------------------------{{{-*/
 void
 TfTransformWidget::broadcastTransform()
 {
@@ -77,6 +92,15 @@ TfTransformWidget::broadcastTransform()
     return;
 
   m_tfBroadcaster->sendTransform(toTransformStamped(*m_tf, m_tfParent, m_tfName, m_broadcastCount++));
+
+  if (m_hasAbsolute) {
+    try {
+      geometry_msgs::TransformStamped transformStamped = m_tfBuffer->lookupTransform(m_tfName.substr(1), "world", ros::Time(0));
+      *m_absoluteTf = toTransform(transformStamped);
+    } catch (tf2::LookupException) {
+      // do nothing
+    }
+  }
 }
 
 void
@@ -147,7 +171,7 @@ TfTransformWidget::createLayout()
 /*--------------------------------- protected: ---------------------------{{{-*/
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------ protected slots: ------------------------{{{-*/
+/*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
 void
 TfTransformWidget::setTfName()
 {
@@ -156,7 +180,7 @@ TfTransformWidget::setTfName()
 /*------------------------------------------------------------------------}}}-*/
 
 
-/*------------------------------- private slots: -------------------------{{{-*/
+/*------------------------------- private Q_SLOTS: -------------------------{{{-*/
 void
 TfTransformWidget::setTfParent(const QString& p_parent)
 {

@@ -10,8 +10,8 @@
 #ifndef Q_MOC_RUN
 # include <ros/ros.h>
 # include <tf2/LinearMath/Transform.h>
+# include <tf2_ros/buffer.h>
 # include <tf2_ros/transform_broadcaster.h>
-# include <tf2_ros/transform_listener.h>
 #endif
 
 // custom includes
@@ -43,6 +43,7 @@ class TfTransformWidget
     // const static member variables
 
     // static utility functions
+    static tf2::Transform toTransform(const geometry_msgs::TransformStamped& p_tfStamped);
     static geometry_msgs::TransformStamped toTransformStamped(const tf2::Transform& p_tf, const std::string& p_tfParent, const std::string p_tfName, int p_seq);
 
 
@@ -57,20 +58,20 @@ class TfTransformWidget
     // variables
 
 
-  public slots:
+  public Q_SLOTS:
     virtual void broadcastTransform();
     virtual void toggleAbsolute(bool);
     void setTfParent(const QString& p_parent);
 
 
-  signals:
+  Q_SIGNALS:
 
 
   protected:
     std::string m_tfName;
     QGridLayout* m_topLayout;
 
-  protected slots:
+  protected Q_SLOTS:
     virtual void setTfName();
 
 
@@ -82,8 +83,8 @@ class TfTransformWidget
     bool m_hasAbsolute;
     tf2::Transform* m_tf;
     tf2::Transform* m_absoluteTf;
+    tf2_ros::Buffer* m_tfBuffer;
     tf2_ros::TransformBroadcaster* m_tfBroadcaster;
-    tf2_ros::TransformListener* m_absoluteTfListener;
 
     std::string m_tfParent;
     unsigned m_broadcastCount;
@@ -100,7 +101,7 @@ class TfTransformWidget
     int m_absoluteRepSelectionWidgetRow;
     int m_absoluteRepSelectionWidgetColumn;
 
-  private slots:
+  private Q_SLOTS:
 
 };
 

@@ -48,11 +48,11 @@ class TfVisualCalcPanel
     // variables
 
 
-  public slots:
+  public Q_SLOTS:
 
   protected:
 
-  signals:
+  Q_SIGNALS:
 
 
   private:
@@ -66,7 +66,7 @@ class TfVisualCalcPanel
     TfVisualCalcView* m_calcView;
 
 
-  private slots:
+  private Q_SLOTS:
 
 
 };

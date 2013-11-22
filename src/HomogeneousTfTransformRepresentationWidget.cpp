@@ -18,7 +18,7 @@ HomogeneousTfTransformRepresentationWidget::HomogeneousTfTransformRepresentation
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- public slots: --------------------------{{{-*/
+/*------------------------------- public Q_SLOTS: --------------------------{{{-*/
 void
 HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 {
@@ -35,7 +35,7 @@ HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 /*--------------------------------- protected: ---------------------------{{{-*/
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------ protected slots: ------------------------{{{-*/
+/*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
 void
 HomogeneousTfTransformRepresentationWidget::updateTransform()
 {
@@ -113,5 +113,5 @@ HomogeneousTfTransformRepresentationWidget::createGraphicFrame()
 }
 /*------------------------------------------------------------------------}}}-*/
 
-/*------------------------------- private slots: -------------------------{{{-*/
+/*------------------------------- private Q_SLOTS: -------------------------{{{-*/
 /*------------------------------------------------------------------------}}}-*/
