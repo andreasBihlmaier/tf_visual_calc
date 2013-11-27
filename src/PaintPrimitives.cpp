@@ -55,6 +55,54 @@ PaintPrimitives::drawRotation(QPainter& p_painter, const QPoint& p_center, doubl
 
   p_painter.restore();
 }
+
+std::vector<QPoint>
+PaintPrimitives::drawCoordinateAxis(QPainter& p_painter, const QPoint& p_origin, int p_arrowLineWidth, bool p_drawRotation, int p_rotationDiameter)
+{
+  p_painter.save();
+
+  QColor xAxisColor("red");
+  QColor yAxisColor("green");
+  QColor zAxisColor("blue");
+  int rotationLineWidth = p_arrowLineWidth;
+  int xArrowLength = 80;
+  int yArrowLength = 70;
+  int zArrowLength = 80;
+  QPoint xAxisTip(p_origin.x() + xArrowLength, p_origin.y());
+  QPoint yAxisTip(p_origin.x() + yArrowLength, p_origin.y() - yArrowLength);
+  QPoint zAxisTip(p_origin.x(), p_origin.y() - zArrowLength);
+
+  PaintPrimitives::drawArrow(p_painter, p_origin, xAxisTip, p_arrowLineWidth, xAxisColor);
+  PaintPrimitives::drawArrow(p_painter, p_origin, yAxisTip, p_arrowLineWidth, yAxisColor);
+  PaintPrimitives::drawArrow(p_painter, p_origin, zAxisTip, p_arrowLineWidth, zAxisColor);
+
+  std::vector<QPoint> arrowTips;
+  arrowTips.push_back(xAxisTip);
+  arrowTips.push_back(yAxisTip);
+  arrowTips.push_back(zAxisTip);
+
+  if (p_drawRotation) {
+    QPoint xAxisRotationCenter(p_origin.x() + (3*xArrowLength)/4, p_origin.y());
+
+    double xAxisRotationAngle = 0;
+    PaintPrimitives::drawRotation(p_painter, xAxisRotationCenter, xAxisRotationAngle, p_rotationDiameter, rotationLineWidth, xAxisColor);
+
+    QPoint yAxisRotationCenter(p_origin.x() + (3*yArrowLength)/4, p_origin.y() - (3*yArrowLength)/4);
+    double yAxisRotationAngle = 45;
+    PaintPrimitives::drawRotation(p_painter, yAxisRotationCenter, yAxisRotationAngle, p_rotationDiameter, rotationLineWidth, yAxisColor);
+
+    QPoint zAxisRotationCenter(p_origin.x(), p_origin.y() - (3*zArrowLength)/4);
+    double zAxisRotationAngle = 90;
+    PaintPrimitives::drawRotation(p_painter, zAxisRotationCenter, zAxisRotationAngle, p_rotationDiameter, rotationLineWidth, zAxisColor);
+
+    arrowTips.push_back(xAxisRotationCenter);
+    arrowTips.push_back(yAxisRotationCenter);
+    arrowTips.push_back(zAxisRotationCenter);
+  }
+
+  p_painter.restore();
+  return arrowTips;
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*--------------------------------- protected: ---------------------------{{{-*/

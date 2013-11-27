@@ -14,6 +14,7 @@
 // custom includes
 #include "HomogeneousTfTransformRepresentationWidget.h"
 #include "VectorRPYTfTransformRepresentationWidget.h"
+#include "VectorQuaternionTfTransformRepresentationWidget.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
 TfTransformRepSelectionWidget::TfTransformRepSelectionWidget(QWidget* p_parent)
@@ -58,6 +59,7 @@ TfTransformRepSelectionWidget::setRepresentation(int p_representation)
     m_representationWidget = new VectorRPYTfTransformRepresentationWidget(m_tf);
     break;
   case VectorQuaternionRepresentation:
+    m_representationWidget = new VectorQuaternionTfTransformRepresentationWidget(m_tf);
     break;
   case DenavitHartenbergRepresentation:
     break;

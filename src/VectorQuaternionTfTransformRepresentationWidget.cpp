@@ -1,4 +1,4 @@
-#include "VectorRPYTfTransformRepresentationWidget.h"
+#include "VectorQuaternionTfTransformRepresentationWidget.h"
 
 // system includes
 #include <iostream>
@@ -10,7 +10,7 @@
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
-VectorRPYTfTransformRepresentationWidget::VectorRPYTfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent)
+VectorQuaternionTfTransformRepresentationWidget::VectorQuaternionTfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent)
   :TfTransformRepresentationWidget(p_tf, p_parent)
 {
   createGraphicFrame();
@@ -20,16 +20,17 @@ VectorRPYTfTransformRepresentationWidget::VectorRPYTfTransformRepresentationWidg
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/
 void
-VectorRPYTfTransformRepresentationWidget::setReadOnly(bool p_ro)
+VectorQuaternionTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 {
   TfTransformRepresentationWidget::setReadOnly(p_ro);
 
   m_graphicWidget->m_xEdit->setReadOnly(p_ro);
   m_graphicWidget->m_yEdit->setReadOnly(p_ro);
   m_graphicWidget->m_zEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_rxEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_ryEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_rzEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_qxEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_qyEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_qzEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_qwEdit->setReadOnly(p_ro);
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -38,13 +39,14 @@ VectorRPYTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 
 /*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
 void
-VectorRPYTfTransformRepresentationWidget::updateTransform()
+VectorQuaternionTfTransformRepresentationWidget::updateTransform()
 {
-  tf2::Matrix3x3 rotationMatrix;
-  rotationMatrix.setRPY(m_graphicWidget->m_rxEdit->text().toDouble(),
-                        m_graphicWidget->m_ryEdit->text().toDouble(),
-                        m_graphicWidget->m_rzEdit->text().toDouble());
-  m_tf->setBasis(rotationMatrix);
+  tf2::Quaternion quaternion;
+  quaternion.setX(m_graphicWidget->m_qxEdit->text().toDouble());
+  quaternion.setY(m_graphicWidget->m_qyEdit->text().toDouble());
+  quaternion.setZ(m_graphicWidget->m_qzEdit->text().toDouble());
+  quaternion.setW(m_graphicWidget->m_qwEdit->text().toDouble());
+  m_tf->setRotation(quaternion);
   tf2::Vector3 translationVector(m_graphicWidget->m_xEdit->text().toDouble(),
                                  m_graphicWidget->m_yEdit->text().toDouble(),
                                  m_graphicWidget->m_zEdit->text().toDouble());
@@ -52,19 +54,16 @@ VectorRPYTfTransformRepresentationWidget::updateTransform()
 }
 
 void
-VectorRPYTfTransformRepresentationWidget::updateDisplay()
+VectorQuaternionTfTransformRepresentationWidget::updateDisplay()
 {
   if (m_tf == NULL)
     return;
 
-  tf2::Matrix3x3 rotationMatrix = m_tf->getBasis();
-  double roll;
-  double pitch;
-  double yaw;
-  rotationMatrix.getRPY(roll, pitch, yaw);
-  m_graphicWidget->m_rxEdit->setText(QString::number(roll));
-  m_graphicWidget->m_ryEdit->setText(QString::number(pitch));
-  m_graphicWidget->m_rzEdit->setText(QString::number(yaw));
+  tf2::Quaternion quaternion = m_tf->getRotation();
+  m_graphicWidget->m_qxEdit->setText(QString::number(quaternion.getX()));
+  m_graphicWidget->m_qyEdit->setText(QString::number(quaternion.getY()));
+  m_graphicWidget->m_qzEdit->setText(QString::number(quaternion.getZ()));
+  m_graphicWidget->m_qwEdit->setText(QString::number(quaternion.getW()));
 
   tf2::Vector3 translationVector = m_tf->getOrigin();
   m_graphicWidget->m_xEdit->setText(QString::number(translationVector.x()));
@@ -75,16 +74,17 @@ VectorRPYTfTransformRepresentationWidget::updateDisplay()
 
 /*---------------------------------- private: ----------------------------{{{-*/
 void
-VectorRPYTfTransformRepresentationWidget::createGraphicFrame()
+VectorQuaternionTfTransformRepresentationWidget::createGraphicFrame()
 {
-  m_graphicWidget = new VectorRPYGraphicWidget();
+  m_graphicWidget = new VectorQuaternionGraphicWidget();
   m_topLayout->insertWidget(0, m_graphicWidget);
   connect(m_graphicWidget->m_xEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
   connect(m_graphicWidget->m_yEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
   connect(m_graphicWidget->m_zEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_rxEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_ryEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_rzEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_qxEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_qyEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_qzEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_qwEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
 }
 /*------------------------------------------------------------------------}}}-*/
 
