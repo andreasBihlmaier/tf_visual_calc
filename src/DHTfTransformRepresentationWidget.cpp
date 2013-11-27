@@ -10,6 +10,23 @@
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
+tf2::Transform
+DHTfTransformRepresentationWidget::dh2Transform(double p_d, double p_theta, double p_a, double p_alpha)
+{
+  tf2::Transform dhTransform;
+
+  tf2::Matrix3x3 rotationMatrix;
+  rotationMatrix[0][0] = TODO
+  dhTransform.setBasis(rotationMatrix);
+
+  tf2::Vector3 translationVector(p_a * cos(p_theta),
+                                 p_a * sin(p_theta),
+                                 p_d);
+  dhTransform.setOrigin(translationVector);
+
+  return dhTransform;
+}
+
 DHTfTransformRepresentationWidget::DHTfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent)
   :TfTransformRepresentationWidget(p_tf, p_parent)
 {
@@ -38,17 +55,12 @@ DHTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 void
 DHTfTransformRepresentationWidget::updateTransform()
 {
-  /*
-  tf2::Matrix3x3 rotationMatrix;
-  rotationMatrix.setRPY(m_graphicWidget->m_rxEdit->text().toDouble(),
-                        m_graphicWidget->m_ryEdit->text().toDouble(),
-                        m_graphicWidget->m_rzEdit->text().toDouble());
-  m_tf->setBasis(rotationMatrix);
-  tf2::Vector3 translationVector(m_graphicWidget->m_xEdit->text().toDouble(),
-                                 m_graphicWidget->m_yEdit->text().toDouble(),
-                                 m_graphicWidget->m_zEdit->text().toDouble());
-  m_tf->setOrigin(translationVector);
-  */
+  tf2::Transform dhTransform = dh2Transform(m_graphicWidget->m_dEdit->text().toDouble(),
+                                            m_graphicWidget->m_thetaEdit->text().toDouble(),
+                                            m_graphicWidget->m_aEdit->text().toDouble(),
+                                            m_graphicWidget->m_alphaEdit->text().toDouble());
+  m_tf->setRotation(dhTransform.getRotation());
+  m_tf->setOrigin(dhTransform.getOrigin());
 }
 
 void
@@ -57,18 +69,22 @@ DHTfTransformRepresentationWidget::updateDisplay()
   if (m_tf == NULL)
     return;
 
-  /*
   tf2::Matrix3x3 rotationMatrix = m_tf->getBasis();
-  rotationMatrix.getRPY(roll, pitch, yaw);
-  m_graphicWidget->m_rxEdit->setText(QString::number(roll));
-  m_graphicWidget->m_ryEdit->setText(QString::number(pitch));
-  m_graphicWidget->m_rzEdit->setText(QString::number(yaw));
-
   tf2::Vector3 translationVector = m_tf->getOrigin();
-  m_graphicWidget->m_xEdit->setText(QString::number(translationVector.x()));
-  m_graphicWidget->m_yEdit->setText(QString::number(translationVector.y()));
-  m_graphicWidget->m_zEdit->setText(QString::number(translationVector.z()));
-  */
+  double d = translationVector.getZ();
+  double cosTheta = rotationMatrix[0][0];
+  double theta = acos(cosTheta);
+  double a = translationVector.getX() / cosTheta;
+  double sinAlpha = rotationMatrix[1][2];
+  double alpha = asin(sinAlpha);
+
+  tf2::Transform shouldDHTransform = dh2Transform(d, theta, a, alpha);
+  // TODO check whether transform can be represented as DH
+
+  m_graphicWidget->m_aEdit->setText(QString::number(a));
+  m_graphicWidget->m_dEdit->setText(QString::number(d));
+  m_graphicWidget->m_thetaEdit->setText(QString::number(theta));
+  m_graphicWidget->m_alphaEdit->setText(QString::number(alpha));
 }
 /*------------------------------------------------------------------------}}}-*/
 

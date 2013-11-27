@@ -28,6 +28,7 @@ class DHTfTransformRepresentationWidget
     // const static member variables
 
     // static utility functions
+    static tf2::Transform dh2Transform(double p_d, double p_theta, double p_a, double p_alpha);
 
 
     // constructors
