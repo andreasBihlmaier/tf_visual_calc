@@ -42,6 +42,7 @@ class TfVisualCalcView
 
     // methods
     TfTransformGraphicsWidget* addTfWidget();
+    void deleteTfWidget(TfTransformGraphicsWidget* p_widget);
 
     // variables
 
@@ -83,6 +84,8 @@ class TfVisualCalcView
 
     QAction* m_removeAllAction;
     QMenu* m_contextMenu;
+
+    std::vector<QWidget*> m_toDeleteWidgets;
 
 
   private Q_SLOTS:

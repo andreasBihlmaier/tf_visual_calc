@@ -33,12 +33,26 @@ TfVisualCalcView::addTfWidget()
 {
   return dynamic_cast<TfTransformGraphicsWidget*>(addTfWidget("")->widget());
 }
+
+void
+TfVisualCalcView::deleteTfWidget(TfTransformGraphicsWidget* p_widget)
+{
+  m_toDeleteWidgets.push_back(p_widget);
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/
 void
 TfVisualCalcView::broadcastTransforms()
 {
+  if (!m_toDeleteWidgets.empty()) {
+    for (int idx = 0; idx < m_toDeleteWidgets.size(); idx++) {
+      delete m_toDeleteWidgets[idx];
+    }
+    m_toDeleteWidgets.clear();
+    updateScene();
+  }
+
   m_tfBroadcaster->sendTransform(TfTransformWidget::toTransformStamped(*m_worldMapTf, "/world", "/map", m_broadcastCount++));
   m_rootTfWidget->broadcastTransform();
 }
@@ -100,7 +114,7 @@ TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
   newTfWidget->setView(this);
 
   if (!p_tfName.empty()) {
-    newTfWidget->setTfParent(QString::fromStdString(p_tfName));
+    newTfWidget->setTfParentName(QString::fromStdString(p_tfName));
   }
 
   QGraphicsProxyWidget* newTfProxy = scene()->addWidget(newTfWidget);

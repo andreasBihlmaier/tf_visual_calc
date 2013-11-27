@@ -45,7 +45,7 @@ class TfTransformWidget
 
     // static utility functions
     static tf2::Transform toTransform(const geometry_msgs::TransformStamped& p_tfStamped);
-    static geometry_msgs::TransformStamped toTransformStamped(const tf2::Transform& p_tf, const std::string& p_tfParent, const std::string p_tfName, int p_seq);
+    static geometry_msgs::TransformStamped toTransformStamped(const tf2::Transform& p_tf, const std::string& p_tfParentName, const std::string p_tfName, int p_seq);
 
 
     // constructors
@@ -63,7 +63,7 @@ class TfTransformWidget
     virtual void broadcastTransform();
     virtual void toggleAbsolute(bool);
     virtual void updateSize();
-    void setTfParent(const QString& p_parent);
+    void setTfParentName(const QString& p_parent);
 
 
   Q_SIGNALS:
@@ -89,7 +89,7 @@ class TfTransformWidget
     tf2_ros::TransformBroadcaster* m_tfBroadcaster;
     tf2_ros::TransformListener* m_tfListener;
 
-    std::string m_tfParent;
+    std::string m_tfParentName;
     unsigned m_broadcastCount;
 
     QHBoxLayout* m_tfNameLayout;

@@ -28,8 +28,23 @@ TfTransformGraphicsWidget::addChild(TfTransformGraphicsWidget* p_newChild)
 {
   if (std::find(m_children.begin(), m_children.end(), p_newChild) == m_children.end()) {
     m_children.push_back(p_newChild);
-    p_newChild->setTfParent(QString::fromStdString(m_tfName));
+    p_newChild->setTfParent(this);
   }
+}
+
+void
+TfTransformGraphicsWidget::deleteChild(TfTransformGraphicsWidget* p_child)
+{
+  for (std::vector<TfTransformGraphicsWidget*>::const_iterator grandchildIter = p_child->children().begin();
+       grandchildIter != p_child->children().end();
+       grandchildIter++) {
+    //std::cout << "Setting parent of " << (*grandchildIter)->tfName() << " to " << m_tfName << std::endl;
+    m_children.push_back(*grandchildIter);
+    (*grandchildIter)->setTfParent(this);
+  }
+  std::vector<TfTransformGraphicsWidget*>::iterator childIter = std::find(m_children.begin(), m_children.end(), p_child);
+  m_children.erase(childIter);
+  m_view->deleteTfWidget(p_child);
 }
 
 void
@@ -54,6 +69,13 @@ const std::vector<TfTransformGraphicsWidget*>&
 TfTransformGraphicsWidget::children()
 {
   return m_children;
+}
+
+void
+TfTransformGraphicsWidget::setTfParent(TfTransformGraphicsWidget* p_parent)
+{
+  m_parent = p_parent;
+  setTfParentName(QString::fromStdString(m_parent->tfName()));
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -102,7 +124,7 @@ TfTransformGraphicsWidget::setTfName()
   for (std::vector<TfTransformGraphicsWidget*>::iterator childIter = m_children.begin();
        childIter != m_children.end();
        ++childIter) {
-    (*childIter)->setTfParent(QString::fromStdString(m_tfName));
+    (*childIter)->setTfParent(this);
   }
 }
 /*------------------------------------------------------------------------}}}-*/
@@ -128,8 +150,12 @@ TfTransformGraphicsWidget::createContextMenu()
   m_createChildAction = new QAction(tr("&Create child"), this);
   connect(m_createChildAction, SIGNAL(triggered()), this, SLOT(createChildWidget()));
 
+  m_deleteAction = new QAction(tr("&Delete"), this);
+  connect(m_deleteAction, SIGNAL(triggered()), this, SLOT(deleteWidget()));
+
   m_contextMenu = new QMenu(this);
   m_contextMenu->addAction(m_createChildAction);
+  m_contextMenu->addAction(m_deleteAction);
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -139,5 +165,14 @@ TfTransformGraphicsWidget::createChildWidget()
 {
   addChild(m_view->addTfWidget());
   m_view->updateScene();
+}
+
+void
+TfTransformGraphicsWidget::deleteWidget()
+{
+  // root can not be deleted
+  if (m_parent) {
+    m_parent->deleteChild(this);
+  }
 }
 /*------------------------------------------------------------------------}}}-*/

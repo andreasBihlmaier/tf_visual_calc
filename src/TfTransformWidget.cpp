@@ -58,12 +58,12 @@ TfTransformWidget::toTransform(const geometry_msgs::TransformStamped& p_tfStampe
 }
 
 geometry_msgs::TransformStamped
-TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::string& p_tfParent, const std::string p_tfName, int p_seq)
+TfTransformWidget::toTransformStamped(const tf2::Transform& p_tf, const std::string& p_tfParentName, const std::string p_tfName, int p_seq)
 {
   geometry_msgs::TransformStamped tfStampedMsg;
   tfStampedMsg.header.seq = p_seq;
   tfStampedMsg.header.stamp = ros::Time::now();
-  tfStampedMsg.header.frame_id = p_tfParent;
+  tfStampedMsg.header.frame_id = p_tfParentName;
 
   tfStampedMsg.transform.translation.x = p_tf.getOrigin().getX();
   tfStampedMsg.transform.translation.y = p_tf.getOrigin().getY();
@@ -89,10 +89,10 @@ TfTransformWidget::tfName()
 void
 TfTransformWidget::broadcastTransform()
 {
-  if (m_tfName.empty() || m_tfParent.empty())
+  if (m_tfName.empty() || m_tfParentName.empty())
     return;
 
-  m_tfBroadcaster->sendTransform(toTransformStamped(*m_tf, m_tfParent, m_tfName, m_broadcastCount++));
+  m_tfBroadcaster->sendTransform(toTransformStamped(*m_tf, m_tfParentName, m_tfName, m_broadcastCount++));
 
   if (m_hasAbsolute) {
     std::string errorString;
@@ -197,8 +197,8 @@ TfTransformWidget::setTfName()
 
 /*------------------------------- private Q_SLOTS: -------------------------{{{-*/
 void
-TfTransformWidget::setTfParent(const QString& p_parent)
+TfTransformWidget::setTfParentName(const QString& p_parent)
 {
-  m_tfParent = p_parent.toStdString();
+  m_tfParentName = p_parent.toStdString();
 }
 /*------------------------------------------------------------------------}}}-*/

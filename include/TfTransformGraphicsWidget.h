@@ -39,10 +39,12 @@ class TfTransformGraphicsWidget
 
     // methods
     void addChild(TfTransformGraphicsWidget* p_newChild);
+    void deleteChild(TfTransformGraphicsWidget* p_newChild);
     void setProxy(QGraphicsProxyWidget* p_proxy);
     void setView(TfVisualCalcView* p_view);
     QGraphicsProxyWidget* proxy();
     const std::vector<TfTransformGraphicsWidget*>& children();
+    void setTfParent(TfTransformGraphicsWidget* p_parent);
 
     // variables
 
@@ -79,6 +81,7 @@ class TfTransformGraphicsWidget
     QLabel* m_parentLabel;
 
     QAction* m_createChildAction;
+    QAction* m_deleteAction;
     QMenu* m_contextMenu;
 
     QGraphicsProxyWidget* m_proxy;
@@ -86,6 +89,7 @@ class TfTransformGraphicsWidget
 
   private Q_SLOTS:
     void createChildWidget();
+    void deleteWidget();
 
 
 };
