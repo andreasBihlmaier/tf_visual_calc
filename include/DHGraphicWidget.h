@@ -6,6 +6,7 @@
 // library includes
 #include <QWidget>
 #include <QLineEdit>
+#include <QImage>
 
 // custom includes
 
@@ -38,12 +39,12 @@ class DHGraphicWidget
     // methods
 
     // variables
-    QLineEdit* m_xEdit;
-    QLineEdit* m_yEdit;
-    QLineEdit* m_zEdit;
-    QLineEdit* m_rxEdit;
-    QLineEdit* m_ryEdit;
-    QLineEdit* m_rzEdit;
+    QLineEdit* m_dEdit;
+    QLineEdit* m_aEdit;
+    QLineEdit* m_thetaEdit;
+    QLineEdit* m_alphaEdit;
+
+    QImage* m_dhImage;
 
 
   public Q_SLOTS:

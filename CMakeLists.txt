@@ -117,6 +117,8 @@ qt4_wrap_cpp(MOC_FILES
   include/VectorRPYGraphicWidget.h
   include/VectorQuaternionTfTransformRepresentationWidget.h
   include/VectorQuaternionGraphicWidget.h
+  include/DHTfTransformRepresentationWidget.h
+  include/DHGraphicWidget.h
 )
 set(SOURCE_FILES
   src/TfVisualCalcPanel.cpp
@@ -131,13 +133,20 @@ set(SOURCE_FILES
   src/VectorRPYGraphicWidget.cpp
   src/VectorQuaternionTfTransformRepresentationWidget.cpp
   src/VectorQuaternionGraphicWidget.cpp
+  src/DHTfTransformRepresentationWidget.cpp
+  src/DHGraphicWidget.cpp
   src/PaintPrimitives.cpp
   ${MOC_FILES}
+)
+
+qt4_add_resources(QRC_FILES
+  src/tf_visual_calc.qrc
 )
 
 ## Declare a cpp library
 add_library(tf_visual_calc
   ${SOURCE_FILES}
+  ${QRC_FILES}
 )
 
 ## Declare a cpp executable

@@ -14,8 +14,8 @@
 DHGraphicWidget::DHGraphicWidget(QWidget* p_parent)
   :QWidget(p_parent)
 {
-  setMinimumWidth(300);
-  setFixedHeight(135);
+  setMinimumWidth(350);
+  setFixedHeight(213);
 
   createChildWidgets();
 }
@@ -29,30 +29,14 @@ void
 DHGraphicWidget::paintEvent(QPaintEvent* p_event)
 {
   QPainter painter(this);
+  painter.drawImage(m_dhImage->rect(), *m_dhImage, m_dhImage->rect());
   int editWidth = 60;
   int editHeight = 25;
-  int arrowLineWidth = 3;
-  int rotationDiameter = 25;
-  int border = rotationDiameter / 2;
-  int editDistance = 5;
-  QPoint axisOrigin(border + editWidth, height() - (border + editHeight/2));
-  std::vector<QPoint> axisTips = PaintPrimitives::drawCoordinateAxis(painter, axisOrigin, arrowLineWidth, true, rotationDiameter);
-  QPoint& xAxisTip = axisTips[0];
-  QPoint& yAxisTip = axisTips[1];
-  QPoint& zAxisTip = axisTips[2];
-  QPoint& xAxisRotationCenter = axisTips[3];
-  QPoint& yAxisRotationCenter = axisTips[4];
-  QPoint& zAxisRotationCenter = axisTips[5];
 
-  m_xEdit->setGeometry(xAxisTip.x() + editDistance, xAxisTip.y() - editHeight/2, editWidth, editHeight);
-  m_rxEdit->setGeometry(xAxisRotationCenter.x() - (rotationDiameter/4 + editWidth), height() - editHeight, editWidth, editHeight);
-
-  m_yEdit->setGeometry(yAxisTip.x() + (editDistance - editWidth/4), yAxisTip.y() - (editDistance + editHeight), editWidth, editHeight);
-  m_ryEdit->setGeometry(yAxisRotationCenter.x() + rotationDiameter/2, yAxisRotationCenter.y() - rotationDiameter/4, editWidth, editHeight);
-
-  m_zEdit->setGeometry(zAxisTip.x() - editWidth/2, zAxisTip.y() - (editDistance + editHeight), editWidth, editHeight);
-  m_rzEdit->setGeometry(0, zAxisRotationCenter.y() - editHeight/2, editWidth, editHeight);
-
+  m_dEdit->setGeometry(10, 165, editWidth, editHeight);
+  m_aEdit->setGeometry(182, 145, editWidth, editHeight);
+  m_thetaEdit->setGeometry(10, 58, editWidth, editHeight);
+  m_alphaEdit->setGeometry(155, 110, editWidth, editHeight);
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -60,13 +44,12 @@ DHGraphicWidget::paintEvent(QPaintEvent* p_event)
 void
 DHGraphicWidget::createChildWidgets()
 {
-  m_xEdit = new QLineEdit(this);
-  m_yEdit = new QLineEdit(this);
-  m_zEdit = new QLineEdit(this);
+  m_dEdit = new QLineEdit(this);
+  m_aEdit = new QLineEdit(this);
+  m_thetaEdit = new QLineEdit(this);
+  m_alphaEdit = new QLineEdit(this);
 
-  m_rxEdit = new QLineEdit(this);
-  m_ryEdit = new QLineEdit(this);
-  m_rzEdit = new QLineEdit(this);
+  m_dhImage = new QImage(QString(":/img/dh.png"));
 }
 /*------------------------------------------------------------------------}}}-*/
 

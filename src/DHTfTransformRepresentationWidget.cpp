@@ -24,12 +24,10 @@ DHTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 {
   TfTransformRepresentationWidget::setReadOnly(p_ro);
 
-  m_graphicWidget->m_xEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_yEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_zEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_rxEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_ryEdit->setReadOnly(p_ro);
-  m_graphicWidget->m_rzEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_dEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_aEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_thetaEdit->setReadOnly(p_ro);
+  m_graphicWidget->m_alphaEdit->setReadOnly(p_ro);
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -40,6 +38,7 @@ DHTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 void
 DHTfTransformRepresentationWidget::updateTransform()
 {
+  /*
   tf2::Matrix3x3 rotationMatrix;
   rotationMatrix.setRPY(m_graphicWidget->m_rxEdit->text().toDouble(),
                         m_graphicWidget->m_ryEdit->text().toDouble(),
@@ -49,6 +48,7 @@ DHTfTransformRepresentationWidget::updateTransform()
                                  m_graphicWidget->m_yEdit->text().toDouble(),
                                  m_graphicWidget->m_zEdit->text().toDouble());
   m_tf->setOrigin(translationVector);
+  */
 }
 
 void
@@ -57,10 +57,8 @@ DHTfTransformRepresentationWidget::updateDisplay()
   if (m_tf == NULL)
     return;
 
+  /*
   tf2::Matrix3x3 rotationMatrix = m_tf->getBasis();
-  double roll;
-  double pitch;
-  double yaw;
   rotationMatrix.getRPY(roll, pitch, yaw);
   m_graphicWidget->m_rxEdit->setText(QString::number(roll));
   m_graphicWidget->m_ryEdit->setText(QString::number(pitch));
@@ -70,6 +68,7 @@ DHTfTransformRepresentationWidget::updateDisplay()
   m_graphicWidget->m_xEdit->setText(QString::number(translationVector.x()));
   m_graphicWidget->m_yEdit->setText(QString::number(translationVector.y()));
   m_graphicWidget->m_zEdit->setText(QString::number(translationVector.z()));
+  */
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -79,12 +78,10 @@ DHTfTransformRepresentationWidget::createGraphicFrame()
 {
   m_graphicWidget = new DHGraphicWidget();
   m_topLayout->insertWidget(0, m_graphicWidget);
-  connect(m_graphicWidget->m_xEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_yEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_zEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_rxEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_ryEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_rzEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_dEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_aEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_thetaEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_alphaEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
 }
 /*------------------------------------------------------------------------}}}-*/
 
