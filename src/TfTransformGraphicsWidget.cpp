@@ -35,6 +35,9 @@ TfTransformGraphicsWidget::addChild(TfTransformGraphicsWidget* p_newChild)
 void
 TfTransformGraphicsWidget::deleteChild(TfTransformGraphicsWidget* p_child)
 {
+  //std::cout << m_tfName << " deleteChild(" << p_child->tfName() << ")" << std::endl;
+  std::vector<TfTransformGraphicsWidget*>::iterator childIter = std::find(m_children.begin(), m_children.end(), p_child);
+  m_children.erase(childIter);
   for (std::vector<TfTransformGraphicsWidget*>::const_iterator grandchildIter = p_child->children().begin();
        grandchildIter != p_child->children().end();
        grandchildIter++) {
@@ -42,8 +45,6 @@ TfTransformGraphicsWidget::deleteChild(TfTransformGraphicsWidget* p_child)
     m_children.push_back(*grandchildIter);
     (*grandchildIter)->setTfParent(this);
   }
-  std::vector<TfTransformGraphicsWidget*>::iterator childIter = std::find(m_children.begin(), m_children.end(), p_child);
-  m_children.erase(childIter);
   m_view->deleteTfWidget(p_child);
 }
 
