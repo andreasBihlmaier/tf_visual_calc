@@ -16,7 +16,15 @@ DHTfTransformRepresentationWidget::dh2Transform(double p_d, double p_theta, doub
   tf2::Transform dhTransform;
 
   tf2::Matrix3x3 rotationMatrix;
-  rotationMatrix[0][0] = TODO
+  rotationMatrix[0][0] = cos(p_theta);
+  rotationMatrix[0][1] = -sin(p_theta) * cos(p_alpha);
+  rotationMatrix[0][2] = sin(p_theta) * sin(p_alpha);
+  rotationMatrix[1][0] = sin(p_theta);
+  rotationMatrix[1][1] = cos(p_theta) * cos(p_alpha);
+  rotationMatrix[1][2] = - cos(p_theta) * sin(p_alpha);
+  rotationMatrix[2][0] = 0;
+  rotationMatrix[2][1] = sin(p_alpha);
+  rotationMatrix[2][2] = cos(p_alpha);
   dhTransform.setBasis(rotationMatrix);
 
   tf2::Vector3 translationVector(p_a * cos(p_theta),
@@ -25,6 +33,20 @@ DHTfTransformRepresentationWidget::dh2Transform(double p_d, double p_theta, doub
   dhTransform.setOrigin(translationVector);
 
   return dhTransform;
+}
+
+bool
+DHTfTransformRepresentationWidget::isEqual(const tf2::Transform& p_tfA, const tf2::Transform& p_tfB)
+{
+  double equalEpsilon = 1e-6;
+  double angle = p_tfA.getRotation().angle(p_tfB.getRotation());
+  double dist = (p_tfA.getOrigin() - p_tfB.getOrigin()).length();
+
+  if (abs(angle) > equalEpsilon || dist > equalEpsilon) {
+    return false;
+  }
+
+  return true;
 }
 
 DHTfTransformRepresentationWidget::DHTfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent)
@@ -79,7 +101,12 @@ DHTfTransformRepresentationWidget::updateDisplay()
   double alpha = asin(sinAlpha);
 
   tf2::Transform shouldDHTransform = dh2Transform(d, theta, a, alpha);
-  // TODO check whether transform can be represented as DH
+  // check whether transform can be represented as DH
+  if (!isEqual(*m_tf, shouldDHTransform)) {
+    QMessageBox::critical(this, "Denavit-Hartenberg Representation",
+                          QString("Transform can't be represented as DH parameters"));
+    return;
+  }
 
   m_graphicWidget->m_aEdit->setText(QString::number(a));
   m_graphicWidget->m_dEdit->setText(QString::number(d));

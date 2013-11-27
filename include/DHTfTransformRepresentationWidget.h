@@ -29,6 +29,7 @@ class DHTfTransformRepresentationWidget
 
     // static utility functions
     static tf2::Transform dh2Transform(double p_d, double p_theta, double p_a, double p_alpha);
+    static bool isEqual(const tf2::Transform& p_tfA, const tf2::Transform& p_tfB);
 
 
     // constructors
