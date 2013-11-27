@@ -84,17 +84,17 @@ HomogeneousTfTransformRepresentationWidget::updateDisplay()
   tf2::Matrix3x3 rotationMatrix = m_tf->getBasis();
   for (unsigned i = 0; i < 3; i++) {
     for (unsigned j = 0; j < 3; j++) {
-      m_graphicWidget->m_matrixEdits[i][j]->setText(QString::number(rotationMatrix[i][j]));
+      m_graphicWidget->m_matrixEdits[i][j]->setText(number(rotationMatrix[i][j]));
     }
   }
   for (unsigned i = 0; i < 3; i++) {
-    m_graphicWidget->m_matrixEdits[i][3]->setText(QString::number(0));
+    m_graphicWidget->m_matrixEdits[i][3]->setText(number(0));
   }
-  m_graphicWidget->m_matrixEdits[3][3]->setText(QString::number(1));
+  m_graphicWidget->m_matrixEdits[3][3]->setText(number(1));
 
   tf2::Vector3 translationVector = m_tf->getOrigin();
   for (unsigned j = 0; j < 3; j++) {
-    m_graphicWidget->m_matrixEdits[3][j]->setText(QString::number(translationVector[j]));
+    m_graphicWidget->m_matrixEdits[3][j]->setText(number(translationVector[j]));
   }
 }
 /*------------------------------------------------------------------------}}}-*/

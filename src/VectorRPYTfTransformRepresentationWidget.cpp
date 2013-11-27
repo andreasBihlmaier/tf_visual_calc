@@ -62,14 +62,14 @@ VectorRPYTfTransformRepresentationWidget::updateDisplay()
   double pitch;
   double yaw;
   rotationMatrix.getRPY(roll, pitch, yaw);
-  m_graphicWidget->m_rxEdit->setText(QString::number(roll));
-  m_graphicWidget->m_ryEdit->setText(QString::number(pitch));
-  m_graphicWidget->m_rzEdit->setText(QString::number(yaw));
+  m_graphicWidget->m_rxEdit->setText(number(roll));
+  m_graphicWidget->m_ryEdit->setText(number(pitch));
+  m_graphicWidget->m_rzEdit->setText(number(yaw));
 
   tf2::Vector3 translationVector = m_tf->getOrigin();
-  m_graphicWidget->m_xEdit->setText(QString::number(translationVector.x()));
-  m_graphicWidget->m_yEdit->setText(QString::number(translationVector.y()));
-  m_graphicWidget->m_zEdit->setText(QString::number(translationVector.z()));
+  m_graphicWidget->m_xEdit->setText(number(translationVector.x()));
+  m_graphicWidget->m_yEdit->setText(number(translationVector.y()));
+  m_graphicWidget->m_zEdit->setText(number(translationVector.z()));
 }
 /*------------------------------------------------------------------------}}}-*/
 

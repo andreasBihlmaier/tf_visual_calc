@@ -60,15 +60,15 @@ VectorQuaternionTfTransformRepresentationWidget::updateDisplay()
     return;
 
   tf2::Quaternion quaternion = m_tf->getRotation();
-  m_graphicWidget->m_qxEdit->setText(QString::number(quaternion.getX()));
-  m_graphicWidget->m_qyEdit->setText(QString::number(quaternion.getY()));
-  m_graphicWidget->m_qzEdit->setText(QString::number(quaternion.getZ()));
-  m_graphicWidget->m_qwEdit->setText(QString::number(quaternion.getW()));
+  m_graphicWidget->m_qxEdit->setText(number(quaternion.getX()));
+  m_graphicWidget->m_qyEdit->setText(number(quaternion.getY()));
+  m_graphicWidget->m_qzEdit->setText(number(quaternion.getZ()));
+  m_graphicWidget->m_qwEdit->setText(number(quaternion.getW()));
 
   tf2::Vector3 translationVector = m_tf->getOrigin();
-  m_graphicWidget->m_xEdit->setText(QString::number(translationVector.x()));
-  m_graphicWidget->m_yEdit->setText(QString::number(translationVector.y()));
-  m_graphicWidget->m_zEdit->setText(QString::number(translationVector.z()));
+  m_graphicWidget->m_xEdit->setText(number(translationVector.x()));
+  m_graphicWidget->m_yEdit->setText(number(translationVector.y()));
+  m_graphicWidget->m_zEdit->setText(number(translationVector.z()));
 }
 /*------------------------------------------------------------------------}}}-*/
 

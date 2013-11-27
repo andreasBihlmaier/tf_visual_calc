@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLineEdit>
+#include <QString>
 
 #include <tf2/LinearMath/Transform.h>
 #include <tf2/LinearMath/Matrix3x3.h>
@@ -35,6 +36,7 @@ class TfTransformRepresentationWidget
     // const static member variables
 
     // static utility functions
+    static QString number(double p_num);
 
 
     // constructors

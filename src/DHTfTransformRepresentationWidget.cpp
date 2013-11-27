@@ -108,10 +108,10 @@ DHTfTransformRepresentationWidget::updateDisplay()
     return;
   }
 
-  m_graphicWidget->m_aEdit->setText(QString::number(a));
-  m_graphicWidget->m_dEdit->setText(QString::number(d));
-  m_graphicWidget->m_thetaEdit->setText(QString::number(theta));
-  m_graphicWidget->m_alphaEdit->setText(QString::number(alpha));
+  m_graphicWidget->m_aEdit->setText(number(a));
+  m_graphicWidget->m_dEdit->setText(number(d));
+  m_graphicWidget->m_thetaEdit->setText(number(theta));
+  m_graphicWidget->m_alphaEdit->setText(number(alpha));
 }
 /*------------------------------------------------------------------------}}}-*/
 

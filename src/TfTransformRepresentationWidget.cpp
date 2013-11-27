@@ -8,6 +8,12 @@
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
+QString
+TfTransformRepresentationWidget::number(double p_num)
+{
+  return QString::number(p_num, 'f', 4);
+}
+
 TfTransformRepresentationWidget::TfTransformRepresentationWidget(tf2::Transform* p_tf, QWidget* p_parent)
   :QWidget(p_parent),
    m_tf(p_tf)
