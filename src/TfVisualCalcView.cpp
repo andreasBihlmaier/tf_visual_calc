@@ -140,6 +140,8 @@ TfVisualCalcView::createContextMenu()
   m_removeAllAction = new QAction(tr("&Remove all"), this);
   connect(m_removeAllAction, SIGNAL(triggered()), this, SLOT(removeAll()));
 
+  // TODO init from tf2 (tf2_msgs/FrameGraph; ROS Service)
+
   m_contextMenu = new QMenu(this);
   m_contextMenu->addAction(m_removeAllAction);
 }
