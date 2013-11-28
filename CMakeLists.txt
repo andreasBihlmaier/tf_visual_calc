@@ -119,6 +119,7 @@ qt4_wrap_cpp(MOC_FILES
   include/VectorQuaternionGraphicWidget.h
   include/DHTfTransformRepresentationWidget.h
   include/DHGraphicWidget.h
+  include/RvizTfTransformGraphicsWidget.h
 )
 set(SOURCE_FILES
   src/TfVisualCalcPanel.cpp
@@ -136,6 +137,7 @@ set(SOURCE_FILES
   src/DHTfTransformRepresentationWidget.cpp
   src/DHGraphicWidget.cpp
   src/PaintPrimitives.cpp
+  src/RvizTfTransformGraphicsWidget.cpp
   ${MOC_FILES}
 )
 

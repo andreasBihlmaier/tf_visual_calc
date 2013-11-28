@@ -121,7 +121,7 @@ TfVisualCalcView::setupBroadcastTimer()
 QGraphicsProxyWidget*
 TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
 {
-  TfTransformGraphicsWidget* newTfWidget = new TfTransformGraphicsWidget(p_hasAbsolute);
+  TfTransformGraphicsWidget* newTfWidget = new RvizTfTransformGraphicsWidget(p_hasAbsolute);
   newTfWidget->setView(this);
 
   if (!p_tfName.empty()) {

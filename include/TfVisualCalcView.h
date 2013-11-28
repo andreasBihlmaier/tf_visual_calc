@@ -7,7 +7,7 @@
 #include <QGraphicsView>
 
 // custom includes
-#include "TfTransformGraphicsWidget.h"
+#include "RvizTfTransformGraphicsWidget.h"
 
 
 // forward declarations
