@@ -50,6 +50,7 @@ class TfVisualCalcView
   public Q_SLOTS:
     void broadcastTransforms();
     void updateScene();
+    void removeAll();
 
 
   Q_SIGNALS:

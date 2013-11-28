@@ -44,6 +44,7 @@ class TfTransformGraphicsWidget
     void setView(TfVisualCalcView* p_view);
     QGraphicsProxyWidget* proxy();
     const std::vector<TfTransformGraphicsWidget*>& children();
+    TfTransformGraphicsWidget* parent();
     void setTfParent(TfTransformGraphicsWidget* p_parent);
 
     // variables
@@ -53,6 +54,7 @@ class TfTransformGraphicsWidget
     virtual void broadcastTransform();
     virtual void toggleAbsolute(bool p_toggled);
     virtual void updateSize();
+    virtual void deleteSubtree();
 
 
   Q_SIGNALS:
@@ -82,6 +84,7 @@ class TfTransformGraphicsWidget
 
     QAction* m_createChildAction;
     QAction* m_deleteAction;
+    QAction* m_deleteSubtreeAction;
     QMenu* m_contextMenu;
 
     QGraphicsProxyWidget* m_proxy;

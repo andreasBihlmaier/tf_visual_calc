@@ -37,7 +37,9 @@ TfVisualCalcView::addTfWidget()
 void
 TfVisualCalcView::deleteTfWidget(TfTransformGraphicsWidget* p_widget)
 {
-  m_toDeleteWidgets.push_back(p_widget);
+  if (std::find(m_toDeleteWidgets.begin(), m_toDeleteWidgets.end(), p_widget) == m_toDeleteWidgets.end()) {
+    m_toDeleteWidgets.push_back(p_widget);
+  }
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -47,7 +49,10 @@ TfVisualCalcView::broadcastTransforms()
 {
   if (!m_toDeleteWidgets.empty()) {
     for (int idx = 0; idx < m_toDeleteWidgets.size(); idx++) {
-      delete m_toDeleteWidgets[idx];
+      QWidget* widget = m_toDeleteWidgets[idx];
+      TfTransformGraphicsWidget* tfWidget = dynamic_cast<TfTransformGraphicsWidget*>(widget);
+      tfWidget->parent()->deleteChild(tfWidget);
+      delete widget;
     }
     m_toDeleteWidgets.clear();
     updateScene();
@@ -61,6 +66,12 @@ void
 TfVisualCalcView::updateScene()
 {
   drawTree(m_rootTfWidget, 0, scene()->sceneRect().height() - m_worldLabel->height());
+}
+
+void
+TfVisualCalcView::removeAll()
+{
+  m_rootTfWidget->deleteSubtree();
 }
 /*------------------------------------------------------------------------}}}-*/
 
