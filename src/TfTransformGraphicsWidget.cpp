@@ -136,6 +136,13 @@ TfTransformGraphicsWidget::contextMenuEvent(QContextMenuEvent* p_event)
 {
   m_contextMenu->exec(p_event->globalPos());
 }
+
+void
+TfTransformGraphicsWidget::updateParentLabel()
+{
+  m_topLayout->removeWidget(m_parentLabel);
+  m_topLayout->addWidget(m_parentLabel, m_topLayout->rowCount() - 1, 0, Qt::AlignBottom);
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------ protected Q_SLOTS: ------------------------{{{-*/

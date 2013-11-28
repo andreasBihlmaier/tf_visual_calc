@@ -63,6 +63,7 @@ class TfTransformGraphicsWidget
   protected:
     // methods
     virtual void contextMenuEvent(QContextMenuEvent* p_event);
+    void updateParentLabel();
 
     // variables
     TfTransformGraphicsWidget* m_parent;

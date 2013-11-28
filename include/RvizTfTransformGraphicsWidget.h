@@ -56,8 +56,12 @@ class RvizTfTransformGraphicsWidget
 
   private:
     // methods
+    void extendLayout();
 
     // variables
+    QLabel* m_markerLabel;
+    QLineEdit* m_markerEdit;
+    QHBoxLayout* m_markerLayout;
 
 
   private Q_SLOTS:
