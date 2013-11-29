@@ -64,6 +64,11 @@ class RvizTfTransformGraphicsWidget
     QHBoxLayout* m_markerLayout;
     QPushButton* m_markerFileButton;
 
+    QLabel* m_markerScaleLabel;
+    QLineEdit* m_markerScaleXEdit;
+    QLineEdit* m_markerScaleYEdit;
+    QLineEdit* m_markerScaleZEdit;
+
 
   private Q_SLOTS:
     void markerDialog();
