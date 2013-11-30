@@ -46,6 +46,7 @@ class TfVisualCalcView
 
     // methods
     TfTransformGraphicsWidget* addTfWidget();
+    TfTransformGraphicsWidget* addTfWidget(const std::string& p_tfName);
     void deleteTfWidget(TfTransformGraphicsWidget* p_widget);
     ros::NodeHandle* nodeHandle();
     std::string toYAMLString();
@@ -81,10 +82,9 @@ class TfVisualCalcView
     void createScene();
     void createContextMenu();
     void setupBroadcastTimer();
-    QGraphicsProxyWidget* addTfWidget(const std::string& p_tfName, bool p_hasAbsolute = true);
+    QGraphicsProxyWidget* addTfWidgetInternal(const std::string& p_tfName, bool p_hasAbsolute = true);
     void drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y);
     void toYAML(YAML::Emitter& p_out, TfTransformGraphicsWidget* p_node);
-    void fromYAML(const YAML::Node& p_in, TfTransformGraphicsWidget* p_node);
 
     // variables
     ros::NodeHandle* m_nodeHandle;

@@ -53,6 +53,7 @@ class TfTransformGraphicsWidget
     void setTfParent(TfTransformGraphicsWidget* p_parent);
     virtual void toYAML(YAML::Emitter& p_out);
     virtual void fromYAML(const YAML::Node& p_in);
+    void createChildWidget(const std::string& p_tfName);
 
     // variables
 

@@ -34,7 +34,15 @@ TfVisualCalcView::TfVisualCalcView(QWidget* p_parent)
 TfTransformGraphicsWidget*
 TfVisualCalcView::addTfWidget()
 {
-  return dynamic_cast<TfTransformGraphicsWidget*>(addTfWidget("")->widget());
+  return dynamic_cast<TfTransformGraphicsWidget*>(addTfWidgetInternal("")->widget());
+}
+
+TfTransformGraphicsWidget*
+TfVisualCalcView::addTfWidget(const std::string& p_tfName)
+{
+  TfTransformGraphicsWidget* newWidget = addTfWidget();
+  newWidget->setTfName(p_tfName);
+  return newWidget;
 }
 
 void
@@ -79,7 +87,7 @@ TfVisualCalcView::fromYAMLString(const std::string& p_string)
     std::string rootTfName;
     in["root"] >> rootTfName;
     m_rootTfWidget->setTfName(rootTfName);
-    fromYAML(in["transforms"], m_rootTfWidget);
+    m_rootTfWidget->fromYAML(in["transforms"]);
   }
 }
 /*------------------------------------------------------------------------}}}-*/
@@ -143,7 +151,7 @@ TfVisualCalcView::createScene()
   m_worldLabelProxy = scene()->addWidget(m_worldLabel);
   m_worldLabelProxy->setPos(-m_worldLabel->width()/2, scene()->sceneRect().height() - m_worldLabel->height()/2);
 
-  QGraphicsProxyWidget* rootTfProxy = addTfWidget("/world", false);
+  QGraphicsProxyWidget* rootTfProxy = addTfWidgetInternal("/world", false);
   m_rootTfWidget = dynamic_cast<TfTransformGraphicsWidget*>(rootTfProxy->widget());
   updateScene();
 
@@ -160,7 +168,7 @@ TfVisualCalcView::setupBroadcastTimer()
 }
 
 QGraphicsProxyWidget*
-TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
+TfVisualCalcView::addTfWidgetInternal(const std::string& p_tfName, bool p_hasAbsolute)
 {
   TfTransformGraphicsWidget* newTfWidget = new RvizTfTransformGraphicsWidget(this, p_hasAbsolute);
 
@@ -214,13 +222,6 @@ TfVisualCalcView::toYAML(YAML::Emitter& p_out, TfTransformGraphicsWidget* p_node
   for (unsigned childIdx = 0; childIdx < p_node->children().size(); childIdx++) {
     toYAML(p_out, p_node->children()[childIdx]);
   }
-}
-
-void
-TfVisualCalcView::fromYAML(const YAML::Node& p_in, TfTransformGraphicsWidget* p_node)
-{
-  m_rootTfWidget->fromYAML(p_in);
-  // TODO children
 }
 /*------------------------------------------------------------------------}}}-*/
 

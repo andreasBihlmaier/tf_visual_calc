@@ -110,6 +110,21 @@ TfTransformGraphicsWidget::fromYAML(const YAML::Node& p_in)
   newTf.setRotation(quaternion);
   newTf.setOrigin(translation);
   setTf(newTf);
+
+  const YAML::Node& childrenNode = inNode["children"];
+  for (unsigned childIdx = 0; childIdx < childrenNode.size(); childIdx++) {
+    std::string childName;
+    childrenNode[childIdx] >> childName;
+    createChildWidget(childName);
+    m_children[childIdx]->fromYAML(p_in);
+  }
+}
+
+void
+TfTransformGraphicsWidget::createChildWidget(const std::string& p_tfName)
+{
+  addChild(m_view->addTfWidget(p_tfName));
+  m_view->updateScene();
 }
 /*------------------------------------------------------------------------}}}-*/
 
