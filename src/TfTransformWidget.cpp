@@ -28,7 +28,7 @@ TfTransformWidget::TfTransformWidget(bool p_hasAbsolute, QWidget* p_parent)
   m_tf = new tf2::Transform();
   m_absoluteTf = new tf2::Transform();
 
-  m_tf->setOrigin(tf2::Vector3(0.0, 2.0, 0.0));
+  m_tf->setOrigin(tf2::Vector3(0.0, 0.0, 0.0));
   tf2::Quaternion quat;
   quat.setEuler(0, 0, 0);
   m_tf->setRotation(quat);
