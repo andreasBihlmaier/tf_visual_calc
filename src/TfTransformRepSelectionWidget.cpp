@@ -34,6 +34,18 @@ TfTransformRepSelectionWidget::setTransform(tf2::Transform* p_tf)
   m_representationWidget->setTransform(m_tf);
   m_representationWidget->updateDisplay();
 }
+
+int
+TfTransformRepSelectionWidget::representation()
+{
+  return m_representationComboBox->currentIndex();
+}
+
+void
+TfTransformRepSelectionWidget::setRepresentation(int p_representation)
+{
+  m_representationComboBox->setCurrentIndex(p_representation);
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/
@@ -45,7 +57,39 @@ TfTransformRepSelectionWidget::setReadOnly(bool p_ro)
 }
 
 void
-TfTransformRepSelectionWidget::setRepresentation(int p_representation)
+TfTransformRepSelectionWidget::updateDisplay()
+{
+  m_representationWidget->updateDisplay();
+}
+/*------------------------------------------------------------------------}}}-*/
+
+/*---------------------------------- private: ----------------------------{{{-*/
+void
+TfTransformRepSelectionWidget::createLayout()
+{
+  m_representationLabel = new QLabel("Representation:");
+  m_representationComboBox = new QComboBox();
+  m_representationComboBox->insertItem(HomogeneousRepresentation, "Homogeneous");
+  m_representationComboBox->insertItem(VectorRPYRepresentation, "Vector + RPY");
+  m_representationComboBox->insertItem(VectorQuaternionRepresentation, "Vector + Quaternion");
+  m_representationComboBox->insertItem(DenavitHartenbergRepresentation, "Denavit-Hartenberg");
+  connect(m_representationComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setRepresentationInternal(int)));
+
+  m_representationLayout = new QHBoxLayout();
+  m_representationLayout->addWidget(m_representationLabel);
+  m_representationLayout->addWidget(m_representationComboBox);
+
+  m_topLayout = new QVBoxLayout();
+  m_topLayout->addLayout(m_representationLayout);
+  setLayout(m_topLayout);
+
+  setRepresentationInternal(m_representationComboBox->currentIndex());
+}
+/*------------------------------------------------------------------------}}}-*/
+
+/*------------------------------- private Q_SLOTS: -------------------------{{{-*/
+void
+TfTransformRepSelectionWidget::setRepresentationInternal(int p_representation)
 {
   if (m_representationWidget) {
     m_topLayout->removeWidget(m_representationWidget);
@@ -71,37 +115,4 @@ TfTransformRepSelectionWidget::setRepresentation(int p_representation)
 
   Q_EMIT sizeChanged();
 }
-
-void
-TfTransformRepSelectionWidget::updateDisplay()
-{
-  m_representationWidget->updateDisplay();
-}
-/*------------------------------------------------------------------------}}}-*/
-
-/*---------------------------------- private: ----------------------------{{{-*/
-void
-TfTransformRepSelectionWidget::createLayout()
-{
-  m_representationLabel = new QLabel("Representation:");
-  m_representationComboBox = new QComboBox();
-  m_representationComboBox->insertItem(HomogeneousRepresentation, "Homogeneous");
-  m_representationComboBox->insertItem(VectorRPYRepresentation, "Vector + RPY");
-  m_representationComboBox->insertItem(VectorQuaternionRepresentation, "Vector + Quaternion");
-  m_representationComboBox->insertItem(DenavitHartenbergRepresentation, "Denavit-Hartenberg");
-  connect(m_representationComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setRepresentation(int)));
-
-  m_representationLayout = new QHBoxLayout();
-  m_representationLayout->addWidget(m_representationLabel);
-  m_representationLayout->addWidget(m_representationComboBox);
-
-  m_topLayout = new QVBoxLayout();
-  m_topLayout->addLayout(m_representationLayout);
-  setLayout(m_topLayout);
-
-  setRepresentation(m_representationComboBox->currentIndex());
-}
-/*------------------------------------------------------------------------}}}-*/
-
-/*------------------------------- private Q_SLOTS: -------------------------{{{-*/
 /*------------------------------------------------------------------------}}}-*/

@@ -111,6 +111,17 @@ TfTransformGraphicsWidget::fromYAML(const YAML::Node& p_in)
   newTf.setOrigin(translation);
   setTf(newTf);
 
+  const YAML::Node& representationNode = inNode["representation"];
+  int representation;
+  representationNode["relative"] >> representation;
+  setRelativeRepresentation(representation);
+  bool hasAbsolute;
+  representationNode["has_absolute"] >> hasAbsolute;
+  if (hasAbsolute) {
+    representationNode["absolute"] >> representation;
+    setAbsoluteRepresentation(representation);
+  }
+
   const YAML::Node& childrenNode = inNode["children"];
   for (unsigned childIdx = 0; childIdx < childrenNode.size(); childIdx++) {
     std::string childName;
@@ -234,12 +245,22 @@ TfTransformGraphicsWidget::toYAMLData(YAML::Emitter& p_out)
       p_out << YAML::Key << "w" << YAML::Value << quaternion.getW();
     p_out << YAML::EndMap;
   p_out << YAML::EndMap;
+
   p_out << YAML::Key << "children";
   p_out << YAML::Value << YAML::BeginSeq;
     for (unsigned childIdx = 0; childIdx < m_children.size(); childIdx++) {
       p_out << m_children[childIdx]->tfName();
     }
   p_out << YAML::EndSeq;
+
+  p_out << YAML::Key << "representation";
+  p_out << YAML::Value << YAML::BeginMap;
+    p_out << YAML::Key << "relative" << YAML::Value << relativeRepresentation();
+    p_out << YAML::Key << "has_absolute" << YAML::Value << hasAbsoluteRepresentation();
+    if (hasAbsoluteRepresentation()) {
+      p_out << YAML::Key << "absolute" << YAML::Value << absoluteRepresentation();
+    }
+  p_out << YAML::EndMap;
 }
 
 void

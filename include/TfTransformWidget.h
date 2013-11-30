@@ -56,6 +56,9 @@ class TfTransformWidget
     // methods
     const std::string& tfName();
     const tf2::Transform* tf();
+    int relativeRepresentation();
+    bool hasAbsoluteRepresentation();
+    int absoluteRepresentation();
 
     // variables
 
@@ -65,6 +68,8 @@ class TfTransformWidget
     virtual void toggleAbsolute(bool);
     virtual void updateSize();
     void setTfParentName(const QString& p_parent);
+    void setRelativeRepresentation(int p_representation);
+    void setAbsoluteRepresentation(int p_representation);
 
 
   Q_SIGNALS:

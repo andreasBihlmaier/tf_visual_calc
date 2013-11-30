@@ -89,6 +89,28 @@ TfTransformWidget::tf()
 {
   return m_tf;
 }
+
+int
+TfTransformWidget::relativeRepresentation()
+{
+  return m_relativeRepSelectionWidget->representation();
+}
+
+bool
+TfTransformWidget::hasAbsoluteRepresentation()
+{
+  return m_hasAbsolute;
+}
+
+int
+TfTransformWidget::absoluteRepresentation()
+{
+  if (m_hasAbsolute) {
+    return m_absoluteRepSelectionWidget->representation();
+  } else {
+    return -1;
+  }
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/
@@ -139,6 +161,18 @@ TfTransformWidget::updateSize()
   // hack to resize Widget to size it would have if removed Widget would never have been there
   QApplication::processEvents();
   resize(0, 0);
+}
+
+void
+TfTransformWidget::setRelativeRepresentation(int p_representation)
+{
+  m_relativeRepSelectionWidget->setRepresentation(p_representation);
+}
+
+void
+TfTransformWidget::setAbsoluteRepresentation(int p_representation)
+{
+  m_absoluteRepSelectionWidget->setRepresentation(p_representation);
 }
 /*------------------------------------------------------------------------}}}-*/
 

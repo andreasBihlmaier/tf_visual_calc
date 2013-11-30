@@ -46,13 +46,14 @@ class TfTransformRepSelectionWidget
 
     // methods
     void setTransform(tf2::Transform* p_tf);
+    int representation();
+    void setRepresentation(int p_representation);
 
     // variables
 
 
   public Q_SLOTS:
     void setReadOnly(bool);
-    void setRepresentation(int);
     void updateDisplay();
 
 
@@ -77,6 +78,7 @@ class TfTransformRepSelectionWidget
 
 
   private Q_SLOTS:
+    void setRepresentationInternal(int);
 
 
 };
