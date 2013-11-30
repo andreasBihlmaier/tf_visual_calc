@@ -54,7 +54,8 @@ class DHTfTransformRepresentationWidget
 
 
   protected Q_SLOTS:
-    void updateTransform();
+    void updateTransformFromGraphic();
+    virtual void updateTransformFromText();
 
 
   private:

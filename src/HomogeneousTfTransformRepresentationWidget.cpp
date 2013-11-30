@@ -37,7 +37,7 @@ HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 
 /*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
 void
-HomogeneousTfTransformRepresentationWidget::updateTransform()
+HomogeneousTfTransformRepresentationWidget::updateTransformFromGraphic()
 {
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
@@ -97,6 +97,12 @@ HomogeneousTfTransformRepresentationWidget::updateDisplay()
     m_graphicWidget->m_matrixEdits[3][j]->setText(number(translationVector[j]));
   }
 }
+
+void
+HomogeneousTfTransformRepresentationWidget::updateTransformFromText()
+{
+  // TODO
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*---------------------------------- private: ----------------------------{{{-*/
@@ -107,7 +113,7 @@ HomogeneousTfTransformRepresentationWidget::createGraphicFrame()
   m_topLayout->insertWidget(0, m_graphicWidget);
   for (unsigned i = 0; i < 4; i++) {
     for (unsigned j = 0; j < 4; j++) {
-      connect(m_graphicWidget->m_matrixEdits[i][j], SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+      connect(m_graphicWidget->m_matrixEdits[i][j], SIGNAL(textEdited(const QString&)), this, SLOT(updateTransformFromGraphic()));
     }
   }
 }

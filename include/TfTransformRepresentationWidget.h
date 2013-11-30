@@ -60,14 +60,16 @@ class TfTransformRepresentationWidget
 
   protected:
     // methods
-    tf2::Transform* m_tf;
+    void setText(const QString& p_text);
 
     // variables
+    tf2::Transform* m_tf;
     QPlainTextEdit* m_textEdit;
     QHBoxLayout* m_topLayout;
 
 
   protected Q_SLOTS:
+    virtual void updateTransformFromText() = 0;
 
 
   private:

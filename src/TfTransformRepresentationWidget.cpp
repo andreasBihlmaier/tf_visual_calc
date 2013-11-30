@@ -36,6 +36,16 @@ TfTransformRepresentationWidget::setReadOnly(bool p_ro)
 }
 /*------------------------------------------------------------------------}}}-*/
 
+/*--------------------------------- protected: ---------------------------{{{-*/
+void
+TfTransformRepresentationWidget::setText(const QString& p_text)
+{
+  bool oldState = m_textEdit->blockSignals(true);
+  m_textEdit->setPlainText(p_text);
+  m_textEdit->blockSignals(oldState);
+}
+/*------------------------------------------------------------------------}}}-*/
+
 /*---------------------------------- private: ----------------------------{{{-*/
 /*------------------------------------------------------------------------}}}-*/
 
@@ -44,6 +54,8 @@ void
 TfTransformRepresentationWidget::createLayout()
 {
   m_textEdit = new QPlainTextEdit();
+  m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  connect(m_textEdit, SIGNAL(textChanged()), this, SLOT(updateTransformFromText()));
 
   m_topLayout = new QHBoxLayout();
   m_topLayout->addWidget(m_textEdit);

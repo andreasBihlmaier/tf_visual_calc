@@ -75,7 +75,7 @@ DHTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 
 /*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
 void
-DHTfTransformRepresentationWidget::updateTransform()
+DHTfTransformRepresentationWidget::updateTransformFromGraphic()
 {
   tf2::Transform dhTransform = dh2Transform(m_graphicWidget->m_dEdit->text().toDouble(),
                                             m_graphicWidget->m_thetaEdit->text().toDouble(),
@@ -113,6 +113,12 @@ DHTfTransformRepresentationWidget::updateDisplay()
   m_graphicWidget->m_thetaEdit->setText(number(theta));
   m_graphicWidget->m_alphaEdit->setText(number(alpha));
 }
+
+void
+DHTfTransformRepresentationWidget::updateTransformFromText()
+{
+  // TODO
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*---------------------------------- private: ----------------------------{{{-*/
@@ -121,10 +127,10 @@ DHTfTransformRepresentationWidget::createGraphicFrame()
 {
   m_graphicWidget = new DHGraphicWidget();
   m_topLayout->insertWidget(0, m_graphicWidget);
-  connect(m_graphicWidget->m_dEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_aEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_thetaEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
-  connect(m_graphicWidget->m_alphaEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransform()));
+  connect(m_graphicWidget->m_dEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransformFromGraphic()));
+  connect(m_graphicWidget->m_aEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransformFromGraphic()));
+  connect(m_graphicWidget->m_thetaEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransformFromGraphic()));
+  connect(m_graphicWidget->m_alphaEdit, SIGNAL(textEdited(const QString&)), this, SLOT(updateTransformFromGraphic()));
 }
 /*------------------------------------------------------------------------}}}-*/
 

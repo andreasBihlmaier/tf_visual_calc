@@ -52,12 +52,15 @@ class VectorQuaternionTfTransformRepresentationWidget
 
 
   protected Q_SLOTS:
-    void updateTransform();
+    void updateTransformFromGraphic();
+    virtual void updateTransformFromText();
 
 
   private:
     // methods
     void createGraphicFrame();
+    void updateGraphicDisplay();
+    void updateTextDisplay();
 
     // variables
     VectorQuaternionGraphicWidget* m_graphicWidget;

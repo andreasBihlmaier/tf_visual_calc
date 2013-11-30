@@ -21,7 +21,7 @@ TfVisualCalcView::TfVisualCalcView(QWidget* p_parent)
    m_broadcastCount(0)
 {
   m_nodeHandle = new ros::NodeHandle("tf_visual_calc_view");
-  m_worldMapTf = new tf2::Transform();
+  m_worldMapTf = new tf2::Transform(tf2::Quaternion(0, 0, 0, 1));
   m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
 
   createScene();
