@@ -48,6 +48,18 @@ TfVisualCalcView::nodeHandle()
 {
   return m_nodeHandle;
 }
+
+std::string
+TfVisualCalcView::toYAMLString()
+{
+  return "foo";
+}
+
+void
+TfVisualCalcView::fromYAMLString(const std::string& p_string)
+{
+  std::cout << p_string << std::endl;
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/

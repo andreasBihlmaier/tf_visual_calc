@@ -41,7 +41,7 @@ class TfVisualCalcPanel
 
     // overwritten methods
     virtual void load(const rviz::Config& config);
-    virtual void save(rviz::Config config) /*const*/;
+    virtual void save(rviz::Config config) const;
 
     // methods
 

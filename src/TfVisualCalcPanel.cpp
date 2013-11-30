@@ -24,20 +24,18 @@ TfVisualCalcPanel::TfVisualCalcPanel(QWidget* p_parent)
 void
 TfVisualCalcPanel::load(const rviz::Config& p_config)
 {
-  rviz::Panel::save(p_config);
-  //p_config.mapSetValue("Topic", output_topic_);
+  rviz::Panel::load(p_config);
+  QString tfVisualCalcViewString;
+  if (p_config.mapGetString("TfVisualCalcView", &tfVisualCalcViewString)) {
+    m_calcView->fromYAMLString(tfVisualCalcViewString.toStdString());
+  }
 }
 
 void
-TfVisualCalcPanel::save(rviz::Config p_config) /*const*/
+TfVisualCalcPanel::save(rviz::Config p_config) const
 {
-  rviz::Panel::load(p_config);
-  /*
-  QString topic;
-  if(p_config.mapGetString("Topic", &topic))
-  {
-  }
-  */
+  rviz::Panel::save(p_config);
+  p_config.mapSetValue("TfVisualCalcView", QString::fromStdString(m_calcView->toYAMLString()));
 }
 /*------------------------------------------------------------------------}}}-*/
 

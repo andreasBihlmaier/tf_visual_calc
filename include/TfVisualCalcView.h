@@ -44,6 +44,8 @@ class TfVisualCalcView
     TfTransformGraphicsWidget* addTfWidget();
     void deleteTfWidget(TfTransformGraphicsWidget* p_widget);
     ros::NodeHandle* nodeHandle();
+    std::string toYAMLString();
+    void fromYAMLString(const std::string& p_string);
 
     // variables
 
