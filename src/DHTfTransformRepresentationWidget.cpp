@@ -21,7 +21,7 @@ DHTfTransformRepresentationWidget::dh2Transform(double p_d, double p_theta, doub
   rotationMatrix[0][2] = sin(p_theta) * sin(p_alpha);
   rotationMatrix[1][0] = sin(p_theta);
   rotationMatrix[1][1] = cos(p_theta) * cos(p_alpha);
-  rotationMatrix[1][2] = - cos(p_theta) * sin(p_alpha);
+  rotationMatrix[1][2] = -cos(p_theta) * sin(p_alpha);
   rotationMatrix[2][0] = 0;
   rotationMatrix[2][1] = sin(p_alpha);
   rotationMatrix[2][2] = cos(p_alpha);
@@ -39,10 +39,13 @@ bool
 DHTfTransformRepresentationWidget::isEqual(const tf2::Transform& p_tfA, const tf2::Transform& p_tfB)
 {
   double equalEpsilon = 1e-6;
-  double angle = p_tfA.getRotation().angle(p_tfB.getRotation());
+  double angleDelta = p_tfA.getRotation().angle(p_tfB.getRotation());
   double dist = (p_tfA.getOrigin() - p_tfB.getOrigin()).length();
-
-  if (abs(angle) > equalEpsilon || dist > equalEpsilon) {
+  if (abs(angleDelta) > equalEpsilon || dist > equalEpsilon) {
+    std::cout << "DH::isEqual():\n"
+              << "tfA=" << p_tfA.getOrigin().getX() << " " << p_tfA.getOrigin().getY() << " " << p_tfA.getOrigin().getZ() << "  " << p_tfA.getRotation().getX() << " " << p_tfA.getRotation().getY() << " "  << p_tfA.getRotation().getZ() << " " << p_tfA.getRotation().getW() << "\n"
+              << "tfB=" << p_tfB.getOrigin().getX() << " " << p_tfB.getOrigin().getY() << " " << p_tfB.getOrigin().getZ() << "  " << p_tfB.getRotation().getX() << " " << p_tfB.getRotation().getY() << " "  << p_tfB.getRotation().getZ() << " " << p_tfB.getRotation().getW() << "\n"
+              << "angleDelta=" << angleDelta << " dist=" << dist << std::endl;
     return false;
   }
 
@@ -97,7 +100,7 @@ DHTfTransformRepresentationWidget::updateDisplay()
   double cosTheta = rotationMatrix[0][0];
   double theta = acos(cosTheta);
   double a = translationVector.getX() / cosTheta;
-  double sinAlpha = rotationMatrix[1][2];
+  double sinAlpha = rotationMatrix[2][1];
   double alpha = asin(sinAlpha);
 
   tf2::Transform shouldDHTransform = dh2Transform(d, theta, a, alpha);
