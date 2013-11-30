@@ -13,6 +13,8 @@
 #include <QApplication>
 #include <QFileDialog>
 
+#include <yaml-cpp/yaml.h>
+
 // custom includes
 #include "TfVisualCalcView.h"
 
@@ -25,6 +27,24 @@ RvizTfTransformGraphicsWidget::RvizTfTransformGraphicsWidget(TfVisualCalcView* p
 
   extendLayout();
   createMarkerPublisher();
+}
+
+void
+RvizTfTransformGraphicsWidget::toYAML(YAML::Emitter& p_out)
+{
+  toYAMLStart(p_out);
+  TfTransformGraphicsWidget::toYAMLData(p_out);
+  p_out << YAML::Key << "marker";
+  p_out << YAML::Value << YAML::BeginMap;
+    p_out << YAML::Key << "file" << YAML::Value << m_markerEdit->text().toStdString();
+    p_out << YAML::Key << "scale";
+    p_out << YAML::Value << YAML::BeginMap;
+      p_out << YAML::Key << "x" << YAML::Value << m_markerScaleXEdit->text().toDouble();
+      p_out << YAML::Key << "y" << YAML::Value << m_markerScaleYEdit->text().toDouble();
+      p_out << YAML::Key << "z" << YAML::Value << m_markerScaleZEdit->text().toDouble();
+    p_out << YAML::EndMap;
+  p_out << YAML::EndMap;
+  toYAMLEnd(p_out);
 }
 /*------------------------------------------------------------------------}}}-*/
 

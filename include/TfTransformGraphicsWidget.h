@@ -14,6 +14,10 @@ class QMenu;
 class QAction;
 class TfVisualCalcView;
 
+namespace YAML {
+  class Emitter;
+}
+
 
 class TfTransformGraphicsWidget
   :public TfTransformWidget
@@ -46,6 +50,7 @@ class TfTransformGraphicsWidget
     const std::vector<TfTransformGraphicsWidget*>& children();
     TfTransformGraphicsWidget* parent();
     void setTfParent(TfTransformGraphicsWidget* p_parent);
+    virtual void toYAML(YAML::Emitter& p_out);
 
     // variables
 
@@ -64,6 +69,9 @@ class TfTransformGraphicsWidget
     // methods
     virtual void contextMenuEvent(QContextMenuEvent* p_event);
     void updateParentLabel();
+    void toYAMLStart(YAML::Emitter& p_out);
+    void toYAMLData(YAML::Emitter& p_out);
+    void toYAMLEnd(YAML::Emitter& p_out);
 
     // variables
     TfTransformGraphicsWidget* m_parent;

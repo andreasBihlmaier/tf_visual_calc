@@ -13,6 +13,8 @@
 #include <QAction>
 #include <QMenu>
 
+#include <yaml-cpp/yaml.h>
+
 // custom includes
 
 /*---------------------------------- public: -----------------------------{{{-*/
@@ -52,13 +54,23 @@ TfVisualCalcView::nodeHandle()
 std::string
 TfVisualCalcView::toYAMLString()
 {
-  return "foo";
+  YAML::Emitter out;
+  out << YAML::BeginMap;
+    out << YAML::Key << "root" << YAML::Value << m_rootTfWidget->tfName();
+    out << YAML::Key << "transforms";
+    out << YAML::Value << YAML::BeginMap;
+      toYAML(out, m_rootTfWidget);
+    out << YAML::EndMap;
+  out << YAML::EndMap;
+
+
+  return out.c_str();
 }
 
 void
 TfVisualCalcView::fromYAMLString(const std::string& p_string)
 {
-  std::cout << p_string << std::endl;
+  std::cout << "fromYAMLString(): " << p_string << std::endl;
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -182,6 +194,15 @@ TfVisualCalcView::drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y)
     int x = p_x + dx;
     int y = p_y - nodeHeight;
     drawTree(p_node->children()[childIdx], x, y);
+  }
+}
+
+void
+TfVisualCalcView::toYAML(YAML::Emitter& p_out, TfTransformGraphicsWidget* p_node)
+{
+  p_node->toYAML(p_out);
+  for (unsigned childIdx = 0; childIdx < p_node->children().size(); childIdx++) {
+    toYAML(p_out, p_node->children()[childIdx]);
   }
 }
 /*------------------------------------------------------------------------}}}-*/

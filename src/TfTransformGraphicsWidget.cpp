@@ -9,6 +9,8 @@
 #include <QMenu>
 #include <QContextMenuEvent>
 
+#include <yaml-cpp/yaml.h>
+
 // custom includes
 #include "TfVisualCalcView.h"
 
@@ -77,6 +79,14 @@ TfTransformGraphicsWidget::parent()
 {
   return m_parent;
 }
+
+void
+TfTransformGraphicsWidget::toYAML(YAML::Emitter& p_out)
+{
+  toYAMLStart(p_out);
+  toYAMLData(p_out);
+  toYAMLEnd(p_out);
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/
@@ -136,6 +146,48 @@ TfTransformGraphicsWidget::updateParentLabel()
 {
   m_topLayout->removeWidget(m_parentLabel);
   m_topLayout->addWidget(m_parentLabel, m_topLayout->rowCount() - 1, 0, Qt::AlignBottom);
+}
+
+void
+TfTransformGraphicsWidget::toYAMLStart(YAML::Emitter& p_out)
+{
+  p_out << YAML::Key << m_tfName;
+  p_out << YAML::Value << YAML::BeginMap;
+}
+
+void
+TfTransformGraphicsWidget::toYAMLData(YAML::Emitter& p_out)
+{
+  p_out << YAML::Key << "tf";
+  p_out << YAML::Value << YAML::BeginMap;
+    p_out << YAML::Key << "translation";
+    p_out << YAML::Value << YAML::BeginMap;
+      tf2::Vector3 translation = tf()->getOrigin();
+      p_out << YAML::Key << "x" << YAML::Value << translation.getX();
+      p_out << YAML::Key << "y" << YAML::Value << translation.getY();
+      p_out << YAML::Key << "z" << YAML::Value << translation.getZ();
+    p_out << YAML::EndMap;
+    p_out << YAML::Key << "rotation";
+    p_out << YAML::Value << YAML::BeginMap;
+      tf2::Quaternion quaternion = tf()->getRotation();
+      p_out << YAML::Key << "x" << YAML::Value << quaternion.getX();
+      p_out << YAML::Key << "y" << YAML::Value << quaternion.getY();
+      p_out << YAML::Key << "z" << YAML::Value << quaternion.getZ();
+      p_out << YAML::Key << "w" << YAML::Value << quaternion.getW();
+    p_out << YAML::EndMap;
+  p_out << YAML::EndMap;
+  p_out << YAML::Key << "children";
+  p_out << YAML::Value << YAML::BeginSeq;
+    for (unsigned childIdx = 0; childIdx < m_children.size(); childIdx++) {
+      p_out << m_children[childIdx]->tfName();
+    }
+  p_out << YAML::EndSeq;
+}
+
+void
+TfTransformGraphicsWidget::toYAMLEnd(YAML::Emitter& p_out)
+{
+  p_out << YAML::EndMap;
 }
 /*------------------------------------------------------------------------}}}-*/
 

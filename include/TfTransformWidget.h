@@ -55,6 +55,7 @@ class TfTransformWidget
 
     // methods
     const std::string& tfName();
+    const tf2::Transform* tf();
 
     // variables
 

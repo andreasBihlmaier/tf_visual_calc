@@ -33,6 +33,7 @@ class RvizTfTransformGraphicsWidget
     RvizTfTransformGraphicsWidget(TfVisualCalcView* p_view, bool p_hasAbsolute = true, QWidget* p_parent = 0);
 
     // overwritten methods
+    virtual void toYAML(YAML::Emitter& p_out);
 
     // methods
 

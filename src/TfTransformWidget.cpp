@@ -83,6 +83,12 @@ TfTransformWidget::tfName()
 {
   return m_tfName;
 }
+
+const tf2::Transform*
+TfTransformWidget::tf()
+{
+  return m_tf;
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/

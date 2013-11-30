@@ -8,7 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
   rviz
   tf2
   tf2_ros
-  yaml-cpp
 )
 
 ## System dependencies are found with CMake's conventions
@@ -16,6 +15,9 @@ find_package(catkin REQUIRED COMPONENTS
 set(QT_QMAKE_EXECUTABLE /usr/bin/qmake-qt4)
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
 
 ## Do not define "emit", "slots", etc because they conflict with boost signals,
 ## replace: emit -> Q_EMIT; slots -> Q_SLOTS
@@ -89,7 +91,9 @@ add_definitions(-DQT_NO_KEYWORDS)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES tf_visual_calc
-#  CATKIN_DEPENDS rviz
+  CATKIN_DEPENDS
+    rviz
+    yaml-cpp
 #  DEPENDS system_lib
 )
 
@@ -103,6 +107,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${YAML_CPP_INCLUDE_DIRS}
 )
 
 qt4_wrap_cpp(MOC_FILES
@@ -163,6 +168,7 @@ add_library(tf_visual_calc
 target_link_libraries(tf_visual_calc
   ${QT_LIBRARIES}
   ${catkin_LIBRARIES}
+  ${YAML_CPP_LIBRARIES}
 )
 
 #############
