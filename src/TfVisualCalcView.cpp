@@ -70,7 +70,17 @@ TfVisualCalcView::toYAMLString()
 void
 TfVisualCalcView::fromYAMLString(const std::string& p_string)
 {
-  std::cout << "fromYAMLString(): " << p_string << std::endl;
+  std::stringstream sstream(p_string);
+  YAML::Parser parser(sstream);
+  YAML::Node in;
+  parser.GetNextDocument(in);
+
+  if (in.FindValue("root")) {
+    std::string rootTfName;
+    in["root"] >> rootTfName;
+    m_rootTfWidget->setTfName(rootTfName);
+    fromYAML(in["transforms"], m_rootTfWidget);
+  }
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -204,6 +214,13 @@ TfVisualCalcView::toYAML(YAML::Emitter& p_out, TfTransformGraphicsWidget* p_node
   for (unsigned childIdx = 0; childIdx < p_node->children().size(); childIdx++) {
     toYAML(p_out, p_node->children()[childIdx]);
   }
+}
+
+void
+TfVisualCalcView::fromYAML(const YAML::Node& p_in, TfTransformGraphicsWidget* p_node)
+{
+  m_rootTfWidget->fromYAML(p_in);
+  // TODO children
 }
 /*------------------------------------------------------------------------}}}-*/
 

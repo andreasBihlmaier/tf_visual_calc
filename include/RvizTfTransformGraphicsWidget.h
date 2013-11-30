@@ -34,6 +34,7 @@ class RvizTfTransformGraphicsWidget
 
     // overwritten methods
     virtual void toYAML(YAML::Emitter& p_out);
+    virtual void fromYAML(const YAML::Node& p_in);
 
     // methods
 
@@ -41,6 +42,7 @@ class RvizTfTransformGraphicsWidget
 
 
   public Q_SLOTS:
+    virtual void broadcastTransform();
 
 
   Q_SIGNALS:
@@ -58,8 +60,11 @@ class RvizTfTransformGraphicsWidget
   private:
     // methods
     void extendLayout();
+    void setMarkerScale(double p_x, double p_y, double p_z);
 
     // variables
+    tf2::Transform m_lastTf;
+
     QLabel* m_markerLabel;
     QLineEdit* m_markerEdit;
     QHBoxLayout* m_markerLayout;

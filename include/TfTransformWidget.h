@@ -74,6 +74,9 @@ class TfTransformWidget
     std::string m_tfName;
     QGridLayout* m_topLayout;
 
+    void setTfName(const std::string& p_tfName);
+    void setTf(const tf2::Transform& p_tf);
+
   protected Q_SLOTS:
     virtual void setTfName();
 
@@ -81,6 +84,7 @@ class TfTransformWidget
   private:
     // methods
     void createLayout();
+    void updateDisplay();
 
     // variables
     bool m_hasAbsolute;

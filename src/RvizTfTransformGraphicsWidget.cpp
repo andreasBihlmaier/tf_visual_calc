@@ -46,9 +46,37 @@ RvizTfTransformGraphicsWidget::toYAML(YAML::Emitter& p_out)
   p_out << YAML::EndMap;
   toYAMLEnd(p_out);
 }
+
+void
+RvizTfTransformGraphicsWidget::fromYAML(const YAML::Node& p_in)
+{
+  TfTransformGraphicsWidget::fromYAML(p_in);
+  const YAML::Node& markerNode = p_in[m_tfName]["marker"];
+  std::string markerFileName;
+  markerNode["file"] >> markerFileName;
+  m_markerEdit->setText(QString::fromStdString(markerFileName));
+
+  const YAML::Node& scaleNode = markerNode["scale"];
+  double sx, sy, sz;
+  scaleNode["x"] >> sx;
+  scaleNode["y"] >> sy;
+  scaleNode["z"] >> sz;
+  setMarkerScale(sx, sy, sz);
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/
+void
+RvizTfTransformGraphicsWidget::broadcastTransform()
+{
+  TfTransformGraphicsWidget::broadcastTransform();
+
+  if (!(m_lastTf == *tf())) {
+    updateMarker();
+  }
+
+  m_lastTf = *tf();
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*--------------------------------- protected: ---------------------------{{{-*/
@@ -143,5 +171,14 @@ RvizTfTransformGraphicsWidget::updateMarker()
   markerMsg.mesh_resource = m_markerEdit->text().toStdString();
 
   m_markerPublisher->publish(markerMsg);
+}
+
+void
+RvizTfTransformGraphicsWidget::setMarkerScale(double p_x, double p_y, double p_z)
+{
+  m_markerScaleXEdit->setText(QString::number(p_x));
+  m_markerScaleYEdit->setText(QString::number(p_y));
+  m_markerScaleZEdit->setText(QString::number(p_z));
+  updateMarker();
 }
 /*------------------------------------------------------------------------}}}-*/

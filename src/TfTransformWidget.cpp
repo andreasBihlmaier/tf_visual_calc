@@ -142,6 +142,30 @@ TfTransformWidget::updateSize()
 }
 /*------------------------------------------------------------------------}}}-*/
 
+/*--------------------------------- protected: ---------------------------{{{-*/
+void
+TfTransformWidget::setTfName(const std::string& p_tfName)
+{
+  m_tfNameEdit->setText(QString::fromStdString(p_tfName));
+}
+
+void
+TfTransformWidget::setTf(const tf2::Transform& p_tf)
+{
+  *m_tf = p_tf;
+  updateDisplay();
+}
+/*------------------------------------------------------------------------}}}-*/
+
+/*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
+void
+TfTransformWidget::setTfName()
+{
+  m_tfName = m_tfNameEdit->text().toStdString();
+}
+/*------------------------------------------------------------------------}}}-*/
+
+
 /*---------------------------------- private: ----------------------------{{{-*/
 void
 TfTransformWidget::createLayout()
@@ -187,19 +211,13 @@ TfTransformWidget::createLayout()
   setLayout(m_topLayout);
   resize(0, 0);
 }
-/*------------------------------------------------------------------------}}}-*/
 
-/*--------------------------------- protected: ---------------------------{{{-*/
-/*------------------------------------------------------------------------}}}-*/
-
-/*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
 void
-TfTransformWidget::setTfName()
+TfTransformWidget::updateDisplay()
 {
-  m_tfName = m_tfNameEdit->text().toStdString();
+  m_relativeRepSelectionWidget->updateDisplay();
 }
 /*------------------------------------------------------------------------}}}-*/
-
 
 /*------------------------------- private Q_SLOTS: -------------------------{{{-*/
 void

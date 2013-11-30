@@ -84,6 +84,7 @@ class TfVisualCalcView
     QGraphicsProxyWidget* addTfWidget(const std::string& p_tfName, bool p_hasAbsolute = true);
     void drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y);
     void toYAML(YAML::Emitter& p_out, TfTransformGraphicsWidget* p_node);
+    void fromYAML(const YAML::Node& p_in, TfTransformGraphicsWidget* p_node);
 
     // variables
     ros::NodeHandle* m_nodeHandle;

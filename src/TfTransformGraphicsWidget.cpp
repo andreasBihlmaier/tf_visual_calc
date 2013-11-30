@@ -87,6 +87,30 @@ TfTransformGraphicsWidget::toYAML(YAML::Emitter& p_out)
   toYAMLData(p_out);
   toYAMLEnd(p_out);
 }
+
+void
+TfTransformGraphicsWidget::fromYAML(const YAML::Node& p_in)
+{
+  const YAML::Node& inNode = p_in[m_tfName];
+  const YAML::Node& translationNode = inNode["tf"]["translation"];
+  const YAML::Node& rotationNode = inNode["tf"]["rotation"];
+  double tx, ty, tz, rx, ry, rz, rw;
+  translationNode["x"] >> tx;
+  translationNode["y"] >> ty;
+  translationNode["z"] >> tz;
+  tf2::Vector3 translation(tx, ty, tz);
+
+  rotationNode["x"] >> rx;
+  rotationNode["y"] >> ry;
+  rotationNode["z"] >> rz;
+  rotationNode["w"] >> rw;
+  tf2::Quaternion quaternion(rx, ry, rz, rw);
+
+  tf2::Transform newTf;
+  newTf.setRotation(quaternion);
+  newTf.setOrigin(translation);
+  setTf(newTf);
+}
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------- public Q_SLOTS: --------------------------{{{-*/
@@ -131,6 +155,25 @@ TfTransformGraphicsWidget::deleteSubtree()
        ++childIter) {
     (*childIter)->deleteWidget();
   }
+}
+
+void
+TfTransformGraphicsWidget::setTfName()
+{
+  TfTransformWidget::setTfName();
+
+  for (std::vector<TfTransformGraphicsWidget*>::iterator childIter = m_children.begin();
+       childIter != m_children.end();
+       ++childIter) {
+    (*childIter)->setTfParent(this);
+  }
+}
+
+void
+TfTransformGraphicsWidget::setTfName(const std::string& p_tfName)
+{
+  TfTransformWidget::setTfName(p_tfName);
+  setTfName();
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -192,17 +235,6 @@ TfTransformGraphicsWidget::toYAMLEnd(YAML::Emitter& p_out)
 /*------------------------------------------------------------------------}}}-*/
 
 /*------------------------------ protected Q_SLOTS: ------------------------{{{-*/
-void
-TfTransformGraphicsWidget::setTfName()
-{
-  TfTransformWidget::setTfName();
-
-  for (std::vector<TfTransformGraphicsWidget*>::iterator childIter = m_children.begin();
-       childIter != m_children.end();
-       ++childIter) {
-    (*childIter)->setTfParent(this);
-  }
-}
 /*------------------------------------------------------------------------}}}-*/
 
 /*---------------------------------- private: ----------------------------{{{-*/

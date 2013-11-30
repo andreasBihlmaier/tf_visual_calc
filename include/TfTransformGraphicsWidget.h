@@ -16,6 +16,7 @@ class TfVisualCalcView;
 
 namespace YAML {
   class Emitter;
+  class Node;
 }
 
 
@@ -51,6 +52,7 @@ class TfTransformGraphicsWidget
     TfTransformGraphicsWidget* parent();
     void setTfParent(TfTransformGraphicsWidget* p_parent);
     virtual void toYAML(YAML::Emitter& p_out);
+    virtual void fromYAML(const YAML::Node& p_in);
 
     // variables
 
@@ -60,6 +62,8 @@ class TfTransformGraphicsWidget
     virtual void toggleAbsolute(bool p_toggled);
     virtual void updateSize();
     virtual void deleteSubtree();
+    virtual void setTfName();
+    void setTfName(const std::string& p_tfName);
 
 
   Q_SIGNALS:
@@ -80,7 +84,6 @@ class TfTransformGraphicsWidget
 
 
   protected Q_SLOTS:
-    virtual void setTfName();
 
 
   private:
