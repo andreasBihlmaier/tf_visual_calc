@@ -20,6 +20,7 @@ TfVisualCalcView::TfVisualCalcView(QWidget* p_parent)
   :QGraphicsView(p_parent),
    m_broadcastCount(0)
 {
+  m_nodeHandle = new ros::NodeHandle("tf_visual_calc_view");
   m_worldMapTf = new tf2::Transform();
   m_tfBroadcaster = new tf2_ros::TransformBroadcaster();
 
@@ -40,6 +41,12 @@ TfVisualCalcView::deleteTfWidget(TfTransformGraphicsWidget* p_widget)
   if (std::find(m_toDeleteWidgets.begin(), m_toDeleteWidgets.end(), p_widget) == m_toDeleteWidgets.end()) {
     m_toDeleteWidgets.push_back(p_widget);
   }
+}
+
+ros::NodeHandle*
+TfVisualCalcView::nodeHandle()
+{
+  return m_nodeHandle;
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -121,8 +128,7 @@ TfVisualCalcView::setupBroadcastTimer()
 QGraphicsProxyWidget*
 TfVisualCalcView::addTfWidget(const std::string& p_tfName, bool p_hasAbsolute)
 {
-  TfTransformGraphicsWidget* newTfWidget = new RvizTfTransformGraphicsWidget(p_hasAbsolute);
-  newTfWidget->setView(this);
+  TfTransformGraphicsWidget* newTfWidget = new RvizTfTransformGraphicsWidget(this, p_hasAbsolute);
 
   if (!p_tfName.empty()) {
     newTfWidget->setTfParentName(QString::fromStdString(p_tfName));

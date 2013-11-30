@@ -3,6 +3,8 @@
 // system includes
 
 // library includes
+#include <visualization_msgs/Marker.h>
+
 #include <QLabel>
 #include <QLineEdit>
 #include <QHBoxLayout>
@@ -12,12 +14,15 @@
 #include <QFileDialog>
 
 // custom includes
+#include "TfVisualCalcView.h"
 
 
 /*---------------------------------- public: -----------------------------{{{-*/
-RvizTfTransformGraphicsWidget::RvizTfTransformGraphicsWidget(bool p_hasAbsolute, QWidget* p_parent)
-  :TfTransformGraphicsWidget(p_hasAbsolute, p_parent)
+RvizTfTransformGraphicsWidget::RvizTfTransformGraphicsWidget(TfVisualCalcView* p_view, bool p_hasAbsolute, QWidget* p_parent)
+  :TfTransformGraphicsWidget(p_view, p_hasAbsolute, p_parent)
 {
+  m_nodeHandle = m_view->nodeHandle();
+
   extendLayout();
   createMarkerPublisher();
 }
@@ -69,6 +74,7 @@ RvizTfTransformGraphicsWidget::extendLayout()
 void
 RvizTfTransformGraphicsWidget::createMarkerPublisher()
 {
+  ros::Publisher m_markerPublisher = m_nodeHandle->advertise<visualization_msgs::Marker>("visualization_marker", 0);
 }
 /*------------------------------------------------------------------------}}}-*/
 

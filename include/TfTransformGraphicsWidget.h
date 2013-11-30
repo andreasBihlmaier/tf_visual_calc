@@ -33,7 +33,7 @@ class TfTransformGraphicsWidget
 
 
     // constructors
-    TfTransformGraphicsWidget(bool p_hasAbsolute = true, QWidget* p_parent = 0);
+    TfTransformGraphicsWidget(TfVisualCalcView* p_view, bool p_hasAbsolute = true, QWidget* p_parent = 0);
 
     // overwritten methods
 
@@ -68,6 +68,7 @@ class TfTransformGraphicsWidget
     // variables
     TfTransformGraphicsWidget* m_parent;
     std::vector<TfTransformGraphicsWidget*> m_children;
+    TfVisualCalcView* m_view;
 
 
   protected Q_SLOTS:
@@ -89,7 +90,6 @@ class TfTransformGraphicsWidget
     QMenu* m_contextMenu;
 
     QGraphicsProxyWidget* m_proxy;
-    TfVisualCalcView* m_view;
 
   private Q_SLOTS:
     void createChildWidget();

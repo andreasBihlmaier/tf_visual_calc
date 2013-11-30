@@ -43,6 +43,7 @@ class TfVisualCalcView
     // methods
     TfTransformGraphicsWidget* addTfWidget();
     void deleteTfWidget(TfTransformGraphicsWidget* p_widget);
+    ros::NodeHandle* nodeHandle();
 
     // variables
 
@@ -78,6 +79,7 @@ class TfVisualCalcView
     void drawTree(TfTransformGraphicsWidget* p_node, int p_x, int p_y);
 
     // variables
+    ros::NodeHandle* m_nodeHandle;
     QLabel* m_worldLabel;
     QGraphicsProxyWidget* m_worldLabelProxy;
     QTimer* m_broadcastTimer;

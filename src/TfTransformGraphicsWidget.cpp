@@ -13,11 +13,11 @@
 #include "TfVisualCalcView.h"
 
 /*---------------------------------- public: -----------------------------{{{-*/
-TfTransformGraphicsWidget::TfTransformGraphicsWidget(bool p_hasAbsolute, QWidget* p_parent)
+TfTransformGraphicsWidget::TfTransformGraphicsWidget(TfVisualCalcView* p_view, bool p_hasAbsolute, QWidget* p_parent)
   :TfTransformWidget(p_hasAbsolute, p_parent),
    m_parent(NULL),
    m_proxy(NULL),
-   m_view(NULL)
+   m_view(p_view)
 {
   createContextMenu();
   extendLayout();
@@ -51,12 +51,6 @@ void
 TfTransformGraphicsWidget::setProxy(QGraphicsProxyWidget* p_proxy)
 {
   m_proxy = p_proxy;
-}
-
-void
-TfTransformGraphicsWidget::setView(TfVisualCalcView* p_view)
-{
-  m_view = p_view;
 }
 
 QGraphicsProxyWidget*

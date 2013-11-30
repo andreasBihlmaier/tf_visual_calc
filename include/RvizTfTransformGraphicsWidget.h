@@ -30,7 +30,7 @@ class RvizTfTransformGraphicsWidget
 
 
     // constructors
-    RvizTfTransformGraphicsWidget(bool p_hasAbsolute = true, QWidget* p_parent = 0);
+    RvizTfTransformGraphicsWidget(TfVisualCalcView* p_view, bool p_hasAbsolute = true, QWidget* p_parent = 0);
 
     // overwritten methods
 
@@ -69,10 +69,13 @@ class RvizTfTransformGraphicsWidget
     QLineEdit* m_markerScaleYEdit;
     QLineEdit* m_markerScaleZEdit;
 
+    ros::NodeHandle* m_nodeHandle;
+
 
   private Q_SLOTS:
     void markerDialog();
     void updateMarker();
+    void createMarkerPublisher();
 
 
 };
