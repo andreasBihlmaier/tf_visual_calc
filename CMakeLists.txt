@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   rviz
   tf2
   tf2_ros
+  yaml-cpp
 )
 
 ## System dependencies are found with CMake's conventions
