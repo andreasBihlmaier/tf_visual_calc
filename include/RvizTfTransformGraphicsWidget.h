@@ -70,6 +70,7 @@ class RvizTfTransformGraphicsWidget
     QLineEdit* m_markerScaleZEdit;
 
     ros::NodeHandle* m_nodeHandle;
+    ros::Publisher* m_markerPublisher;
 
 
   private Q_SLOTS:

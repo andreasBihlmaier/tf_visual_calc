@@ -74,7 +74,7 @@ RvizTfTransformGraphicsWidget::extendLayout()
 void
 RvizTfTransformGraphicsWidget::createMarkerPublisher()
 {
-  ros::Publisher m_markerPublisher = m_nodeHandle->advertise<visualization_msgs::Marker>("visualization_marker", 0);
+  m_markerPublisher = new ros::Publisher(m_nodeHandle->advertise<visualization_msgs::Marker>("/visualization_marker", 0));
 }
 /*------------------------------------------------------------------------}}}-*/
 
@@ -85,7 +85,7 @@ RvizTfTransformGraphicsWidget::markerDialog()
   QString markerFileName = QFileDialog::getOpenFileName(this,
                                                         tr("Open Mesh as Marker"),
                                                         QString(),
-                                                        tr("Meshes (*.dae, *.stl)"));
+                                                        tr("Meshes (*.dae *.stl *.mesh)"));
   if (!markerFileName.isEmpty()) {
     m_markerEdit->setText(markerFileName);
     updateMarker();
@@ -95,5 +95,31 @@ RvizTfTransformGraphicsWidget::markerDialog()
 void
 RvizTfTransformGraphicsWidget::updateMarker()
 {
+  visualization_msgs::Marker markerMsg;
+  markerMsg.header.frame_id = m_tfName;
+  markerMsg.header.stamp = ros::Time::now();
+  markerMsg.frame_locked = true;
+  markerMsg.ns = m_tfName;
+  markerMsg.id = 0;
+  markerMsg.type = visualization_msgs::Marker::MESH_RESOURCE;
+  markerMsg.action = visualization_msgs::Marker::ADD;
+  markerMsg.pose.position.x = 0.0;
+  markerMsg.pose.position.y = 0.0;
+  markerMsg.pose.position.z = 0.0;
+  markerMsg.pose.orientation.x = 0.0;
+  markerMsg.pose.orientation.y = 0.0;
+  markerMsg.pose.orientation.z = 0.0;
+  markerMsg.pose.orientation.w = 1.0;
+  markerMsg.scale.x = m_markerScaleXEdit->text().toDouble();
+  markerMsg.scale.y = m_markerScaleYEdit->text().toDouble();
+  markerMsg.scale.z = m_markerScaleZEdit->text().toDouble();
+  markerMsg.mesh_use_embedded_materials = true;
+  markerMsg.color.a = 0.0;
+  markerMsg.color.r = 0.0;
+  markerMsg.color.g = 0.0;
+  markerMsg.color.b = 0.0;
+  markerMsg.mesh_resource = m_markerEdit->text().toStdString();
+
+  m_markerPublisher->publish(markerMsg);
 }
 /*------------------------------------------------------------------------}}}-*/
