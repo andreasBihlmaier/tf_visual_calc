@@ -82,11 +82,13 @@ RvizTfTransformGraphicsWidget::createMarkerPublisher()
 void
 RvizTfTransformGraphicsWidget::markerDialog()
 {
+  QString packagePath = QDir::homePath() + tr("/catkin_ws/src");
   QString markerFileName = QFileDialog::getOpenFileName(this,
                                                         tr("Open Mesh as Marker"),
-                                                        QString(),
+                                                        packagePath,
                                                         tr("Meshes (*.dae *.stl *.mesh)"));
   if (!markerFileName.isEmpty()) {
+    markerFileName.replace(packagePath, "package:/");
     m_markerEdit->setText(markerFileName);
     updateMarker();
   }
