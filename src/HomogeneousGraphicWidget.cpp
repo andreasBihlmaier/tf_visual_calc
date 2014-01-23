@@ -43,9 +43,9 @@ HomogeneousGraphicWidget::paintEvent(QPaintEvent* p_event)
   int horizontalLineY = yw * 3;
   painter.drawLine(borderWidth, horizontalLineY, widthWithoutBorder + 4 * 6, horizontalLineY);
 
-  for (unsigned i = 0; i < 4; i++) {
-    for (unsigned j = 0; j < 4; j++) {
-      m_matrixEdits[i][j]->setGeometry(borderWidth + i * xw, j * yw, xw, yw);
+  for (unsigned row = 0; row < 4; row++) {
+    for (unsigned col = 0; col < 4; col++) {
+      m_matrixEdits[row][col]->setGeometry(borderWidth + col * xw, row * yw, xw, yw);
     }
   }
 }
