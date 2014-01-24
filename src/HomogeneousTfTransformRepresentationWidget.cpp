@@ -24,9 +24,9 @@ HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 {
   TfTransformRepresentationWidget::setReadOnly(p_ro);
 
-  for (unsigned i = 0; i < 4; i++) {
-    for (unsigned j = 0; j < 4; j++) {
-      m_graphicWidget->m_matrixEdits[i][j]->setReadOnly(p_ro);
+  for (unsigned row = 0; row < 4; row++) {
+    for (unsigned col = 0; col < 4; col++) {
+      m_graphicWidget->m_matrixEdits[row][col]->setReadOnly(p_ro);
     }
   }
 }
@@ -39,38 +39,40 @@ HomogeneousTfTransformRepresentationWidget::setReadOnly(bool p_ro)
 void
 HomogeneousTfTransformRepresentationWidget::updateTransformFromGraphic()
 {
-  for (unsigned i = 0; i < 4; i++) {
-    for (unsigned j = 0; j < 4; j++) {
-      if (m_graphicWidget->m_matrixEdits[i][j]->text().isEmpty())
+  for (unsigned row = 0; row < 4; row++) {
+    for (unsigned col = 0; col < 4; col++) {
+      if (m_graphicWidget->m_matrixEdits[row][col]->text().isEmpty())
         return;
     }
   }
 
-  for (unsigned i = 0; i < 3; i++) {
-    if (m_graphicWidget->m_matrixEdits[i][3]->text().toDouble() != 0) {
+  for (unsigned col = 0; col < 3; col++) {
+    if (m_graphicWidget->m_matrixEdits[3][col]->text().toDouble() != 0) {
       QMessageBox::critical(this, "Homogeneous Representation",
-                            QString("Field (%1, %2) must be %3").arg(i).arg(3).arg(0));
+                            QString("Field (%1, %2) must be %3").arg(3).arg(col).arg(0));
+      m_graphicWidget->m_matrixEdits[3][col]->setText(number(0));
       return;
     }
   }
   if (m_graphicWidget->m_matrixEdits[3][3]->text().toDouble() != 1) {
     QMessageBox::critical(this, "Homogeneous Representation",
                           QString("Field (%1, %2) must be %3").arg(3).arg(3).arg(1));
+      m_graphicWidget->m_matrixEdits[3][3]->setText(number(1));
     return;
   }
 
 
   tf2::Matrix3x3 rotationMatrix;
-  for (unsigned i = 0; i < 3; i++) {
-    for (unsigned j = 0; j < 3; j++) {
-       rotationMatrix[i][j] = m_graphicWidget->m_matrixEdits[i][j]->text().toDouble();
+  for (unsigned row = 0; row < 3; row++) {
+    for (unsigned col = 0; col < 3; col++) {
+       rotationMatrix[row][col] = m_graphicWidget->m_matrixEdits[row][col]->text().toDouble();
     }
   }
   m_tf->setBasis(rotationMatrix);
 
   tf2::Vector3 translationVector;
-  for (unsigned j = 0; j < 3; j++) {
-    translationVector[j] = m_graphicWidget->m_matrixEdits[3][j]->text().toDouble();
+  for (unsigned row = 0; row < 3; row++) {
+    translationVector[row] = m_graphicWidget->m_matrixEdits[row][3]->text().toDouble();
   }
   m_tf->setOrigin(translationVector);
 }
@@ -82,19 +84,19 @@ HomogeneousTfTransformRepresentationWidget::updateDisplay()
     return;
 
   tf2::Matrix3x3 rotationMatrix = m_tf->getBasis();
-  for (unsigned i = 0; i < 3; i++) {
-    for (unsigned j = 0; j < 3; j++) {
-      m_graphicWidget->m_matrixEdits[i][j]->setText(number(rotationMatrix[i][j]));
+  for (unsigned row = 0; row < 3; row++) {
+    for (unsigned col = 0; col < 3; col++) {
+      m_graphicWidget->m_matrixEdits[row][col]->setText(number(rotationMatrix[row][col]));
     }
   }
-  for (unsigned i = 0; i < 3; i++) {
-    m_graphicWidget->m_matrixEdits[i][3]->setText(number(0));
+  for (unsigned col = 0; col < 3; col++) {
+    m_graphicWidget->m_matrixEdits[3][col]->setText(number(0));
   }
   m_graphicWidget->m_matrixEdits[3][3]->setText(number(1));
 
   tf2::Vector3 translationVector = m_tf->getOrigin();
-  for (unsigned j = 0; j < 3; j++) {
-    m_graphicWidget->m_matrixEdits[3][j]->setText(number(translationVector[j]));
+  for (unsigned row = 0; row < 3; row++) {
+    m_graphicWidget->m_matrixEdits[row][3]->setText(number(translationVector[row]));
   }
 }
 
@@ -111,9 +113,9 @@ HomogeneousTfTransformRepresentationWidget::createGraphicFrame()
 {
   m_graphicWidget = new HomogeneousGraphicWidget();
   m_topLayout->insertWidget(0, m_graphicWidget);
-  for (unsigned i = 0; i < 4; i++) {
-    for (unsigned j = 0; j < 4; j++) {
-      connect(m_graphicWidget->m_matrixEdits[i][j], SIGNAL(textEdited(const QString&)), this, SLOT(updateTransformFromGraphic()));
+  for (unsigned row = 0; row < 4; row++) {
+    for (unsigned col = 0; col < 4; col++) {
+      connect(m_graphicWidget->m_matrixEdits[row][col], SIGNAL(textEdited(const QString&)), this, SLOT(updateTransformFromGraphic()));
     }
   }
 }

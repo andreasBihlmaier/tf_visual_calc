@@ -55,10 +55,10 @@ HomogeneousGraphicWidget::paintEvent(QPaintEvent* p_event)
 void
 HomogeneousGraphicWidget::createChildWidgets()
 {
-  for (unsigned i = 0; i < 4; i++) {
-    for (unsigned j = 0; j < 4; j++) {
-      m_matrixEdits[i][j] = new QLineEdit(this);
-      m_matrixEdits[i][j]->setValidator(new QDoubleValidator());
+  for (unsigned row = 0; row < 4; row++) {
+    for (unsigned col = 0; col < 4; col++) {
+      m_matrixEdits[row][col] = new QLineEdit(this);
+      m_matrixEdits[row][col]->setValidator(new QDoubleValidator());
     }
   }
 }
