@@ -2,7 +2,7 @@
 <package>
   <name>tf_visual_calc</name>
   <version>0.0.0</version>
-  <description>The tf_visual_calc package</description>
+  <description>Rviz GUI plugin that allows to manually define a TF tree through various representations (Vector+Quaternion, Homogenous, Vector+RPY, Denavit-Hartenberg) and converting between them</description>
   <maintainer email="andreas.bihlmaier@gmx.de">Andreas Bihlmaier</maintainer>
   <license>MIT</license>
 
