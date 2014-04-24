@@ -145,7 +145,7 @@ void
 TfVisualCalcView::createScene()
 {
   setScene(new QGraphicsScene(QRect(0, 0, 640, 480), this));
-  scene()->setSceneRect(-2000, 0, 4000, 4000);
+  scene()->setSceneRect(-4000, 0, 8000, 8000);
 
   m_worldLabel = new QLabel("/world");
   m_worldLabelProxy = scene()->addWidget(m_worldLabel);
