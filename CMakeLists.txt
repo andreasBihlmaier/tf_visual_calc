@@ -17,6 +17,7 @@ find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})
 
 find_package(PkgConfig REQUIRED)
+#TODO new (0.5) yaml-cpp API: new: https://code.google.com/p/yaml-cpp/wiki/Tutorial VS. old: https://code.google.com/p/yaml-cpp/wiki/HowToParseADocument
 pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
 
 ## Do not define "emit", "slots", etc because they conflict with boost signals,
