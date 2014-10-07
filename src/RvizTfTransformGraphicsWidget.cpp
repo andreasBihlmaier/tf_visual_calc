@@ -52,15 +52,14 @@ RvizTfTransformGraphicsWidget::fromYAML(const YAML::Node& p_in)
 {
   TfTransformGraphicsWidget::fromYAML(p_in);
   const YAML::Node& markerNode = p_in[m_tfName]["marker"];
-  std::string markerFileName;
-  markerNode["file"] >> markerFileName;
+  std::string markerFileName = markerNode["file"].as<std::string>();
   m_markerEdit->setText(QString::fromStdString(markerFileName));
 
   const YAML::Node& scaleNode = markerNode["scale"];
   double sx, sy, sz;
-  scaleNode["x"] >> sx;
-  scaleNode["y"] >> sy;
-  scaleNode["z"] >> sz;
+  sx = scaleNode["x"].as<double>();
+  sy = scaleNode["y"].as<double>();
+  sz = scaleNode["z"].as<double>();
   setMarkerScale(sx, sy, sz);
 }
 /*------------------------------------------------------------------------}}}-*/

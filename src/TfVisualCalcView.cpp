@@ -78,14 +78,10 @@ TfVisualCalcView::toYAMLString()
 void
 TfVisualCalcView::fromYAMLString(const std::string& p_string)
 {
-  std::stringstream sstream(p_string);
-  YAML::Parser parser(sstream);
-  YAML::Node in;
-  parser.GetNextDocument(in);
+  YAML::Node in = YAML::Load(p_string);
 
-  if (in.FindValue("root")) {
-    std::string rootTfName;
-    in["root"] >> rootTfName;
+  if (in["root"]) {
+    std::string rootTfName = in["root"].as<std::string>();
     m_rootTfWidget->setTfName(rootTfName);
     m_rootTfWidget->fromYAML(in["transforms"]);
   }

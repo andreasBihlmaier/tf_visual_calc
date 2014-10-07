@@ -95,15 +95,15 @@ TfTransformGraphicsWidget::fromYAML(const YAML::Node& p_in)
   const YAML::Node& translationNode = inNode["tf"]["translation"];
   const YAML::Node& rotationNode = inNode["tf"]["rotation"];
   double tx, ty, tz, rx, ry, rz, rw;
-  translationNode["x"] >> tx;
-  translationNode["y"] >> ty;
-  translationNode["z"] >> tz;
+  tx = translationNode["x"].as<double>();
+  ty = translationNode["y"].as<double>();
+  tz = translationNode["z"].as<double>();
   tf2::Vector3 translation(tx, ty, tz);
 
-  rotationNode["x"] >> rx;
-  rotationNode["y"] >> ry;
-  rotationNode["z"] >> rz;
-  rotationNode["w"] >> rw;
+  rx = rotationNode["x"].as<double>();
+  ry = rotationNode["y"].as<double>();
+  rz = rotationNode["z"].as<double>();
+  rw = rotationNode["w"].as<double>();
   tf2::Quaternion quaternion(rx, ry, rz, rw);
 
   tf2::Transform newTf;
@@ -112,20 +112,18 @@ TfTransformGraphicsWidget::fromYAML(const YAML::Node& p_in)
   setTf(newTf);
 
   const YAML::Node& representationNode = inNode["representation"];
-  int representation;
-  representationNode["relative"] >> representation;
+  int representation = representationNode["relative"].as<int>();
   setRelativeRepresentation(representation);
-  bool hasAbsolute;
-  representationNode["has_absolute"] >> hasAbsolute;
+  bool hasAbsolute = representationNode["has_absolute"].as<bool>();
   if (hasAbsolute) {
-    representationNode["absolute"] >> representation;
+    representation = representationNode["absolute"].as<int>();
     setAbsoluteRepresentation(representation);
   }
 
   const YAML::Node& childrenNode = inNode["children"];
   for (unsigned childIdx = 0; childIdx < childrenNode.size(); childIdx++) {
     std::string childName;
-    childrenNode[childIdx] >> childName;
+    childName = childrenNode[childIdx].as<std::string>();
     createChildWidget(childName);
     m_children[childIdx]->fromYAML(p_in);
   }
